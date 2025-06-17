@@ -27,4 +27,15 @@
     <string name="password_changed_subtitle">Your password has been changed successfully.</string>
     <string name="forgot_password_subtitle">Don\'t worry! It occurs. Please enter the email address linked with your account.</string>
     <string name="send_code">Send Code</string>
+    <string name="hello_register_to_get_started">Hello! Register to get started</string>
+    <string name="username">Username</string>
+    <string name="email">Email</string>
+    <string name="phone">Phone</string>
+    <string name="date_of_birth">Date of Birth</string>
+    <string name="password">Password</string>
+    <string name="next">Next</string>
+    <string name="already_have_an_account">Already have an account?</string>
+    <string name="level">Teaching Level</string>
+    <string name="yoga">Teaching Yoga</string>
+    <string name="professional_information">Professional Information</string>
 </resources>

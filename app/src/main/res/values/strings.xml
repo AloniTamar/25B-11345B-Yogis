@@ -25,4 +25,6 @@
     <string name="reset_password">Reset Password</string>
     <string name="password_changed">Password Changed!</string>
     <string name="password_changed_subtitle">Your password has been changed successfully.</string>
+    <string name="forgot_password_subtitle">Don\'t worry! It occurs. Please enter the email address linked with your account.</string>
+    <string name="send_code">Send Code</string>
 </resources>

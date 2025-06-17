@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">25B-11345B-Yogis</string>
+    <string name="welcome_to">Welcome to</string>
+    <string name="yogis">YOGIS</string>
+    <string name="yoga_instructors_helper">Yoga Instructors Helper</string>
+    <string name="login">Login</string>
+    <string name="register">Register</string>
+    <string name="continue_as_a_guest">Continue as a guest</string>
+    <string name="enter_your_email">Enter your email</string>
+    <string name="enter_your_password">Enter your password</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="register_now">Register Now</string>
+    <string name="don_t_have_an_account">Don\'t have an account?</string>
+    <string name="welcome_back_glad_to_see_you_again">Welcome back! Glad to see you, Again!</string>
+    <string name="remember_password">Remember Password?</string>
+    <string name="otp_sub_title">Enter the verification code we just sent on your email address.</string>
+    <string name="otp_verification">OTP Verification</string>
+    <string name="didn_t_receive_code">Didn’t receive code?</string>
+    <string name="resend">Resend</string>
+    <string name="verify">Verify</string>
+    <string name="create_new_password">Create new password</string>
+    <string name="create_new_strig_subtitle">Your new password must be unique from those previously used.</string>
+    <string name="new_password">New Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="reset_password">Reset Password</string>
+    <string name="password_changed">Password Changed!</string>
+    <string name="password_changed_subtitle">Your password has been changed successfully.</string>
 </resources>

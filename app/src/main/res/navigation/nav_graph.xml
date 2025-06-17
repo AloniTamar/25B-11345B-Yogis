@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/welcomeFragment">
+
+    <!-- Welcome Screen -->
+    <fragment
+        android:id="@+id/welcomeFragment"
+        android:name="com.yogis.app.ui.auth.WelcomeFragment"
+        android:label="Welcome" >
+        <action
+            android:id="@+id/action_welcome_to_login"
+            app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_welcome_to_register"
+            app:destination="@id/registerFragment" />
+    </fragment>
+
+    <!-- Login Screen -->
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.yogis.app.ui.auth.LoginFragment"
+        android:label="Login" >
+        <action
+            android:id="@+id/action_login_to_main"
+            app:destination="@id/mainMenuFragment" />
+    </fragment>
+
+    <!-- Register Screen -->
+    <fragment
+        android:id="@+id/registerFragment"
+        android:name="com.yogis.app.ui.auth.RegisterFragment"
+        android:label="Register" >
+        <action
+            android:id="@+id/action_register_to_main"
+            app:destination="@id/mainMenuFragment" />
+    </fragment>
+
+    <!-- Main Menu -->
+    <fragment
+        android:id="@+id/mainMenuFragment"
+        android:name="com.yogis.app.ui.main.MainMenuFragment"
+        android:label="Main Menu" />
+
+    <!-- Add more fragments here as you build -->
+
+</navigation>

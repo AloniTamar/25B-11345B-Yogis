@@ -1,0 +1,11 @@
+<resources>
+    <style name="Widget.Yogis.TextField.Outlined" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxBackgroundColor">@color/background_text_field</item>
+        <item name="boxStrokeColor">@color/stroke_text_field</item>
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+        <item name="android:fontFamily">@font/urbanist</item>
+    </style>
+</resources>

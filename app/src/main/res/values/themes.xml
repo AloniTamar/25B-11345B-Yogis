@@ -3,6 +3,10 @@
     <style name="Base.Theme._25B11345BYogis" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <!-- default font for all TextViews -->
+        <item name="android:fontFamily">@font/urbanist</item>
+        <!-- for Material Components -->
+        <item name="fontFamily">@font/urbanist</item>
     </style>
 
     <style name="Theme._25B11345BYogis" parent="Base.Theme._25B11345BYogis" />

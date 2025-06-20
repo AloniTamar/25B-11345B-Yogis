@@ -38,4 +38,15 @@
     <string name="level">Teaching Level</string>
     <string name="yoga">Teaching Yoga</string>
     <string name="professional_information">Professional Information</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="user_name">User Name</string>
+    <string name="ashtanga_yoga_instructor">Ashtanga Yoga Instructor</string>
+    <string name="professional_details">Professional Details</string>
+    <string name="ashtanga">Ashtanga</string>
+    <string name="_2_years">2 Years</string>
+    <string name="contact_details">Contact Details</string>
+    <string name="_972_547628936">+972 547628936</string>
+    <string name="example_gmail_com">example@gmail.com</string>
+    <string name="personal_details">Personal Details</string>
+    <string name="_12_jan_1995">12 Jan 1995</string>
 </resources>

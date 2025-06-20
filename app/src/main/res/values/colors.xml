@@ -6,4 +6,5 @@
     <color name="background_text_field">#F7F8F9</color>
     <color name="stroke_text_field">#E8ECF4</color>
     <color name="stroke_button">#E8ECF4</color>
+    <color name="overlay_background">#808A8A8A</color>
 </resources>

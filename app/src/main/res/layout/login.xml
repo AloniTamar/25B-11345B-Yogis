@@ -14,7 +14,7 @@
         android:id="@+id/guideline_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="0.60"
+        app:layout_constraintGuide_percent="0.85"
         android:orientation="horizontal"/>
 
     <com.google.android.material.button.MaterialButton
@@ -109,7 +109,7 @@
         android:id="@+id/tv_no_account"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/urbanist"
         android:text="@string/don_t_have_an_account"
         android:textColor="#212121"

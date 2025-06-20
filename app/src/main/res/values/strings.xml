@@ -53,4 +53,13 @@
     <string name="john_smith">John Smith</string>
     <string name="change_password">Change Password</string>
     <string name="save">Save</string>
+    <string name="how_can_we_help_you_today">How can we help you today?</string>
+    <string name="class_builder">Class Builder</string>
+    <string name="plan_your_next_class">Plan your next class</string>
+    <string name="pose_library">Pose Library</string>
+    <string name="view_amp_filter_as_you_like"><![CDATA[View & filter as you like]]></string>
+    <string name="teaching_mode">Teaching Mode</string>
+    <string name="view_your_class_while_you_teach">view your class while you teach</string>
+    <string name="view_my_profile">View My Profile</string>
+
 </resources>

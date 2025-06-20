@@ -13,7 +13,7 @@
         android:id="@+id/guideline_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="0.60"
+        app:layout_constraintGuide_percent="0.85"
         android:orientation="horizontal"/>
 
     <com.google.android.material.button.MaterialButton
@@ -176,7 +176,7 @@
         android:id="@+id/tv_otp_footer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/urbanist"
         android:text="@string/didn_t_receive_code"
         android:textColor="#212121"
@@ -190,7 +190,7 @@
         android:id="@+id/tv_resend"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="20dp"
         android:clickable="true"
         android:focusable="true"
         android:fontFamily="@font/urbanist_bold"

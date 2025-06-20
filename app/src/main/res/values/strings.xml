@@ -49,4 +49,8 @@
     <string name="example_gmail_com">example@gmail.com</string>
     <string name="personal_details">Personal Details</string>
     <string name="_12_jan_1995">12 Jan 1995</string>
+    <string name="edit_photo">Edit Photo</string>
+    <string name="john_smith">John Smith</string>
+    <string name="change_password">Change Password</string>
+    <string name="save">Save</string>
 </resources>

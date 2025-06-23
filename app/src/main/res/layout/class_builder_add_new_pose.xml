@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_pose_from_library"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="@android:color/white">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_ap_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.85"
+        android:orientation="horizontal"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_ap_back"
+        style="@style/Widget.Yogis.Button.Back"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        app:icon="@drawable/ic_arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_ap_title"
+        android:layout_width="343dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="32dp"
+        android:fontFamily="@font/urbanist_bold"
+        android:text="@string/add_pose"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.35"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_ap_back" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tl_add_pose_tabs"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_ap_title"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/primary"
+        app:tabIndicatorFullWidth="true"
+        app:tabIndicatorHeight="3dp"
+        app:tabMode="fixed"
+        app:tabSelectedTextColor="@color/primary"
+        app:tabTextColor="@color/sub_titles_text">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_from_library"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/from_library" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tab_set_new_pose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/set_new_pose" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <View
+        android:layout_width="206dp"
+        android:layout_height="1dp"
+        android:background="@color/grey_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.044"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tl_add_pose_tabs" />
+
+    <androidx.core.widget.NestedScrollView
+        android:id="@+id/scroll_region"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scrollbars="vertical"
+        android:fadeScrollbars="false"
+        android:scrollbarSize="6dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="8dp"
+        android:layout_marginBottom="2dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbarThumbVertical="@drawable/scrollbar_thumb"
+        android:scrollbarTrackVertical="@drawable/scrollbar_track"
+        app:layout_constraintTop_toBottomOf="@id/tl_add_pose_tabs"
+        app:layout_constraintBottom_toTopOf="@id/guideline_ap_action_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:ignore="RtlSymmetry">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Yogis.TextField.Outlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:hint="@string/pose_name">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:focusable="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Yogis.TextField.Outlined"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="@string/pose_family">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RadioGroup
+                android:id="@+id/rg_duration_vs_reps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="8dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/rb_duration"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:buttonTint="@color/primary"
+                        android:checked="true" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Yogis.TextField.Outlined"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/duration">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_duration"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:enabled="true"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="8dp">
+
+                    <com.google.android.material.radiobutton.MaterialRadioButton
+                        android:id="@+id/rb_repetitions"
+                        android:layout_width="wrap_content"
+                        app:buttonTint="@color/sub_titles_text"
+                        android:layout_height="wrap_content"/>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.Yogis.TextField.Outlined"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="@string/repetitions">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/et_repetitions"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:enabled="false"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </RadioGroup>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Yogis.TextField.Outlined"
+                android:id="@+id/til_level"
+                android:layout_width="350dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="12dp"
+                android:hint="Select Class Level"
+                app:endIconMode="dropdown_menu"
+                app:layout_constraintTop_toBottomOf="@id/til_duration"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <AutoCompleteTextView
+                    android:id="@+id/ac_level"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingStart="16dp"
+                    android:inputType="none"
+                    tools:ignore="LabelFor" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Yogis.TextField.Outlined"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:hint="@string/description">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:enabled="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_register"
+                style="@style/Widget.Yogis.Button.Secondary"
+                android:layout_width="350dp"
+                android:layout_height="60dp"
+                android:layout_marginTop="8dp"
+                android:text="Upload / Take Photo"
+                android:textAllCaps="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.461"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guideline_action_button"
+                tools:layout_editor_absoluteY="603dp"
+                tools:ignore="MissingConstraints" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.Yogis.TextField.Outlined"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:hint="@string/note">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp"
+                    android:gravity="top"
+                    android:inputType="textMultiLine"
+                    android:enabled="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_start"
+        style="@style/Widget.Yogis.Button.Primary"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:text="@string/add_pose"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline_ap_action_button"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_back_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/back_to_main_menu"
+        android:textSize="14sp"
+        android:fontFamily="@font/urbanist"
+        android:textColor="#757575"
+        app:layout_constraintTop_toBottomOf="@id/btn_start"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

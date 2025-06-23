@@ -69,6 +69,12 @@
     <string name="back_to_main_menu">Back to Main Menu</string>
     <string name="from_library">From Library</string>
     <string name="set_new_pose">Set New Pose</string>
+    <string name="pose_name">Pose Name</string>
+    <string name="pose_family">Pose Family</string>
+    <string name="duration">Duration</string>
+    <string name="repetitions">Repetitions</string>
+    <string name="description">Description</string>
+    <string name="note">Notes</string>
     <string-array name="class_levels">
         <item>Beginners</item>
         <item>Intermediate</item>

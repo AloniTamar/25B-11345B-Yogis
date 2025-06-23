@@ -3,6 +3,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="primary">#FF8C8C</color>
+    <color name="sub_titles_text">#657781</color>
+    <color name="grey_200">#D4DBDE</color>
     <color name="background_text_field">#F7F8F9</color>
     <color name="stroke_text_field">#E8ECF4</color>
     <color name="stroke_button">#E8ECF4</color>

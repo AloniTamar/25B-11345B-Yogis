@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_class_actions"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="@android:color/white">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.85"
+        android:orientation="horizontal"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_ca_back"
+        style="@style/Widget.Yogis.Button.Back"
+        android:layout_width="40dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="8dp"
+        app:icon="@drawable/ic_arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_ca_title"
+        android:layout_width="329dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="36dp"
+        android:fontFamily="@font/urbanist_bold"
+        android:text="Your Stretching Class"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.117"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_ca_back" />
+
+    <TextView
+        android:id="@+id/tv_ca_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="90 Minutes"
+        android:textSize="14sp"
+        android:fontFamily="@font/urbanist"
+        android:textColor="@color/sub_titles_text"
+        app:layout_constraintTop_toBottomOf="@id/tv_ca_title"
+        app:layout_constraintStart_toStartOf="@id/tv_ca_title"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_add_pose"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:strokeColor="@color/white"
+        app:layout_constraintTop_toBottomOf="@id/tv_ca_duration"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/ic_add_pose"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_card_mark"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_add_pose_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/urbanist"
+                android:text="Add New Pose"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintBaseline_toBaselineOf="@id/ic_add_pose"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ic_add_pose" />
+
+            <TextView
+                android:id="@+id/tv_add_pose_sub"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/urbanist"
+                android:text="Single pose"
+                android:textColor="#757575"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_add_pose_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_add_pose_title" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_add_flow"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:strokeColor="@color/white"
+        app:cardBackgroundColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/card_add_pose"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/ic_add_flow"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_card_mark"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_add_flow_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="Add New Flow"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:fontFamily="@font/urbanist"
+                app:layout_constraintBaseline_toBaselineOf="@id/ic_add_flow"
+                app:layout_constraintStart_toEndOf="@id/ic_add_flow"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_add_flow_sub"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Sequence of exercises"
+                android:textSize="14sp"
+                android:fontFamily="@font/urbanist"
+                android:textColor="#757575"
+                app:layout_constraintTop_toBottomOf="@id/tv_add_flow_title"
+                app:layout_constraintStart_toStartOf="@id/tv_add_flow_title"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_view_plan"
+        style="@style/Widget.Yogis.Button.Secondary"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:text="View Class Plan"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/guideline_action_button"
+        app:layout_constraintBottom_toTopOf="@+id/tv_back_main"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/tv_back_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/urbanist"
+        android:text="@string/back_to_main_menu"
+        android:textColor="@color/black"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@id/btn_view_plan"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

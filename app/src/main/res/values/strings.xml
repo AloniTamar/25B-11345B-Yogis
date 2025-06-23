@@ -61,5 +61,20 @@
     <string name="teaching_mode">Teaching Mode</string>
     <string name="view_your_class_while_you_teach">view your class while you teach</string>
     <string name="view_my_profile">View My Profile</string>
+    <string name="view_by_levels">View by Levels</string>
+    <string name="view_by_types">View by Types</string>
+    <string name="view_by_types_desc">Body parts and muscles</string>
+    <string name="all_poses">All Poses</string>
+    <string name="add_pose"> Add Pose</string>
+    <string name="back_to_main_menu">Back to Main Menu</string>
+    <string name="from_library">From Library</string>
+    <string name="set_new_pose">Set New Pose</string>
+    <string-array name="class_levels">
+        <item>Beginners</item>
+        <item>Intermediate</item>
+        <item>Advanced</item>
+        <item>All Levels</item>
+    </string-array>
+
 
 </resources>

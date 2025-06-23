@@ -14,7 +14,7 @@
         android:layout_width="285dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="64dp"
-        android:fontFamily="@font/urbanist_bold"
+        android:fontFamily="@font/urbanist"
         android:text="@string/how_can_we_help_you_today"
         android:textColor="#212121"
         android:textSize="24sp"
@@ -57,10 +57,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:text="@string/class_builder"
-
                 android:textStyle="bold"
                 android:textSize="16sp"
-                android:fontFamily="@font/urbanist_bold"
+                android:fontFamily="@font/urbanist"
+                android:textColor="@color/black"
                 app:layout_constraintBaseline_toBaselineOf="@id/ic_class_builder"
                 app:layout_constraintStart_toEndOf="@id/ic_class_builder"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -73,7 +73,7 @@
                 android:text="@string/plan_your_next_class"
                 android:textSize="14sp"
                 android:fontFamily="@font/urbanist"
-                android:textColor="#757575"
+                android:textColor="@color/sub_titles_text"
                 app:layout_constraintTop_toBottomOf="@id/tv_class_builder_title"
                 app:layout_constraintStart_toStartOf="@id/tv_class_builder_title"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -83,7 +83,7 @@
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:src="@drawable/ic_chevron_right"
-                app:tint="#757575"
+                app:tint="@color/sub_titles_text"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -121,9 +121,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:fontFamily="@font/urbanist_bold"
+                android:fontFamily="@font/urbanist"
                 android:text="@string/pose_library"
                 android:textSize="16sp"
+                android:textColor="@color/black"
                 android:textStyle="bold"
                 app:layout_constraintBaseline_toBaselineOf="@id/ic_pose_library"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -136,7 +137,7 @@
                 android:layout_marginTop="4dp"
                 android:fontFamily="@font/urbanist"
                 android:text="@string/view_amp_filter_as_you_like"
-                android:textColor="#757575"
+                android:textColor="@color/sub_titles_text"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@id/tv_pose_library_title"
@@ -149,7 +150,7 @@
                 android:src="@drawable/ic_chevron_right"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:tint="#757575" />
+                app:tint="@color/sub_titles_text" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -159,7 +160,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="@font/urbanist"
         android:text="@string/don_t_have_an_account"
-        android:textColor="#212121"
+        android:textColor="@color/sub_titles_text"
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@id/tv_register_now"
         app:layout_constraintHorizontal_chainStyle="packed"
@@ -172,7 +173,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/register_now"
-        android:fontFamily="@font/urbanist_bold"
+        android:fontFamily="@font/urbanist"
         android:textColor="@color/primary"
         android:textSize="14sp"
         android:clickable="true"

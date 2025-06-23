@@ -28,7 +28,7 @@
         android:text="@string/edit_photo"
         android:textSize="14sp"
         android:fontFamily="@font/urbanist"
-        android:textColor="@color/primary"
+        android:textColor="@color/sub_titles_text"
         app:layout_constraintTop_toBottomOf="@id/iv_photo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

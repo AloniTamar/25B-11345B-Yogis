@@ -75,6 +75,23 @@
     <string name="repetitions">Repetitions</string>
     <string name="description">Description</string>
     <string name="note">Notes</string>
+    <string name="new_class_builder">New Class Builder</string>
+    <string name="enter_main_focus">Enter Main Focus</string>
+    <string name="enter_class_duration_minutes">Enter Class Duration (Minutes)</string>
+    <string name="select_class_level">Select Class Level</string>
+    <string name="start">Start</string>
+    <string name="your_stretching_class">Your Stretching Class</string>
+    <string name="_90_minutes">90 Minutes</string>
+    <string name="add_new_pose">Add New Pose</string>
+    <string name="single_pose">Single pose</string>
+    <string name="add_new_flow">Add New Flow</string>
+    <string name="sequence_of_exercises">Sequence of exercises</string>
+    <string name="view_class_plan">View Class Plan</string>
+    <string name="upload_take_photo">Upload / Take Photo</string>
+    <string name="body_parts_and_muscles">Body parts and muscles</string>
+    <string name="current_password">Current Password</string>
+    <string name="verify_new_password">Verify New Password</string>
+    <string name="update_password">Update Password</string>
     <string-array name="class_levels">
         <item>Beginners</item>
         <item>Intermediate</item>

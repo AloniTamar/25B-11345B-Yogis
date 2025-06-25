@@ -92,6 +92,18 @@
     <string name="current_password">Current Password</string>
     <string name="verify_new_password">Verify New Password</string>
     <string name="update_password">Update Password</string>
+    <string name="ct_title">Stretching Class</string>
+    <string name="ct_duration">90 Minutes</string>
+    <string name="ct_class_id">class_id</string>
+    <string name="ct_level">Beginners</string>
+    <string name="ct_item_duration">5 Minutes</string>
+    <string name="ct_item_title">Meditation</string>
+    <string name="ct_item_sub">Teachers Note</string>
+    <string name="ct_add_pose_title">Add New Pose</string>
+    <string name="ct_add_pose_sub">Single pose</string>
+    <string name="ct_add_flow_title">Add New Flow</string>
+    <string name="ct_add_flow_sub">Sequence of exercises</string>
+    <string name="save_class">Save Class</string>
     <string-array name="class_levels">
         <item>Beginners</item>
         <item>Intermediate</item>

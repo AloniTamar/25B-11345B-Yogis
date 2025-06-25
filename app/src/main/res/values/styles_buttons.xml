@@ -29,4 +29,12 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <!-- Chip style for class info -->
+    <style name="Widget.Yogis.Chip.Info" parent="Widget.MaterialComponents.Chip.Choice">
+        <item name="chipBackgroundColor">@color/chip_bg</item>
+        <item name="chipStrokeWidth">0dp</item>
+        <item name="chipCornerRadius">16dp</item>
+        <item name="android:textColor">@color/sub_titles_text</item>
+    </style>
+
 </resources>

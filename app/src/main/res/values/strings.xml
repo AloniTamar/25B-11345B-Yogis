@@ -114,6 +114,7 @@
     <string name="beginners_poses">Beginners Poses</string>
     <string name="search">Search</string>
     <string name="pose">Pose</string>
+    <string name="poses_by_family">Poses by Family</string>
     <string-array name="class_levels">
         <item>Beginners</item>
         <item>Intermediate</item>

@@ -111,6 +111,9 @@
     <string name="poses_library">Poses Library</string>
     <string name="poses_family">Poses Family</string>
     <string name="flows">Flows</string>
+    <string name="beginners_poses">Beginners Poses</string>
+    <string name="search">Search</string>
+    <string name="pose">Pose</string>
     <string-array name="class_levels">
         <item>Beginners</item>
         <item>Intermediate</item>

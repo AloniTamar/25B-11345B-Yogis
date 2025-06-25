@@ -104,6 +104,13 @@
     <string name="ct_add_flow_title">Add New Flow</string>
     <string name="ct_add_flow_sub">Sequence of exercises</string>
     <string name="save_class">Save Class</string>
+    <string name="poses_by_levels">Poses By Levels</string>
+    <string name="beginners">Beginners</string>
+    <string name="intermediate">Intermediate</string>
+    <string name="advanced">Advanced</string>
+    <string name="poses_library">Poses Library</string>
+    <string name="poses_family">Poses Family</string>
+    <string name="flows">Flows</string>
     <string-array name="class_levels">
         <item>Beginners</item>
         <item>Intermediate</item>

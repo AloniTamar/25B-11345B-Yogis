@@ -98,7 +98,6 @@
                 android:text="@string/professional_details"
                 android:textSize="16sp"
                 android:fontFamily="@font/urbanist"
-                android:textStyle="bold"
                 android:textColor="@color/black"
                 android:layout_marginStart="8dp"
                 app:layout_constraintBaseline_toBaselineOf="@id/ic_professional"
@@ -111,7 +110,6 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/urbanist"
                 android:text="@string/yoga"
-                android:textStyle="bold"
                 android:textColor="@color/sub_titles_text"
                 android:textSize="14sp"
                 android:layout_marginTop="8dp"
@@ -136,7 +134,6 @@
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/urbanist"
                 android:text="@string/level"
-                android:textStyle="bold"
                 android:textColor="@color/sub_titles_text"
                 android:textSize="14sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -188,7 +185,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/contact_details"
                 android:textSize="16sp"
-                android:textStyle="bold"
                 android:textColor="@color/black"
                 android:fontFamily="@font/urbanist"
                 app:layout_constraintBaseline_toBaselineOf="@id/ic_contact"
@@ -201,7 +197,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/phone"
                 android:textSize="14sp"
-                android:textStyle="bold"
                 android:fontFamily="@font/urbanist"
                 android:textColor="@color/sub_titles_text"
                 android:layout_marginTop="8dp"
@@ -227,7 +222,6 @@
                 android:textSize="14sp"
                 android:fontFamily="@font/urbanist"
                 android:textColor="@color/sub_titles_text"
-                android:textStyle="bold"
                 android:layout_marginTop="8dp"
                 app:layout_constraintTop_toBottomOf="@id/tv_label_phone"
                 app:layout_constraintStart_toStartOf="parent"/>
@@ -280,7 +274,6 @@
                 android:fontFamily="@font/urbanist"
                 android:text="@string/personal_details"
                 android:textColor="@color/black"
-                android:textStyle="bold"
                 android:textSize="16sp"
                 app:layout_constraintBaseline_toBaselineOf="@id/ic_personal"
                 app:layout_constraintStart_toEndOf="@id/ic_personal" />
@@ -294,7 +287,6 @@
                 android:textColor="@color/sub_titles_text"
                 android:layout_marginTop="8dp"
                 android:textSize="14sp"
-                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ic_personal" />
 

@@ -2,21 +2,22 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/add_pose_from_library"
+    android:id="@+id/fragment_pose_library"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
     android:background="@android:color/white">
 
+
     <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/guideline_ap_action_button"
+        android:id="@+id/guideline_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="0.97"
+        app:layout_constraintGuide_percent="0.85"
         android:orientation="horizontal"/>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_ap_back"
+        android:id="@+id/btn_pl_back"
         style="@style/Widget.Yogis.Button.Back"
         android:layout_width="40dp"
         android:layout_height="50dp"
@@ -27,72 +28,29 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_ap_title"
-        android:layout_width="343dp"
-        android:layout_height="28dp"
-        android:layout_marginTop="32dp"
-        android:fontFamily="@font/urbanist"
-        android:text="@string/add_pose"
-        android:textColor="@color/black"
+        android:id="@+id/tv_pl_title"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:text="@string/poses_library"
         android:textSize="24sp"
+        android:fontFamily="@font/urbanist"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.35"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/btn_pl_back"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/btn_ap_back" />
-
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tl_add_pose_tabs"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_ap_title"
-        app:tabGravity="fill"
-        app:tabIndicatorColor="@color/primary"
-        app:tabIndicatorFullWidth="true"
-        app:tabIndicatorHeight="3dp"
-        app:tabMode="fixed"
-        app:tabSelectedTextColor="@color/primary"
-        app:tabTextColor="@color/sub_titles_text">
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_from_library"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/from_library" />
-
-        <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_set_new_pose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/set_new_pose" />
-
-    </com.google.android.material.tabs.TabLayout>
-
-    <View
-        android:layout_width="206dp"
-        android:layout_height="1dp"
-        android:background="@color/grey_200"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.044"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tl_add_pose_tabs" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_ap_view_by_levels"
+        android:id="@+id/card_view_by_levels"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
         app:strokeColor="@color/white"
         app:cardBackgroundColor="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@id/tl_add_pose_tabs"
+        app:layout_constraintTop_toBottomOf="@id/tv_pl_title"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -102,17 +60,16 @@
             android:padding="16dp">
 
             <ImageView
-                android:id="@+id/ic_ap_view_by_levels"
+                android:id="@+id/ic_pl_levels"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_card_mark"
-                android:importantForAccessibility="no"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
-                android:id="@+id/tv_ap_view_by_levels_title"
+                android:id="@+id/tv_pl_levels_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -121,14 +78,14 @@
                 android:textColor="@color/black"
                 android:fontFamily="@font/urbanist"
                 android:gravity="center_vertical"
-                app:layout_constraintStart_toEndOf="@id/ic_ap_view_by_levels"
-                app:layout_constraintEnd_toStartOf="@id/ic_ap_view_by_levels_chev"
+                app:layout_constraintStart_toEndOf="@id/ic_pl_levels"
+                app:layout_constraintEnd_toStartOf="@id/ic_pl_levels_chev"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"/>
 
             <ImageView
-                android:id="@+id/ic_ap_view_by_levels_chev"
+                android:id="@+id/ic_pl_levels_chev"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:src="@drawable/ic_chevron_right"
@@ -140,15 +97,16 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_ap_view_by_types"
+        android:id="@+id/card_view_by_types"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
         app:strokeColor="@color/white"
+
         app:cardBackgroundColor="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@id/card_ap_view_by_levels"
+        app:layout_constraintTop_toBottomOf="@id/card_view_by_levels"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -158,43 +116,42 @@
             android:padding="16dp">
 
             <ImageView
-                android:id="@+id/ic_ap_view_by_types"
+                android:id="@+id/ic_pl_types"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:importantForAccessibility="no"
                 android:src="@drawable/ic_card_mark"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
-                android:id="@+id/tv_ap_view_by_types_title"
+                android:id="@+id/tv_pl_types_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:text="@string/view_by_types"
-                android:textColor="@color/black"
                 android:textSize="16sp"
                 android:fontFamily="@font/urbanist"
-                app:layout_constraintBaseline_toBaselineOf="@id/ic_ap_view_by_types"
-                app:layout_constraintStart_toEndOf="@id/ic_ap_view_by_types"
+                android:textColor="@color/black"
+                app:layout_constraintBaseline_toBaselineOf="@id/ic_pl_types"
+                app:layout_constraintStart_toEndOf="@id/ic_pl_types"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
             <TextView
-                android:id="@+id/tv_ap_view_by_types_sub"
+                android:id="@+id/tv_pl_types_sub"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/body_parts_and_muscles"
+                android:text="@string/poses_family"
                 android:textSize="14sp"
                 android:fontFamily="@font/urbanist"
                 android:textColor="@color/sub_titles_text"
-                app:layout_constraintTop_toBottomOf="@id/tv_ap_view_by_types_title"
-                app:layout_constraintStart_toStartOf="@id/tv_ap_view_by_types_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_pl_types_title"
+                app:layout_constraintStart_toStartOf="@id/tv_pl_types_title"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
             <ImageView
-                android:id="@+id/ic_ap_view_by_types_chev"
+                android:id="@+id/ic_pl_types_chev"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:src="@drawable/ic_chevron_right"
@@ -205,17 +162,17 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
-
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_ap_all_poses"
+        android:id="@+id/card_all_poses"
         android:layout_width="350dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
         app:strokeColor="@color/white"
+
         app:cardBackgroundColor="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@id/card_ap_view_by_types"
+        app:layout_constraintTop_toBottomOf="@id/card_view_by_types"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
@@ -225,33 +182,32 @@
             android:padding="16dp">
 
             <ImageView
-                android:id="@+id/ic_ap_all_poses"
+                android:id="@+id/ic_all_poses"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_card_mark"
-                android:importantForAccessibility="no"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <TextView
-                android:id="@+id/tv_ap_all_poses_title"
+                android:id="@+id/tv_all_poses_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:text="@string/all_poses"
                 android:textSize="16sp"
-                android:textColor="@color/black"
                 android:fontFamily="@font/urbanist"
+                android:textColor="@color/black"
                 android:gravity="center_vertical"
-                app:layout_constraintStart_toEndOf="@id/ic_ap_all_poses"
-                app:layout_constraintEnd_toStartOf="@id/ic_ap_all_poses_chev"
+                app:layout_constraintStart_toEndOf="@id/ic_all_poses"
+                app:layout_constraintEnd_toStartOf="@id/ic_all_poses_chev"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"/>
 
             <ImageView
-                android:id="@+id/ic_ap_all_poses_chev"
+                android:id="@+id/ic_all_poses_chev"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:src="@drawable/ic_chevron_right"
@@ -262,15 +218,83 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_flows"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:strokeColor="@color/white"
+
+        app:cardBackgroundColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/card_all_poses"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/ic_flows"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_card_mark"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_flows_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="@string/flows"
+                android:textSize="16sp"
+                android:fontFamily="@font/urbanist"
+                android:textColor="@color/black"
+                android:gravity="center_vertical"
+                app:layout_constraintStart_toEndOf="@id/ic_flows"
+                app:layout_constraintEnd_toStartOf="@id/ic_flows_chev"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"/>
+
+            <ImageView
+                android:id="@+id/ic_flows_chev"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/ic_chevron_right"
+                app:tint="@color/sub_titles_text"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_pl_add"
+        style="@style/Widget.Yogis.Button.Secondary"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:text="@string/add_new_pose"
+        android:textAllCaps="false"
+        app:layout_constraintTop_toBottomOf="@id/guideline_action_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <TextView
         android:id="@+id/tv_back_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/urbanist"
         android:text="@string/back_to_main_menu"
-        android:textColor="@color/black"
+        android:textColor="@color/sub_titles_text"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/guideline_ap_action_button"
+        app:layout_constraintTop_toBottomOf="@id/btn_pl_add"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

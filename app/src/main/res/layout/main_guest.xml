@@ -57,7 +57,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:text="@string/class_builder"
-                android:textStyle="bold"
                 android:textSize="16sp"
                 android:fontFamily="@font/urbanist"
                 android:textColor="@color/black"
@@ -85,6 +84,7 @@
                 android:src="@drawable/ic_chevron_right"
                 app:tint="@color/sub_titles_text"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
@@ -125,7 +125,6 @@
                 android:text="@string/pose_library"
                 android:textSize="16sp"
                 android:textColor="@color/black"
-                android:textStyle="bold"
                 app:layout_constraintBaseline_toBaselineOf="@id/ic_pose_library"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ic_pose_library" />
@@ -149,6 +148,7 @@
                 android:layout_height="16dp"
                 android:src="@drawable/ic_chevron_right"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/sub_titles_text" />
         </androidx.constraintlayout.widget.ConstraintLayout>

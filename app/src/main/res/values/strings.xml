@@ -119,6 +119,10 @@
     <string name="surya_namaskar_a">Surya Namaskar A</string>
     <string name="start_teaching">Start Teaching</string>
     <string name="finish_class">Finish Class</string>
+    <string name="adho_mukha_shvanasana">Adho Mukha Shvanasana</string>
+    <string name="notes">Notes</string>
+    <string name="_2_minutes">2 Minutes</string>
+    <string name="forward_bends">Forward Bends</string>
     <string-array name="class_levels">
         <item>Beginners</item>
         <item>Intermediate</item>

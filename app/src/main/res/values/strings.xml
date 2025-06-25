@@ -115,6 +115,8 @@
     <string name="search">Search</string>
     <string name="pose">Pose</string>
     <string name="poses_by_family">Poses by Family</string>
+    <string name="_3_5_rounds">3–5 Rounds</string>
+    <string name="surya_namaskar_a">Surya Namaskar A</string>
     <string-array name="class_levels">
         <item>Beginners</item>
         <item>Intermediate</item>

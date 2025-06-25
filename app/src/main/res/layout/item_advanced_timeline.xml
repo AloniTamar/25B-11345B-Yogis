@@ -25,7 +25,7 @@
         android:layout_marginStart="36dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
-        app:cardStrokeColor="@color/white"
+        app:strokeColor="@color/white"
         app:cardBackgroundColor="@android:color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

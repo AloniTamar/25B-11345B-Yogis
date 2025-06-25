@@ -9,6 +9,13 @@
     android:padding="24dp"
     android:background="@android:color/white">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_action_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintGuide_percent="0.95"
+        android:orientation="horizontal"/>
+
     <TextView
         android:id="@+id/tv_header"
         android:layout_width="285dp"
@@ -164,6 +171,7 @@
         android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@id/tv_register_now"
         app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintTop_toBottomOf="@id/guideline_action_button"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="661dp" />
@@ -179,6 +187,6 @@
         android:clickable="true"
         android:focusable="true"
         app:layout_constraintStart_toEndOf="@id/tv_no_account"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBaseline_toBaselineOf="@id/tv_no_account"/>
+        app:layout_constraintTop_toBottomOf="@id/guideline_action_button"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -32,7 +32,7 @@
         android:label="Login" >
         <action
             android:id="@+id/action_login_to_main"
-            app:destination="@id/mainMenuFragment" />
+            app:destination="@id/MainGuestFragment" />
     </fragment>
 
     <fragment
@@ -41,12 +41,12 @@
         android:label="Register" >
         <action
             android:id="@+id/action_register_to_main"
-            app:destination="@id/mainMenuFragment" />
+            app:destination="@id/MainGuestFragment" />
     </fragment>
 
     <fragment
-        android:id="@+id/mainMenuFragment"
-        android:name="com.tamara.a25b_11345b_yogis.ui.main.MainMenuFragment"
+        android:id="@+id/MainGuestFragment"
+        android:name="com.tamara.a25b_11345b_yogis.ui.main.MainGuestFragment"
         android:label="Main Menu" />
 
 

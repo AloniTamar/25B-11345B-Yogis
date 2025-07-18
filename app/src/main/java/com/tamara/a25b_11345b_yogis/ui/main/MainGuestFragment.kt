@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.tamara.a25b_11345b_yogis.databinding.MainGuestBinding
 
-class MainMenuFragment : Fragment() {
+class MainGuestFragment : Fragment() {
 
     private var _binding: MainGuestBinding? = null
     private val binding get() = _binding!!

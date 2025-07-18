@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.tamara.a25b_11345b_yogis.databinding.SignUpBinding
-import com.tamara.a25b_11345b_yogis.ui.main.MainMenuFragment
+import com.tamara.a25b_11345b_yogis.ui.main.MainGuestFragment
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 
 class RegisterFragment : Fragment() {
@@ -31,7 +31,7 @@ class RegisterFragment : Fragment() {
         // “Next” button on sign_up.xml
         binding.btnSignUpNext.setOnClickListener {
             // for now skip straight to Main
-            navigateSmoothly(MainMenuFragment())
+            navigateSmoothly(MainGuestFragment())
         }
     }
 

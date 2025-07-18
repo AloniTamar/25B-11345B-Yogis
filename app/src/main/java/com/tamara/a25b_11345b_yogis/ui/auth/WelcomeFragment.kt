@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import com.tamara.a25b_11345b_yogis.databinding.WelcomeBinding
 import com.tamara.a25b_11345b_yogis.ui.auth.LoginFragment
 import com.tamara.a25b_11345b_yogis.ui.auth.RegisterFragment
-import com.tamara.a25b_11345b_yogis.ui.main.MainMenuFragment
+import com.tamara.a25b_11345b_yogis.ui.main.MainGuestFragment
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 
 class WelcomeFragment : Fragment() {
@@ -37,7 +37,7 @@ class WelcomeFragment : Fragment() {
         }
 
         binding.tvContinueGuest.setOnClickListener {
-            navigateSmoothly(MainMenuFragment())
+            navigateSmoothly(MainGuestFragment())
         }
     }
 

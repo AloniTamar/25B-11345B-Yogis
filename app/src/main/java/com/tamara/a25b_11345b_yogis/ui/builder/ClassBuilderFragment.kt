@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.tamara.a25b_11345b_yogis.utils.navigateBackToMain
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderBinding
 import com.tamara.a25b_11345b_yogis.utils.wireBack
 
@@ -27,6 +28,9 @@ class ClassBuilderFragment : Fragment() {
         // TODO: hook up your “Add New Pose” and “View Existing Poses” actions here
 
         wireBack(binding.btnCbBack)
+        binding.tvBackMenu.setOnClickListener {
+            navigateBackToMain()
+        }
     }
 
     override fun onDestroyView() {

@@ -5,7 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.tamara.a25b_11345b_yogis.ui.auth.RegisterFragment
+import com.tamara.a25b_11345b_yogis.ui.builder.ClassBuilderFragment
+import com.tamara.a25b_11345b_yogis.ui.library.PoseLibraryFragment
 import com.tamara.a25b_11345b_yogis.databinding.MainGuestBinding
+import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
+
 
 class MainGuestFragment : Fragment() {
 
@@ -25,9 +30,9 @@ class MainGuestFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // TODO: hook up each card/button:
-        // binding.btnClassBuilder.setOnClickListener { navigateSmoothly(ClassBuilderFragment()) }
-        // binding.btnPoseLibrary.setOnClickListener { navigateSmoothly(PoseLibraryFragment()) }
-        // etc.
+        binding.cardClassBuilder.setOnClickListener { navigateSmoothly(ClassBuilderFragment()) }
+        binding.cardPoseLibrary.setOnClickListener { navigateSmoothly(PoseLibraryFragment()) }
+        binding.tvRegisterNow.setOnClickListener { navigateSmoothly(RegisterFragment()) }
     }
 
     override fun onDestroyView() {

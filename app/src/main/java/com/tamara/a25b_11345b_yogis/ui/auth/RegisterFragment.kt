@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.tamara.a25b_11345b_yogis.ui.auth.LoginFragment
 import com.tamara.a25b_11345b_yogis.databinding.SignUpBinding
 import com.tamara.a25b_11345b_yogis.ui.main.MainGuestFragment
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
@@ -33,6 +34,15 @@ class RegisterFragment : Fragment() {
             // for now skip straight to Main
             navigateSmoothly(MainGuestFragment())
         }
+
+        // “Already have an account? Log in” text
+        binding.tvSignUpLogin.setOnClickListener {
+            // for now skip straight to Main
+            navigateSmoothly(LoginFragment())
+        }
+
+        binding.btnSignUpBack.setOnClickListener { navigateSmoothly(WelcomeFragment()) }
+
     }
 
     override fun onDestroyView() {

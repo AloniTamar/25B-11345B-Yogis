@@ -13,7 +13,7 @@
         android:id="@+id/guideline_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="0.92"
+        app:layout_constraintGuide_percent="0.85"
         android:orientation="horizontal"/>
 
     <TextView
@@ -228,7 +228,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btn_register"
+        android:id="@+id/btn_view_profile"
         style="@style/Widget.Yogis.Button.Secondary"
         android:layout_width="350dp"
         android:layout_height="60dp"
@@ -241,4 +241,17 @@
         app:layout_constraintTop_toBottomOf="@id/guideline_action_button"
         tools:layout_editor_absoluteY="603dp"
         tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tv_log_out"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/log_out"
+        android:textSize="14sp"
+        android:fontFamily="@font/urbanist"
+        android:textColor="@color/sub_titles_text"
+        app:layout_constraintTop_toBottomOf="@id/btn_view_profile"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

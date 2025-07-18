@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.tamara.a25b_11345b_yogis.databinding.MainLoggedInBinding
+import com.tamara.a25b_11345b_yogis.ui.auth.WelcomeFragment
 import com.tamara.a25b_11345b_yogis.ui.builder.ClassBuilderFragment
 import com.tamara.a25b_11345b_yogis.ui.library.PoseLibraryFragment
 import com.tamara.a25b_11345b_yogis.ui.profile.ProfileFragment
@@ -45,8 +46,13 @@ class MainLoggedInFragment : Fragment() {
         }
 
         // “View My Profile” button (footer)
-        binding.btnRegister.setOnClickListener {
+        binding.btnViewProfile.setOnClickListener {
             navigateSmoothly(ProfileFragment())
+        }
+
+        // “Log Out” button (footer)
+        binding.tvLogOut.setOnClickListener {
+            navigateSmoothly(WelcomeFragment())
         }
     }
 

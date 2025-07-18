@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import com.tamara.a25b_11345b_yogis.R
 import com.tamara.a25b_11345b_yogis.databinding.PoseLibraryFlowsOrPosesFamListBinding
 import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
+import com.tamara.a25b_11345b_yogis.utils.navigateBackToMain
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 import com.tamara.a25b_11345b_yogis.utils.wireBack
 
@@ -33,20 +34,16 @@ class TeachingModeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 1) Change the title at runtime
         binding.tvPblTitle.text = "Select Teaching Class"
 
-        // 2) For now: no classes exist → hide the list and show placeholder
         binding.rvPblLevels.visibility = View.GONE
 
-        // Create and add an “empty” TextView
         val empty = TextView(requireContext()).apply {
             text = "No classes have been created yet in your account."
             setTypeface(typeface, Typeface.ITALIC)
             textSize = 16f
             gravity = Gravity.CENTER
         }
-        // LayoutParams to center under the title
         val lp = ConstraintLayout.LayoutParams(
             ConstraintLayout.LayoutParams.WRAP_CONTENT,
             ConstraintLayout.LayoutParams.WRAP_CONTENT
@@ -58,7 +55,6 @@ class TeachingModeFragment : Fragment() {
         }
         binding.root.addView(empty, lp)
 
-        // 3) Wire up the back-arrow and “back to main” link
         binding.btnPblBack.setOnClickListener {
             navigateSmoothly(MainLoggedInFragment())
         }
@@ -67,6 +63,9 @@ class TeachingModeFragment : Fragment() {
         }
 
         wireBack(binding.btnPblBack)
+        binding.tvBackMain.setOnClickListener {
+            navigateBackToMain()
+        }
     }
 
     override fun onDestroyView() {

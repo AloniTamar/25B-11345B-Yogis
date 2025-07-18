@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.tamara.a25b_11345b_yogis.utils.navigateBackToMain
 import com.tamara.a25b_11345b_yogis.databinding.PoseLibraryBinding
 import com.tamara.a25b_11345b_yogis.utils.wireBack
 
@@ -27,6 +28,9 @@ class PoseLibraryFragment : Fragment() {
         // TODO: wire up your level/type/all filters and pose list clicks
 
         wireBack(binding.btnPlBack)
+        binding.tvBackMain.setOnClickListener {
+            navigateBackToMain()
+        }
     }
 
     override fun onDestroyView() {

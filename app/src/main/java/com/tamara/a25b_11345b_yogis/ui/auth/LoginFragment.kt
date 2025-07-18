@@ -52,7 +52,7 @@ class LoginFragment : Fragment() {
             navigateSmoothly(RegisterFragment())
         }
 
-        wireBack(binding.ivBack)
+        binding.ivBack.setOnClickListener { navigateSmoothly(WelcomeFragment()) }
 
     }
 

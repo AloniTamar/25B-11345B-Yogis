@@ -5,14 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.tamara.a25b_11345b_yogis.utils.navigateBackToMain
-import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderBinding
-import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
+import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderActionsBinding
 import com.tamara.a25b_11345b_yogis.utils.wireBack
 
-class ClassBuilderFragment : Fragment() {
-
-    private var _binding: ClassBuilderBinding? = null
+class ClassBuilderActionsFragment : Fragment() {
+    private var _binding: ClassBuilderActionsBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -20,21 +17,20 @@ class ClassBuilderFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = ClassBuilderBinding.inflate(inflater, container, false)
+        _binding = ClassBuilderActionsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // TODO: hook up your “Add New Pose” and “View Existing Poses” actions here
+        // back arrow
+        wireBack(binding.btnCaBack)
 
-        wireBack(binding.btnCbBack)
-
-        binding.tvBackMenu.setOnClickListener {
-            navigateBackToMain()
+        // back to main menu
+        binding.tvBackMain.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
         }
-
-        binding.btnStart.setOnClickListener { navigateSmoothly(ClassBuilderActionsFragment()) }
+        // TODO: hook up “Add New Pose” / “Add New Flow”
     }
 
     override fun onDestroyView() {

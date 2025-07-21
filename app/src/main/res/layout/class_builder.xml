@@ -48,7 +48,7 @@
         android:layout_width="350dp"
         android:layout_height="60dp"
         android:layout_marginTop="24dp"
-        android:hint="@string/enter_main_focus"
+        android:hint="@string/enter_name"
         android:textColorHint="@color/sub_titles_text"
         app:layout_constraintTop_toBottomOf="@id/tv_cb_title"
         app:layout_constraintStart_toStartOf="parent"

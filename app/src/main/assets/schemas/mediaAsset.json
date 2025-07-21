@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "mediaAssetMetadata",
+  "description": "Schema for storing metadata about an image asset in Yogis",
+  "type": "object",
+  "properties": {
+    "assetId": {
+      "type": "string",
+      "description": "Unique identifier for this asset"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "Download URL or storage path for the image"
+    },
+    "mimeType": {
+      "type": "string",
+      "description": "Image MIME type, e.g. \"image/png\", \"image/jpeg\""
+    },
+    "width": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Image width in pixels"
+    },
+    "height": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Image height in pixels"
+    },
+    "createdAt": {
+      "type": "integer",
+      "description": "Timestamp (ms since epoch) when the asset was uploaded"
+    },
+    "updatedAt": {
+      "type": "integer",
+      "description": "Timestamp (ms since epoch) of last metadata update"
+    }
+  },
+  "required": [
+    "assetId",
+    "url",
+    "mimeType",
+    "width",
+    "height",
+    "createdAt",
+    "updatedAt"
+  ],
+  "additionalProperties": false
+}

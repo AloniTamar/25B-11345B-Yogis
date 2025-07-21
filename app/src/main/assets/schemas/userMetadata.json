@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "userMetadata",
+  "description": "Schema for storing metadata about a user in Yogis",
+  "type": "object",
+  "properties": {
+    "userId": {
+      "type": "string",
+      "description": "Firebase UID for this user"
+    },
+    "username": {
+      "type": "string",
+      "description": "User-chosen display name"
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "User's email address"
+    },
+    "phone": {
+      "type": "string",
+      "description": "User's phone number"
+    },
+    "dateOfBirth": {
+      "type": "string",
+      "format": "date",
+      "description": "User's birth date (YYYY-MM-DD)"
+    },
+    "yogaType": {
+      "type": "array",
+      "description": "Selected styles of yoga taught",
+      "items": {
+        "type": "string",
+        "enum": [
+          "ashtanga",
+          "vinyasa",
+          "hatha",
+          "iyengar",
+          "kundalini",
+          "yin",
+          "restorative",
+          "power",
+          "rocket"
+        ]
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "level": {
+      "type": "string",
+      "description": "Instructor's proficiency level",
+      "enum": ["beginner", "intermediate", "advanced"]
+    },
+    "createdAt": {
+      "type": "integer",
+      "description": "Timestamp (ms since epoch) when the account was created"
+    },
+    "updatedAt": {
+      "type": "integer",
+      "description": "Timestamp (ms since epoch) of the last profile update"
+    }
+  },
+  "required": [
+    "userId",
+    "username",
+    "email",
+    "phone",
+    "dateOfBirth",
+    "yogaType",
+    "level",
+    "createdAt",
+    "updatedAt"
+  ],
+  "additionalProperties": false
+}

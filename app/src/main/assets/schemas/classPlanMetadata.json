@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "classPlanMetadata",
+  "description": "Schema for storing metadata about a Class Plan in Yogis",
+  "type": "object",
+  "properties": {
+    "planId": {
+      "type": "string",
+      "description": "Unique identifier for this class plan"
+    },
+    "planName": {
+      "type": "string",
+      "description": "Human-readable title of the class plan"
+    },
+    "level": {
+      "type": "string",
+      "description": "Level of difficulty for the class plan",
+      "enum": ["beginner", "intermediate", "advanced"]
+    },
+    "numberOfElements": {
+      "type": "integer",
+      "description": "Total count of items (poses + flows) in this plan",
+      "minimum": 1
+    },
+    "duration": {
+      "type": "integer",
+      "description": "Estimated total duration of the class plan in minutes",
+      "minimum": 0
+    },
+    "elements": {
+      "type": "array",
+      "description": "Ordered list of poses and flows in this class plan",
+      "minItems": 1,
+      "items": {
+        "oneOf": [
+          { "$ref": "poseMetadata.json" },
+          { "$ref": "flowMetadata.json" }
+        ]
+      }
+    }
+  },
+  "required": [
+    "planId",
+    "planName",
+    "level",
+    "numberOfElements",
+    "duration",
+    "elements"
+  ],
+  "additionalProperties": false
+}

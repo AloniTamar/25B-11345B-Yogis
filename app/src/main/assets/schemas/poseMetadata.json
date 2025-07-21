@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "poseMetadata",
+  "description": "Schema for storing metadata about pose file in Yogis",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique identifier for this pose"
+    },
+    "name": {
+      "type": "string",
+      "description": "Original pose name in Sanskrit or English"
+    },
+    "level": {
+      "type": "string",
+      "description": "Level of difficulty for the pose, e.g., beginner, intermediate, advanced",
+      "enum": ["beginner", "intermediate", "advanced"]
+    },
+    "category": {
+      "type": "string",
+      "description": "Category of the pose, e.g., standing, seated, supine, inverted",
+      "enum": [
+        "standingPoses",
+        "forwardBends",
+        "backendArches",
+        "twists",
+        "inversions",
+        "seatedPoses",
+        "boatPoses",
+        "balancingPoses"
+      ]
+    },
+    "duration": {
+      "type": "integer",
+      "description": "Recommended duration in seconds for holding the pose",
+      "minimum": 0
+    },
+    "repetitions": {
+      "type": "integer",
+      "description": "Recommended number of repetitions for the pose",
+      "minimum": 0
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of the pose, including benefits and instructions"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Additional notes or tips for performing the pose"
+    },
+    "image": {
+      "type": "string",
+      "description": "URL or path to an image representing the pose"
+    }
+  },
+  "required": ["id", "name", "level", "category", "description", "image"],
+  "anyOf": [{ "required": ["duration"] }, { "required": ["repetitions"] }],
+  "additionalProperties": false
+}

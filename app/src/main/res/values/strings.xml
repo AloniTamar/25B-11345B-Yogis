@@ -76,7 +76,7 @@
     <string name="description">Description</string>
     <string name="note">Notes</string>
     <string name="new_class_builder">New Class Builder</string>
-    <string name="enter_main_focus">Enter Main Focus</string>
+    <string name="enter_name">Enter Name</string>
     <string name="enter_class_duration_minutes">Enter Class Duration (Minutes)</string>
     <string name="select_class_level">Select Class Level</string>
     <string name="start">Start</string>

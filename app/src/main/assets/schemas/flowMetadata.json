@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "flowMetadata",
+  "description": "Schema for storing metadata about a Flow in Yogis",
+  "type": "object",
+  "properties": {
+    "flowId": {
+      "type": "string",
+      "description": "Unique identifier for this flow"
+    },
+    "flowName": {
+      "type": "string",
+      "description": "Original name of the flow in Sanskrit or English"
+    },
+    "level": {
+      "type": "string",
+      "description": "Level of difficulty for the flow",
+      "enum": ["beginner", "intermediate", "advanced"]
+    },
+    "numberOfPoses": {
+      "type": "integer",
+      "description": "Total number of poses in this flow (must equal length of the poses array)",
+      "minimum": 2
+    },
+    "recommendedRounds": {
+      "type": "integer",
+      "description": "How many times to repeat the full sequence",
+      "minimum": 1
+    },
+    "poses": {
+      "type": "array",
+      "description": "Ordered list of the poses in this flow",
+      "minItems": 2,
+      "items": {
+        "$ref": "poseMetadata.json"
+      }
+    }
+  },
+  "required": [
+    "flowId",
+    "flowName",
+    "level",
+    "numberOfPoses",
+    "recommendedRounds",
+    "poses"
+  ],
+  "additionalProperties": false
+}

@@ -124,6 +124,9 @@
     <string name="_2_minutes">2 Minutes</string>
     <string name="forward_bends">Forward Bends</string>
     <string name="log_out">Log Out</string>
+    <string name="begginers">Beginners</string>
+    <string name="add_flow">Add Flow</string>
+    <string name="Flows">Flows</string>
     <string-array name="class_levels">
         <item>Beginners</item>
         <item>Intermediate</item>

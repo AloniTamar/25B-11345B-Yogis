@@ -61,13 +61,11 @@
         app:tabTextColor="@color/sub_titles_text">
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_from_library"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/from_library" />
 
         <com.google.android.material.tabs.TabItem
-            android:id="@+id/tab_set_new_pose"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/set_new_pose" />

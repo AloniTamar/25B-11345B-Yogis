@@ -128,6 +128,7 @@
     <string name="add_flow">Add Flow</string>
     <string name="Flows">Flows</string>
     <string name="define_new_flow">Define New Flow</string>
+    <string name="define_new_pose">Define New Pose</string>
     <string-array name="class_levels">
         <item>Beginners</item>
         <item>Intermediate</item>

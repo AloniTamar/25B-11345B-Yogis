@@ -276,10 +276,10 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_pl_add"
-        style="@style/Widget.Yogis.Button.Secondary"
+        style="@style/Widget.Yogis.Button.Primary"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:text="@string/add_new_pose"
+        android:text="@string/define_new_pose"
         android:textAllCaps="false"
         app:layout_constraintTop_toBottomOf="@id/guideline_action_button"
         app:layout_constraintStart_toStartOf="parent"

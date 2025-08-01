@@ -65,7 +65,7 @@
         android:layout_width="350dp"
         android:layout_height="60dp"
         android:layout_marginBottom="40dp"
-        android:text="@string/add_new_flow"
+        android:text="@string/define_new_flow"
         android:textAllCaps="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

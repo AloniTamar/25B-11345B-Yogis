@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 import com.tamara.a25b_11345b_yogis.databinding.LoginBinding
 import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
-import com.tamara.a25b_11345b_yogis.utils.wireBack
 
 class LoginFragment : Fragment() {
 

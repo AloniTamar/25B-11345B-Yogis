@@ -1,5 +1,6 @@
 package com.tamara.a25b_11345b_yogis.ui.teaching
 
+import android.annotation.SuppressLint
 import android.graphics.Typeface
 import android.os.Bundle
 import android.view.Gravity
@@ -10,7 +11,7 @@ import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import com.tamara.a25b_11345b_yogis.R
-import com.tamara.a25b_11345b_yogis.databinding.PoseLibraryFlowsOrPosesFamListBinding
+import com.tamara.a25b_11345b_yogis.databinding.PoseLibraryPosesFamListBinding
 import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
 import com.tamara.a25b_11345b_yogis.utils.navigateBackToMain
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
@@ -18,7 +19,7 @@ import com.tamara.a25b_11345b_yogis.utils.wireBack
 
 class TeachingModeFragment : Fragment() {
 
-    private var _binding: PoseLibraryFlowsOrPosesFamListBinding? = null
+    private var _binding: PoseLibraryPosesFamListBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -26,11 +27,12 @@ class TeachingModeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = PoseLibraryFlowsOrPosesFamListBinding
+        _binding = PoseLibraryPosesFamListBinding
             .inflate(inflater, container, false)
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

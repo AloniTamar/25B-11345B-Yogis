@@ -1,17 +1,16 @@
-package com.tamara.a25b_11345b_yogis.ui.auth
+package com.tamara.a25b_11345b_yogis.ui.builder
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.tamara.a25b_11345b_yogis.databinding.WelcomeBinding
-import com.tamara.a25b_11345b_yogis.ui.main.MainGuestFragment
+import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderAddFlowBinding
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
+import com.tamara.a25b_11345b_yogis.utils.wireBack
 
-class WelcomeFragment : Fragment() {
-
-    private var _binding: WelcomeBinding? = null
+class ClassBuilderAddFlowFragment : Fragment() {
+    private var _binding: ClassBuilderAddFlowBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -19,23 +18,17 @@ class WelcomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = WelcomeBinding.inflate(inflater, container, false)
+        _binding = ClassBuilderAddFlowBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // wire the back arrow
+        wireBack(binding.btnCtBack)  // update to the actual ID in your layout
 
-        binding.btnLogin.setOnClickListener {
-            navigateSmoothly(LoginFragment())
-        }
-
-        binding.btnRegister.setOnClickListener {
-            navigateSmoothly(RegisterFragment())
-        }
-
-        binding.tvContinueGuest.setOnClickListener {
-            navigateSmoothly(MainGuestFragment())
+        binding.btnAddFlow.setOnClickListener {
+            navigateSmoothly(ClassBuilderActionsFragment())
         }
     }
 

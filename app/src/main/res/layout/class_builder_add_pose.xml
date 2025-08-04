@@ -6,157 +6,174 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="16dp"
-    android:paddingStart="24dp"
-    android:paddingEnd="24dp"
     android:background="@android:color/white">
 
-    <!-- View by Levels -->
+    <!-- Card #1: View by Levels -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_ap_view_by_levels"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="@android:color/white"
-        app:strokeColor="@color/white">
+        app:strokeColor="@color/white"
+        app:cardBackgroundColor="@android:color/white">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:padding="16dp">
 
             <ImageView
                 android:id="@+id/ic_ap_view_by_levels"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:importantForAccessibility="no"
-                android:src="@drawable/ic_card_mark" />
+                android:src="@drawable/ic_card_mark"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
             <TextView
                 android:id="@+id/tv_ap_view_by_levels_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/urbanist"
-                android:gravity="center_vertical"
                 android:text="@string/view_by_levels"
+                android:textSize="16sp"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:fontFamily="@font/urbanist"
+                app:layout_constraintStart_toEndOf="@id/ic_ap_view_by_levels"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ic_ap_view_by_levels_chev" />
 
             <ImageView
                 android:id="@+id/ic_ap_view_by_levels_chev"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:src="@drawable/ic_chevron_right"
-                app:tint="@color/sub_titles_text" />
-        </LinearLayout>
+                app:tint="@color/sub_titles_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- View by Types -->
+    <!-- Card #2: View by Types -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_ap_view_by_types"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="@android:color/white"
-        app:strokeColor="@color/white">
+        app:strokeColor="@color/white"
+        app:cardBackgroundColor="@android:color/white">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:orientation="horizontal">
+            android:padding="16dp">
 
             <ImageView
                 android:id="@+id/ic_ap_view_by_types"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_card_mark"
-                android:importantForAccessibility="no" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/tv_ap_view_by_types_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginStart="12dp">
+                android:layout_marginStart="12dp"
+                android:text="@string/view_by_types"
+                android:textSize="16sp"
+                android:textColor="@color/black"
+                android:fontFamily="@font/urbanist"
+                app:layout_constraintStart_toEndOf="@id/ic_ap_view_by_types"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
 
-                <TextView
-                    android:id="@+id/tv_ap_view_by_types_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/view_by_types"
-                    android:textSize="16sp"
-                    android:textColor="@color/black"
-                    android:fontFamily="@font/urbanist" />
-
-                <TextView
-                    android:id="@+id/tv_ap_view_by_types_sub"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="@string/body_parts_and_muscles"
-                    android:textSize="14sp"
-                    android:textColor="@color/sub_titles_text"
-                    android:fontFamily="@font/urbanist" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_ap_view_by_types_sub"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginStart="12dp"
+                android:text="@string/body_parts_and_muscles"
+                android:textSize="14sp"
+                android:textColor="@color/sub_titles_text"
+                android:fontFamily="@font/urbanist"
+                app:layout_constraintStart_toStartOf="@id/tv_ap_view_by_types_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_ap_view_by_types_title"
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <ImageView
                 android:id="@+id/ic_ap_view_by_types_chev"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:src="@drawable/ic_chevron_right"
-                app:tint="@color/sub_titles_text" />
-        </LinearLayout>
+                app:tint="@color/sub_titles_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
-    <!-- All Poses -->
+    <!-- Card #3: All Poses -->
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_ap_all_poses"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
-        app:cardBackgroundColor="@android:color/white"
-        app:strokeColor="@color/white">
+        app:strokeColor="@color/white"
+        app:cardBackgroundColor="@android:color/white">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:orientation="horizontal">
+            android:padding="16dp">
 
             <ImageView
                 android:id="@+id/ic_ap_all_poses"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@drawable/ic_card_mark"
-                android:importantForAccessibility="no" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
             <TextView
                 android:id="@+id/tv_ap_all_poses_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginStart="12dp"
                 android:text="@string/all_poses"
                 android:textSize="16sp"
                 android:textColor="@color/black"
                 android:fontFamily="@font/urbanist"
-                android:gravity="center_vertical" />
+                app:layout_constraintStart_toEndOf="@id/ic_ap_all_poses"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
 
             <ImageView
                 android:id="@+id/ic_ap_all_poses_chev"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
                 android:src="@drawable/ic_chevron_right"
-                app:tint="@color/sub_titles_text" />
-        </LinearLayout>
+                app:tint="@color/sub_titles_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
 </LinearLayout>

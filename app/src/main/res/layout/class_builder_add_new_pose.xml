@@ -6,7 +6,7 @@
     android:id="@+id/add_pose_new_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="24dp"
+    android:padding="16dp"
     android:background="@android:color/white">
 
     <androidx.core.widget.NestedScrollView

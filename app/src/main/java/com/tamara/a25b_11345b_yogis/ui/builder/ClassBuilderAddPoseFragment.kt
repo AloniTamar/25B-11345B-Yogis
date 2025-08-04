@@ -8,10 +8,14 @@ import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import com.google.android.material.card.MaterialCardView
 import com.google.android.material.tabs.TabLayout
 import com.tamara.a25b_11345b_yogis.R
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderAddNewPoseBinding
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderAddPoseContainerBinding
+import com.tamara.a25b_11345b_yogis.ui.library.PosesByLevelsFragment
+import com.tamara.a25b_11345b_yogis.ui.library.PosesByTypesFragment
+import com.tamara.a25b_11345b_yogis.ui.library.PosesListFragment
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 
 class ClassBuilderAddPoseFragment : Fragment() {
@@ -29,8 +33,7 @@ class ClassBuilderAddPoseFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = ClassBuilderAddPoseContainerBinding
-            .inflate(inflater, container, false)
+        _binding = ClassBuilderAddPoseContainerBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -44,23 +47,37 @@ class ClassBuilderAddPoseFragment : Fragment() {
             binding.flAddPoseContent.removeAllViews()
 
             if (layoutRes == R.layout.class_builder_add_new_pose) {
+                // “Set New Pose” tab
                 val newBinding = ClassBuilderAddNewPoseBinding
                     .inflate(layoutInflater, binding.flAddPoseContent, false)
                 binding.flAddPoseContent.addView(newBinding.root)
                 initNewPosePageWithBinding(newBinding)
-            }
-            else {
+            } else {
+                // “From Library” tab
                 val page = layoutInflater.inflate(
-                    layoutRes,
+                    R.layout.class_builder_add_pose,
                     binding.flAddPoseContent,
                     false
-                )
-                binding.flAddPoseContent.addView(page)
+                ).also { binding.flAddPoseContent.addView(it) }
+
+                // wire up the three cards
+                page.findViewById<MaterialCardView>(R.id.card_ap_view_by_levels)
+                    .setOnClickListener {
+                        navigateSmoothly(PosesByLevelsFragment.newInstanceForBuilder())
+                    }
+                page.findViewById<MaterialCardView>(R.id.card_ap_view_by_types)
+                    .setOnClickListener {
+                        navigateSmoothly(PosesByTypesFragment.newInstanceForBuilder())
+                    }
+                page.findViewById<MaterialCardView>(R.id.card_ap_all_poses)
+                    .setOnClickListener {
+                        navigateSmoothly(PosesListFragment.newInstanceAllForBuilder())
+                    }
             }
         }
 
+        // initial load & tab-switcher
         loadPage(R.layout.class_builder_add_pose)
-
         binding.tlAddPoseTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
                 loadPage(

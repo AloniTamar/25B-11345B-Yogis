@@ -11,6 +11,25 @@ import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 import com.tamara.a25b_11345b_yogis.utils.wireBack
 
 class PosesByLevelsFragment : Fragment() {
+
+    companion object {
+        private const val ARG_FOR_CLASS_BUILDER = "for_class_builder"
+
+        /** Library mode: show levels list in the public library */
+        fun newInstance() = PosesByLevelsFragment().apply {
+            arguments = Bundle().apply {
+                putBoolean(ARG_FOR_CLASS_BUILDER, false)
+            }
+        }
+
+        /** Builder mode: show levels list coming from the ClassBuilder flow */
+        fun newInstanceForBuilder() = PosesByLevelsFragment().apply {
+            arguments = Bundle().apply {
+                putBoolean(ARG_FOR_CLASS_BUILDER, true)
+            }
+        }
+    }
+
     private var _binding: PoseLibraryLevelsBinding? = null
     private val binding get() = _binding!!
 
@@ -26,22 +45,37 @@ class PosesByLevelsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Back‐arrow wiring
+        // read the flag
+        val forBuilder = arguments?.getBoolean(ARG_FOR_CLASS_BUILDER, false) == true
+
+        // wire back arrow
         wireBack(binding.btnPblBack)
 
-        // When the user taps the “Beginners” card:
+        // tap “Beginners”
         binding.cardBeginners.setOnClickListener {
-            navigateSmoothly(PosesListFragment.newInstance(Pose.Level.beginner))
+            if (forBuilder) {
+                navigateSmoothly(PosesListFragment.newInstanceForBuilder(Pose.Level.beginner))
+            } else {
+                navigateSmoothly(PosesListFragment.newInstance(Pose.Level.beginner))
+            }
         }
 
-        // “Intermediate” card:
+        // tap “Intermediate”
         binding.cardIntermediate.setOnClickListener {
-            navigateSmoothly(PosesListFragment.newInstance(Pose.Level.intermediate))
+            if (forBuilder) {
+                navigateSmoothly(PosesListFragment.newInstanceForBuilder(Pose.Level.intermediate))
+            } else {
+                navigateSmoothly(PosesListFragment.newInstance(Pose.Level.intermediate))
+            }
         }
 
-        // “Advanced” card:
+        // tap “Advanced”
         binding.cardAdvanced.setOnClickListener {
-            navigateSmoothly(PosesListFragment.newInstance(Pose.Level.advanced))
+            if (forBuilder) {
+                navigateSmoothly(PosesListFragment.newInstanceForBuilder(Pose.Level.advanced))
+            } else {
+                navigateSmoothly(PosesListFragment.newInstance(Pose.Level.advanced))
+            }
         }
     }
 

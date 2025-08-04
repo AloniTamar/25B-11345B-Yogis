@@ -13,7 +13,7 @@
         android:id="@+id/guideline_ap_action_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintGuide_percent="0.97"
+        app:layout_constraintGuide_percent="0.85"
         android:orientation="horizontal"/>
 
     <com.google.android.material.button.MaterialButton
@@ -206,7 +206,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Start on all fours, tuck your toes…"
+                android:text="@string/start_on_all_fours_tuck_your_toes"
                 android:textSize="14sp"
                 android:fontFamily="@font/urbanist"
                 android:textColor="@color/sub_titles_text"
@@ -225,7 +225,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Keep feet hip-width apart…"
+                android:text="@string/keep_feet_hip_width_apart"
                 android:textSize="14sp"
                 android:fontFamily="@font/urbanist"
                 android:textColor="@color/sub_titles_text"
@@ -234,15 +234,31 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_add_pose"
+        style="@style/Widget.Yogis.Button.Primary"
+        android:layout_width="350dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="40dp"
+        android:text="@string/add_pose"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.538"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline_ap_action_button"/>
+
+
     <TextView
         android:id="@+id/tv_back_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/urbanist"
         android:text="@string/back_to_main_menu"
+        android:layout_marginTop="20dp"
         android:textColor="@color/black"
         android:textSize="14sp"
-        app:layout_constraintTop_toBottomOf="@id/guideline_ap_action_button"
+        app:layout_constraintTop_toBottomOf="@id/btn_add_pose"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

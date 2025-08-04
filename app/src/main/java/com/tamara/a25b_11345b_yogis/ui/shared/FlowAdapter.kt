@@ -15,7 +15,7 @@ class FlowAdapter(
         : RecyclerView.ViewHolder(binding.root) {
         fun bind(flow: Flow) {
             // Show the flow’s title in the “pose” title field
-            binding.tvLevelTitle.text = flow.title
+            binding.tvLevelTitle.text = flow.flowName
             // Hook up click
             binding.root.setOnClickListener { onClick(flow) }
         }

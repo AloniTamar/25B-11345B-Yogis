@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.tamara.a25b_11345b_yogis.R
-import com.tamara.a25b_11345b_yogis.data.model.Flow
+import com.tamara.a25b_11345b_yogis.data.repository.FlowRepository
 import com.tamara.a25b_11345b_yogis.databinding.PoseLibraryFlowListBinding
 import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
 import com.tamara.a25b_11345b_yogis.ui.shared.FlowAdapter
@@ -40,17 +40,12 @@ class ClassBuilderFlowListFragment : Fragment() {
             navigateSmoothly(MainLoggedInFragment())
         }
 
-        val dummyFlows = listOf(
-            Flow("Surya Namaskar A"),
-            Flow("Surya Namaskar B"),
-            Flow("Standing Sequence"),
-            Flow("Primary Series")
-        )
+        val dummyFlows = FlowRepository.getAll()
 
         val adapter = FlowAdapter(dummyFlows) { flow ->
             // TODO: when you have real data, navigate to the flow detail screen.
             // For now: bubble up to your “class timeline” fragment
-            navigateSmoothly(ClassBuilderAddFlowFragment())
+            navigateSmoothly(ClassBuilderAddFlowFragment.newInstance(flow.flowId))
         }
         binding.rvPblLevels.apply {
               layoutManager = androidx.recyclerview.widget.LinearLayoutManager(requireContext())

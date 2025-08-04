@@ -98,11 +98,7 @@ class ClassBuilderAddPoseFragment : Fragment() {
         nb.rbRepetitions.setOnClickListener { selectReps() }
         selectDuration()
 
-        val levels = listOf(
-            getString(R.string.beginners),
-            getString(R.string.intermediate),
-            getString(R.string.advanced)
-        )
+        val levels = resources.getStringArray(R.array.class_levels)
         nb.acLevel.setAdapter(
             ArrayAdapter(requireContext(), R.layout.item_dropdown_menu, levels)
         )

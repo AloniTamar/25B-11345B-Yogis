@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.tamara.a25b_11345b_yogis.databinding.SignUpProfInfoBinding
 import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
-import com.tamara.a25b_11345b_yogis.utils.wireBack
 
 class RegisterProfessionalInfoFragment : Fragment() {
 
@@ -26,8 +25,9 @@ class RegisterProfessionalInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.btnProfessionalBack.apply { wireBack(this) }
+        binding.btnProfessionalBack.setOnClickListener {
+            navigateSmoothly(RegisterFragment())
+        }
 
         binding.btnProfessionalRegister.setOnClickListener {
             navigateSmoothly(MainLoggedInFragment(), addToBackStack = false)

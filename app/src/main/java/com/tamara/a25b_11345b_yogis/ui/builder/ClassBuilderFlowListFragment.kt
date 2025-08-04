@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.tamara.a25b_11345b_yogis.R
 import com.tamara.a25b_11345b_yogis.databinding.PoseLibraryFlowListBinding
 import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
-import com.tamara.a25b_11345b_yogis.utils.wireBack
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 
 
@@ -31,7 +30,9 @@ class ClassBuilderFlowListFragment : Fragment() {
 
         binding.tvPblTitle.text = getString(R.string.Flows)
 
-        wireBack(binding.btnPblBack)
+        binding.btnPblBack.setOnClickListener {
+            navigateSmoothly(ClassBuilderActionsFragment())
+        }
 
         binding.tvBackMain.setOnClickListener {
             navigateSmoothly(MainLoggedInFragment())

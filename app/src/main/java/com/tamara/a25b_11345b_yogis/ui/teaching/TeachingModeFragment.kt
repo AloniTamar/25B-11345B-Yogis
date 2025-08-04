@@ -63,7 +63,7 @@ class TeachingModeFragment : Fragment() {
         binding.tvBackMain.setOnClickListener {
             navigateSmoothly(MainLoggedInFragment(), addToBackStack = false)
         }
-
+// TODO - fix to hard coded back btn
         wireBack(binding.btnPblBack)
         binding.tvBackMain.setOnClickListener {
             navigateBackToMain()

@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.tamara.a25b_11345b_yogis.databinding.OtpVerificationBinding
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
-import com.tamara.a25b_11345b_yogis.utils.wireBack
 
 class OtpVerificationFragment : Fragment() {
 
@@ -49,7 +48,9 @@ class OtpVerificationFragment : Fragment() {
                 Toast.LENGTH_SHORT).show()
         }
 
-        wireBack(binding.btnOtpBack)
+        binding.btnOtpBack.setOnClickListener {
+            navigateSmoothly(ForgotPasswordFragment())
+        }
     }
 
     override fun onDestroyView() {

@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.tamara.a25b_11345b_yogis.databinding.CreateNewPasswordBinding
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
-import com.tamara.a25b_11345b_yogis.utils.wireBack
 
 class CreateNewPasswordFragment : Fragment() {
 
@@ -39,8 +38,9 @@ class CreateNewPasswordFragment : Fragment() {
                 navigateSmoothly(PasswordChangedFragment())
             }
         }
-
-        wireBack(binding.btnCpBack)
+        binding.btnCpBack.setOnClickListener {
+            navigateSmoothly(OtpVerificationFragment())
+        }
     }
 
     override fun onDestroyView() {

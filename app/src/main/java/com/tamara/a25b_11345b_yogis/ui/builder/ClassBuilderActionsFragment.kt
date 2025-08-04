@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderActionsBinding
 import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
-import com.tamara.a25b_11345b_yogis.utils.wireBack
 
 class ClassBuilderActionsFragment : Fragment() {
     private var _binding: ClassBuilderActionsBinding? = null
@@ -25,7 +24,9 @@ class ClassBuilderActionsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        wireBack(binding.btnCaBack)
+        binding.btnCaBack.setOnClickListener {
+            navigateSmoothly(ClassBuilderFragment())
+        }
 
         binding.tvBackMain.setOnClickListener {
             navigateSmoothly(MainLoggedInFragment())

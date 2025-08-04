@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.tamara.a25b_11345b_yogis.databinding.ForgotPasswordBinding
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
-import com.tamara.a25b_11345b_yogis.utils.wireBack
 
 class ForgotPasswordFragment : Fragment() {
 
@@ -43,7 +42,9 @@ class ForgotPasswordFragment : Fragment() {
             navigateSmoothly(LoginFragment())
         }
 
-        wireBack(binding.btnFpBack)
+        binding.btnFpBack.setOnClickListener {
+            navigateSmoothly(LoginFragment())
+        }
     }
 
     override fun onDestroyView() {

@@ -26,7 +26,6 @@ class PoseLibraryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // TODO: wire up your level/type/all filters and pose list clicks
-
         wireBack(binding.btnPlBack)
         binding.tvBackMain.setOnClickListener {
             navigateBackToMain()

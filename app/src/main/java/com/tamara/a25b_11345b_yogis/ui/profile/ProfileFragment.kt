@@ -25,7 +25,6 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // TODO: load user profile data and hook up “Edit Profile” and “Change Password”
-
         wireBack(binding.btnProfileBack)
     }
 

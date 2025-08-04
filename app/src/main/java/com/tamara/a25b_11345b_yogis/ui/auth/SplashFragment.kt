@@ -29,7 +29,7 @@ class SplashFragment : Fragment() {
 
         // TODO: Delay 3 seconds, then go to WelcomeFragment
         viewLifecycleOwner.lifecycleScope.launch {
-            delay(3000)
+            delay(2000)
             navigateSmoothly(WelcomeFragment())
         }
     }

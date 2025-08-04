@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.tamara.a25b_11345b_yogis.utils.navigateBackToMain
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderBinding
+import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
-import com.tamara.a25b_11345b_yogis.utils.wireBack
 
 class ClassBuilderFragment : Fragment() {
 
@@ -27,8 +27,9 @@ class ClassBuilderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // TODO: hook up your “Add New Pose” and “View Existing Poses” actions here
-
-        wireBack(binding.btnCbBack)
+        binding.btnCbBack.setOnClickListener {
+            navigateSmoothly(MainLoggedInFragment())
+        }
 
         binding.tvBackMenu.setOnClickListener {
             navigateBackToMain()

@@ -1,18 +1,19 @@
-package com.tamara.a25b_11345b_yogis.ui.builder
+package com.tamara.a25b_11345b_yogis.ui.shared
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.tamara.a25b_11345b_yogis.data.model.Flow
 import com.tamara.a25b_11345b_yogis.databinding.ItemPoseBinding
 
-class ClassBuilderFlowAdapter(
-    private val items: List<ClassFlow>,
-    private val onClick: (ClassFlow) -> Unit
-) : RecyclerView.Adapter<ClassBuilderFlowAdapter.FlowViewHolder>() {
+class FlowAdapter(
+    private val items: List<Flow>,
+    private val onClick: (Flow) -> Unit
+) : RecyclerView.Adapter<FlowAdapter.FlowViewHolder>() {
 
     inner class FlowViewHolder(private val binding: ItemPoseBinding)
         : RecyclerView.ViewHolder(binding.root) {
-        fun bind(flow: ClassFlow) {
+        fun bind(flow: Flow) {
             // Show the flow’s title in the “pose” title field
             binding.tvLevelTitle.text = flow.title
             // Hook up click

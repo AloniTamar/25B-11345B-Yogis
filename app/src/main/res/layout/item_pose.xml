@@ -21,8 +21,7 @@
             android:layout_height="30dp"
             android:src="@drawable/ic_card_mark"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/tv_level_title"
@@ -34,9 +33,21 @@
             android:fontFamily="@font/urbanist"
             android:textColor="#212121"
             app:layout_constraintStart_toEndOf="@id/iv_level_mark"
-            app:layout_constraintEnd_toStartOf="@id/iv_level_chev"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintEnd_toStartOf="@id/iv_level_chev"/>
+
+        <TextView
+            android:id="@+id/tv_level_subtitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/category_or_level"
+            android:textSize="14sp"
+            android:fontFamily="@font/urbanist"
+            android:textColor="@color/sub_titles_text"
+            app:layout_constraintStart_toStartOf="@id/tv_level_title"
+            app:layout_constraintTop_toBottomOf="@id/tv_level_title"
+            app:layout_constraintEnd_toStartOf="@id/iv_level_chev"/>
 
         <ImageView
             android:id="@+id/iv_level_chev"
@@ -45,7 +56,7 @@
             android:src="@drawable/ic_chevron_right"
             app:tint="@color/sub_titles_text"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

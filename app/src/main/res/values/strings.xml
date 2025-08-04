@@ -129,6 +129,16 @@
     <string name="Flows">Flows</string>
     <string name="define_new_flow">Define New Flow</string>
     <string name="define_new_pose">Define New Pose</string>
+    <string name="category_or_level">Category or Level</string>
+    <string name="intermediate_poses">Intermediate Poses</string>
+    <string name="advanced_poses">Advanced Poses</string>
+    <string name="standing_poses">Standing Poses</string>
+    <string name="backbends_arches">Backbends (Arches)</string>
+    <string name="twists">Twists</string>
+    <string name="inversions">Inversions</string>
+    <string name="seated_poses">Seated Poses</string>
+    <string name="boat_poses">Boat Poses</string>
+    <string name="balancing_poses">Balancing Poses</string>
     <string-array name="class_levels">
         <item>Beginners</item>
         <item>Intermediate</item>

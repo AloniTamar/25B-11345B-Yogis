@@ -142,6 +142,8 @@
     <string name="__repetitions">/ Repetitions</string>
     <string name="start_on_all_fours_tuck_your_toes">Start on all fours, tuck your toes…</string>
     <string name="keep_feet_hip_width_apart">Keep feet hip-width apart…</string>
+    <string name="discard_changes_title">Discard changes?</string>
+    <string name="discard_changes_message">Your changes won’t be saved. Continue?</string>
     <string-array name="class_levels">
         <item>Beginners</item>
         <item>Intermediate</item>

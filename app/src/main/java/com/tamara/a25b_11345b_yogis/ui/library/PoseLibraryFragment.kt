@@ -45,7 +45,7 @@ class PoseLibraryFragment : Fragment() {
 
         // All Poses
         binding.cardAllPoses.setOnClickListener {
-            navigateSmoothly(PosesListFragment.newInstanceAll())
+            navigateSmoothly(PosesListFragment.newInstanceAllForBuilder())
         }
     }
 

@@ -21,50 +21,56 @@ import com.tamara.a25b_11345b_yogis.utils.wireBack
 class PosesListFragment : Fragment() {
 
     companion object {
-        private const val ARG_LEVEL         = "level"
-        private const val ARG_CATEGORY      = "category"
+        private const val ARG_LEVEL             = "level"
+        private const val ARG_CATEGORY          = "category"
         private const val ARG_FOR_CLASS_BUILDER = "for_class_builder"
 
-        /** show only poses of a given Level, in regular library mode */
-        fun newInstance(level: Pose.Level) = PosesListFragment().apply {
-            arguments = Bundle().apply {
-                putString(ARG_LEVEL, level.name)
-                putBoolean(ARG_FOR_CLASS_BUILDER, false)
+        fun newInstance(level: Pose.Level): PosesListFragment =
+            PosesListFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_LEVEL, level.name)
+                    putBoolean(ARG_FOR_CLASS_BUILDER, false)
+                }
             }
-        }
 
-        /** show only poses of a given Level, inside ClassBuilder */
-        fun newInstanceForBuilder(level: Pose.Level) = PosesListFragment().apply {
-            arguments = Bundle().apply {
-                putString(ARG_LEVEL, level.name)
-                putBoolean(ARG_FOR_CLASS_BUILDER, true)
+        fun newInstanceForBuilder(level: Pose.Level): PosesListFragment =
+            PosesListFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_LEVEL, level.name)
+                    putBoolean(ARG_FOR_CLASS_BUILDER, true)
+                }
             }
-        }
 
-        fun newInstance(category: Pose.Category) = PosesListFragment().apply {
-            arguments = Bundle().apply {
-                putString(ARG_CATEGORY, category.name)
-                putBoolean(ARG_FOR_CLASS_BUILDER, false)
+        fun newInstance(category: Pose.Category): PosesListFragment =
+            PosesListFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_CATEGORY, category.name)
+                    putBoolean(ARG_FOR_CLASS_BUILDER, false)
+                }
             }
-        }
-        fun newInstanceForBuilder(category: Pose.Category) = PosesListFragment().apply {
-            arguments = Bundle().apply {
-                putString(ARG_CATEGORY, category.name)
-                putBoolean(ARG_FOR_CLASS_BUILDER, true)
+
+        fun newInstanceForBuilder(category: Pose.Category): PosesListFragment =
+            PosesListFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_CATEGORY, category.name)
+                    putBoolean(ARG_FOR_CLASS_BUILDER, true)
+                }
             }
-        }
-        fun newInstanceAll() = PosesListFragment().apply {
-            arguments = Bundle().apply {
-                putBoolean(ARG_FOR_CLASS_BUILDER, false)
+
+        fun newInstanceAll(): PosesListFragment =
+            PosesListFragment().apply {
+                arguments = Bundle().apply {
+                    putBoolean(ARG_FOR_CLASS_BUILDER, false)
+                }
             }
-        }
-        fun newInstanceAllForBuilder() = PosesListFragment().apply {
-            arguments = Bundle().apply {
-                putBoolean(ARG_FOR_CLASS_BUILDER, true)
+
+        fun newInstanceAllForBuilder(): PosesListFragment =
+            PosesListFragment().apply {
+                arguments = Bundle().apply {
+                    putBoolean(ARG_FOR_CLASS_BUILDER, true)
+                }
             }
-        }
     }
-
 
     private var _binding: PoseLibraryPosesListBinding? = null
     private val binding get() = _binding!!
@@ -72,7 +78,6 @@ class PosesListFragment : Fragment() {
     private lateinit var allPoses: List<Pose>
     private var filterLevel: Pose.Level? = null
     private var filterCategory: Pose.Category? = null
-
     private var forClassBuilder: Boolean = false
 
     override fun onCreateView(
@@ -86,57 +91,52 @@ class PosesListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // back / footer
         wireBack(binding.btnPblBack)
         binding.tvBackMain.setOnClickListener { navigateBackToMain() }
 
-        // read filters
         arguments?.getString(ARG_LEVEL)?.let { filterLevel = Pose.Level.valueOf(it) }
         arguments?.getString(ARG_CATEGORY)?.let { filterCategory = Pose.Category.valueOf(it) }
+        forClassBuilder = arguments?.getBoolean(ARG_FOR_CLASS_BUILDER, false) == true
 
-        forClassBuilder = arguments?.getBoolean("for_class_builder", false) ?: false
-
-        // set title
-        val titleRes = filterLevel?.let { lvl ->
-            when (lvl) {
+        val titleRes = when {
+            filterLevel != null -> when (filterLevel!!) {
                 Pose.Level.beginner     -> R.string.beginners_poses
                 Pose.Level.intermediate -> R.string.intermediate_poses
                 Pose.Level.advanced     -> R.string.advanced_poses
             }
-        } ?: (filterCategory?.let { _ ->
-            R.string.all_poses
-        } ?: R.string.all_poses)
+            else -> R.string.all_poses
+        }
         binding.tvPblTitle.setText(titleRes)
 
-        // data + recycler
         allPoses = PoseRepository.getAll()
-        val rv = binding.rvPblLevels
-        rv.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvPblLevels.layoutManager = LinearLayoutManager(requireContext())
 
         fun show(list: List<Pose>) {
-            rv.adapter = PoseAdapter(list) { pose ->
+            binding.rvPblLevels.adapter = PoseAdapter(list) { pose ->
                 if (forClassBuilder) {
-                    // Go to ClassBuilder version
-                    navigateSmoothly(ClassBuilderPoseDetailFragment.newInstance(pose.id))
+                    navigateSmoothly(
+                        ClassBuilderPoseDetailFragment.newInstance(pose.id)
+                    )
                 } else {
-                    // Go to regular pose detail
-                    navigateSmoothly(PoseDetailFragment.newInstance(pose.id))
+                    navigateSmoothly(
+                        PoseDetailFragment.newInstance(pose.id)
+                    )
                 }
             }
         }
 
-        // initial filter
-        val initial = allPoses
-            .filter { filterLevel?.let { lvl -> it.level == lvl } ?: true }
-            .filter { filterCategory?.let { cat -> it.category == cat } ?: true }
-        show(initial)
+        val baseline = allPoses.filter {
+            (filterLevel == null || it.level == filterLevel!!)
+                    && (filterCategory == null || it.category == filterCategory!!)
+        }
 
-        // search
-        binding.etLpSearch.addTextChangedListener(object: TextWatcher {
+        show(baseline)
+
+        binding.etLpSearch.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 val q = s.toString().trim().lowercase()
-                show(initial.filter { it.name.lowercase().contains(q) })
+                show(baseline.filter { it.name.lowercase().contains(q) })
             }
             override fun afterTextChanged(s: Editable?) {}
         })

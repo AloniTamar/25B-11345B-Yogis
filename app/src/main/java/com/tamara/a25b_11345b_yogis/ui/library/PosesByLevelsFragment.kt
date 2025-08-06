@@ -15,14 +15,12 @@ class PosesByLevelsFragment : Fragment() {
     companion object {
         private const val ARG_FOR_CLASS_BUILDER = "for_class_builder"
 
-        /** Library mode: show levels list in the public library */
         fun newInstance() = PosesByLevelsFragment().apply {
             arguments = Bundle().apply {
                 putBoolean(ARG_FOR_CLASS_BUILDER, false)
             }
         }
 
-        /** Builder mode: show levels list coming from the ClassBuilder flow */
         fun newInstanceForBuilder() = PosesByLevelsFragment().apply {
             arguments = Bundle().apply {
                 putBoolean(ARG_FOR_CLASS_BUILDER, true)
@@ -45,13 +43,11 @@ class PosesByLevelsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // read the flag
-        val forBuilder = arguments?.getBoolean(ARG_FOR_CLASS_BUILDER, false) == true
+        val forBuilder = arguments
+            ?.getBoolean(ARG_FOR_CLASS_BUILDER, false) == true
 
-        // wire back arrow
         wireBack(binding.btnPblBack)
 
-        // tap “Beginners”
         binding.cardBeginners.setOnClickListener {
             if (forBuilder) {
                 navigateSmoothly(PosesListFragment.newInstanceForBuilder(Pose.Level.beginner))
@@ -60,7 +56,6 @@ class PosesByLevelsFragment : Fragment() {
             }
         }
 
-        // tap “Intermediate”
         binding.cardIntermediate.setOnClickListener {
             if (forBuilder) {
                 navigateSmoothly(PosesListFragment.newInstanceForBuilder(Pose.Level.intermediate))
@@ -69,7 +64,6 @@ class PosesByLevelsFragment : Fragment() {
             }
         }
 
-        // tap “Advanced”
         binding.cardAdvanced.setOnClickListener {
             if (forBuilder) {
                 navigateSmoothly(PosesListFragment.newInstanceForBuilder(Pose.Level.advanced))

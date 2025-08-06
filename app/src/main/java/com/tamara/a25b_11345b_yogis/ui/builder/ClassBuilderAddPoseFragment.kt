@@ -1,6 +1,7 @@
 package com.tamara.a25b_11345b_yogis.ui.builder
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,17 +9,24 @@ import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.tabs.TabLayout
 import com.tamara.a25b_11345b_yogis.R
+import com.tamara.a25b_11345b_yogis.data.model.Pose
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderAddNewPoseBinding
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderAddPoseContainerBinding
 import com.tamara.a25b_11345b_yogis.ui.library.PosesByLevelsFragment
 import com.tamara.a25b_11345b_yogis.ui.library.PosesByTypesFragment
 import com.tamara.a25b_11345b_yogis.ui.library.PosesListFragment
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
+import com.tamara.a25b_11345b_yogis.viewmodel.ClassPlanBuilderViewModel
+import java.util.UUID
 
 class ClassBuilderAddPoseFragment : Fragment() {
+
+    private val viewModel: ClassPlanBuilderViewModel by activityViewModels()
+
     private var _binding: ClassBuilderAddPoseContainerBinding? = null
     private val binding get() = _binding!!
 
@@ -47,20 +55,17 @@ class ClassBuilderAddPoseFragment : Fragment() {
             binding.flAddPoseContent.removeAllViews()
 
             if (layoutRes == R.layout.class_builder_add_new_pose) {
-                // “Set New Pose” tab
                 val newBinding = ClassBuilderAddNewPoseBinding
                     .inflate(layoutInflater, binding.flAddPoseContent, false)
                 binding.flAddPoseContent.addView(newBinding.root)
                 initNewPosePageWithBinding(newBinding)
             } else {
-                // “From Library” tab
                 val page = layoutInflater.inflate(
                     R.layout.class_builder_add_pose,
                     binding.flAddPoseContent,
                     false
                 ).also { binding.flAddPoseContent.addView(it) }
 
-                // wire up the three cards
                 page.findViewById<MaterialCardView>(R.id.card_ap_view_by_levels)
                     .setOnClickListener {
                         navigateSmoothly(PosesByLevelsFragment.newInstanceForBuilder())
@@ -76,7 +81,6 @@ class ClassBuilderAddPoseFragment : Fragment() {
             }
         }
 
-        // initial load & tab-switcher
         loadPage(R.layout.class_builder_add_pose)
         binding.tlAddPoseTabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab) {
@@ -125,6 +129,36 @@ class ClassBuilderAddPoseFragment : Fragment() {
         }
 
         nb.btnAddPose.setOnClickListener {
+            // Read and normalize inputs
+            val name = nb.etPoseName.text.toString().trim()
+            val levelText = nb.acLevel.text.toString().trim().lowercase()
+            val level = Pose.Level.valueOf(levelText)
+            val duration = if (nb.rbDuration.isChecked) {
+                nb.etDuration.text.toString().toIntOrNull() ?: 0
+            } else 0
+            val reps = if (nb.rbRepetitions.isChecked) {
+                nb.etRepetitions.text.toString().toIntOrNull() ?: 0
+            } else 0
+            val description = nb.etDescription.text.toString().trim()
+
+            // Create and add the Pose
+            val newPose = Pose(
+                id          = UUID.randomUUID().toString(),
+                name        = name,
+                level       = level,
+                category    = Pose.Category.standingPoses,
+                duration    = duration.takeIf { it > 0 },
+                repetitions = reps.takeIf { it > 0 },
+                description = description,
+                notes       = null,
+                image       = ""
+            )
+            viewModel.addPose(newPose)
+
+            // Log to verify it was added
+            Log.d("AddPoseFragment", "After addPose, total items = ${viewModel.items.value?.size}")
+
+            // Return to the actions menu
             navigateSmoothly(ClassBuilderActionsFragment())
         }
     }

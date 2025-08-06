@@ -10,6 +10,7 @@ import com.tamara.a25b_11345b_yogis.data.model.Pose
 import com.tamara.a25b_11345b_yogis.databinding.PoseLibraryPosesFamListBinding
 import com.tamara.a25b_11345b_yogis.ui.shared.CategoryAdapter
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
+import com.tamara.a25b_11345b_yogis.utils.wireBack
 
 class PosesByTypesFragment : Fragment() {
 
@@ -19,6 +20,7 @@ class PosesByTypesFragment : Fragment() {
         fun newInstance() = PosesByTypesFragment().apply {
             arguments = Bundle().apply { putBoolean(ARG_FOR_CLASS_BUILDER, false) }
         }
+
         fun newInstanceForBuilder() = PosesByTypesFragment().apply {
             arguments = Bundle().apply { putBoolean(ARG_FOR_CLASS_BUILDER, true) }
         }
@@ -26,8 +28,6 @@ class PosesByTypesFragment : Fragment() {
 
     private var _binding: PoseLibraryPosesFamListBinding? = null
     private val binding get() = _binding!!
-
-    private var forBuilder = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,22 +39,20 @@ class PosesByTypesFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        forBuilder = arguments?.getBoolean(ARG_FOR_CLASS_BUILDER, false) == true
         super.onViewCreated(view, savedInstanceState)
-        binding.btnPblBack.setOnClickListener {
-            requireActivity().onBackPressedDispatcher.onBackPressed()
-        }
 
-        val recycler = binding.rvPblLevels
-        recycler.layoutManager = LinearLayoutManager(requireContext())
+        val forBuilder = arguments
+            ?.getBoolean(ARG_FOR_CLASS_BUILDER, false) == true
+
+        wireBack(binding.btnPblBack)
+
+        binding.rvPblLevels.layoutManager = LinearLayoutManager(requireContext())
 
         val families = Pose.Category.entries
-        recycler.adapter = CategoryAdapter(families) { category ->
+        binding.rvPblLevels.adapter = CategoryAdapter(families) { category ->
             if (forBuilder) {
-                // Launch in builder mode
                 navigateSmoothly(PosesListFragment.newInstanceForBuilder(category))
             } else {
-                // Launch in public library mode
                 navigateSmoothly(PosesListFragment.newInstance(category))
             }
         }

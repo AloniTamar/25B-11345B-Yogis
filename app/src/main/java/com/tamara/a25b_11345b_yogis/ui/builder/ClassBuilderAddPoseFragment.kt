@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.card.MaterialCardView
@@ -19,6 +20,7 @@ import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderAddPoseContainerBind
 import com.tamara.a25b_11345b_yogis.ui.library.PosesByLevelsFragment
 import com.tamara.a25b_11345b_yogis.ui.library.PosesByTypesFragment
 import com.tamara.a25b_11345b_yogis.ui.library.PosesListFragment
+import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 import com.tamara.a25b_11345b_yogis.viewmodel.ClassPlanBuilderViewModel
 import java.util.UUID
@@ -49,6 +51,18 @@ class ClassBuilderAddPoseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.btnApBack.setOnClickListener {
             navigateSmoothly(ClassBuilderActionsFragment())
+        }
+
+        binding.tvBackMain.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setTitle("Discard changes?")
+                .setMessage("Your changes won’t be saved. Continue?")
+                .setPositiveButton(android.R.string.yes) { _, _ ->
+                    viewModel.resetAll()
+                    navigateSmoothly(MainLoggedInFragment())
+                }
+                .setNegativeButton(android.R.string.no, null)
+                .show()
         }
 
         fun loadPage(@LayoutRes layoutRes: Int) {

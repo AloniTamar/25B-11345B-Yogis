@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,6 +14,7 @@ import com.tamara.a25b_11345b_yogis.data.repository.FlowRepository
 import com.tamara.a25b_11345b_yogis.data.model.Flow
 import com.tamara.a25b_11345b_yogis.data.model.Pose
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderAddFlowBinding
+import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
 import com.tamara.a25b_11345b_yogis.ui.shared.ClassPlanAdapter
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 import com.tamara.a25b_11345b_yogis.viewmodel.ClassPlanBuilderViewModel
@@ -80,6 +82,18 @@ class ClassBuilderAddFlowFragment : Fragment() {
         binding.btnAddFlow.setOnClickListener {
             viewModel.addFlow(flow)
             navigateSmoothly(ClassBuilderActionsFragment())
+        }
+
+        binding.tvBackMenu.setOnClickListener {
+            AlertDialog.Builder(requireContext())
+                .setTitle("Discard changes?")
+                .setMessage("Your changes won’t be saved. Continue?")
+                .setPositiveButton(android.R.string.yes) { _, _ ->
+                    viewModel.resetAll()
+                    navigateSmoothly(MainLoggedInFragment())
+                }
+                .setNegativeButton(android.R.string.no, null)
+                .show()
         }
     }
 

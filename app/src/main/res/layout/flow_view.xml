@@ -66,20 +66,20 @@
     </com.google.android.material.chip.ChipGroup>
 
     <View
-        android:id="@+id/v_timeline_line"
+        android:id="@+id/view_timeline_line"
         android:layout_width="2dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="10dp"
         android:background="@color/grey_200"
         app:layout_constraintTop_toBottomOf="@id/chipgroup_ct_info"
-        app:layout_constraintBottom_toTopOf="@+id/guideline_action_button"
-        app:layout_constraintStart_toStartOf="parent"/>
+        app:layout_constraintBottom_toTopOf="@id/guideline_action_button"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_timeline"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingStart="24dp"
+        android:paddingStart="0dp"
         android:paddingEnd="0dp"
         android:clipToPadding="false"
         android:scrollbars="vertical"

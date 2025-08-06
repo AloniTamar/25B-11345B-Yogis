@@ -14,10 +14,17 @@ class TimelineAdapter(
     inner class ViewHolder(private val binding: ItemBasicTimelineBinding)
         : RecyclerView.ViewHolder(binding.root) {
         fun bind(pose: Pose) {
+            binding.tvDuration.text =
+                pose.duration?.let { "$it min" }
+                    ?: pose.repetitions?.let { "$it reps" }
+                            ?: ""
+
+            // Pose Name
             binding.tvTitle.text = pose.name
-            binding.tvSub.text = pose.description
-            binding.tvDuration.text = pose.duration?.let { "$it min" }
-                ?: pose.repetitions?.let { "$it reps" } ?: ""
+
+            // SUBTITLE: First sentence of description
+            binding.tvSub.text = pose.description.split(".").firstOrNull() ?: ""
+
             binding.root.setOnClickListener { onClick(pose) }
         }
     }

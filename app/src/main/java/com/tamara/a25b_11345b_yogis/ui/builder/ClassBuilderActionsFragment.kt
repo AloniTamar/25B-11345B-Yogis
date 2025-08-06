@@ -39,6 +39,10 @@ class ClassBuilderActionsFragment : Fragment() {
         binding.cardAddFlow.setOnClickListener {
             navigateSmoothly(ClassBuilderFlowListFragment())
         }
+
+        binding.btnViewPlan.setOnClickListener {
+            navigateSmoothly(ClassBuilderTempViewFragment())
+        }
     }
 
     override fun onDestroyView() {

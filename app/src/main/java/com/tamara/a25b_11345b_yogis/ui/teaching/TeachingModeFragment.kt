@@ -23,7 +23,9 @@ class TeachingModeFragment : Fragment() {
 
     private var _binding: TeachingModeViewClassBinding? = null
     private val binding get() = _binding!!
-    private val planRepo    = ClassPlanRepository()
+    private val planRepo = ClassPlanRepository()
+    private var currentOrder = 0
+    private lateinit var timelineAdapter: TimelineAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -51,12 +53,25 @@ class TeachingModeFragment : Fragment() {
             onPlanLoaded = { plan ->
                 plan?.let {
                     binding.rvTimeline.apply {
+
                         layoutManager = LinearLayoutManager(requireContext())
-                        adapter = TimelineAdapter(
-                            items = it.elements,
-                            currentOrder = 0,
-                            onFinish = { /*…*/ }
+                        timelineAdapter = TimelineAdapter(
+                            items = plan.elements,
+                            currentOrder = currentOrder,
+                            onItemClick = { position ->
+                                if (position == currentOrder && position < plan.elements.size) {
+                                    val prev = currentOrder
+                                    currentOrder += 1
+                                    timelineAdapter.currentOrder = currentOrder
+                                    timelineAdapter.notifyItemChanged(prev) // checked now!
+                                    if (currentOrder < plan.elements.size)
+                                        timelineAdapter.notifyItemChanged(currentOrder) // next one is now clickable
+                                    else
+                                        Toast.makeText(requireContext(), "Class finished!", Toast.LENGTH_SHORT).show()
+                                }
+                            }
                         )
+                        adapter = timelineAdapter      // <<-- THIS LINE WAS MISSING!
                         visibility = View.VISIBLE
                     }
                 }
@@ -94,8 +109,8 @@ class TeachingModeFragment : Fragment() {
         ).apply {
             topToBottom = binding.tvCtTitle.id
             startToStart = binding.root.id
-            endToEnd   = binding.root.id
-            topMargin  = resources.getDimensionPixelSize(R.dimen.spacing_medium)
+            endToEnd = binding.root.id
+            topMargin = resources.getDimensionPixelSize(R.dimen.spacing_medium)
         }
         binding.root.addView(empty, lp)
     }

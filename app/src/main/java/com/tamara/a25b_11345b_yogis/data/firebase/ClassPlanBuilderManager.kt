@@ -5,7 +5,6 @@ import com.tamara.a25b_11345b_yogis.data.model.ClassPlan
 import com.tamara.a25b_11345b_yogis.data.model.ClassPlanElement
 import com.tamara.a25b_11345b_yogis.data.model.Flow
 import com.tamara.a25b_11345b_yogis.data.model.Pose
-import com.tamara.a25b_11345b_yogis.data.model.TeachingSession
 import com.tamara.a25b_11345b_yogis.data.repository.ClassPlanRepository
 import java.util.UUID
 
@@ -24,8 +23,6 @@ class ClassPlanBuilderManager(
     private var durationMinutes: Int = 0
     private var level: String = ""
 
-    var latestSession: TeachingSession? = null
-        private set
 
     // ———————————————————————————
     // 2) Draft elements

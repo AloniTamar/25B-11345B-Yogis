@@ -11,13 +11,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.tamara.a25b_11345b_yogis.data.repository.ClassPlanRepository
 import com.tamara.a25b_11345b_yogis.databinding.FlowViewBinding
 import com.tamara.a25b_11345b_yogis.ui.shared.TimelineAdapter
-import com.tamara.a25b_11345b_yogis.utils.navigateBackToMain
 
 class ClassPlanViewFragment : Fragment() {
 
     private var _binding: FlowViewBinding? = null
     private val binding get() = _binding!!
     private val repo = ClassPlanRepository()
+
+    private var currentOrder = 0
+    private lateinit var timelineAdapter: TimelineAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -53,11 +56,22 @@ class ClassPlanViewFragment : Fragment() {
                 // 2) timeline + footer
                 binding.rvTimeline.apply {
                     layoutManager = LinearLayoutManager(requireContext())
-                    adapter = TimelineAdapter(
-                        items         = plan.elements,
-//                        currentOrder = session.currentElementOrder,
-                        onFinish      = { navigateBackToMain() }
+                    timelineAdapter = TimelineAdapter(
+                        items = plan.elements,
+                        currentOrder = currentOrder,
+                        onItemClick = { index ->
+                            if (index < plan.elements.size - 1) {
+                                currentOrder = index + 1
+                                timelineAdapter.currentOrder = currentOrder
+                                timelineAdapter.notifyItemChanged(currentOrder - 1)
+                                timelineAdapter.notifyItemChanged(currentOrder)
+                            } else {
+                                Toast.makeText(requireContext(), "Class finished!", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                     )
+                    binding.rvTimeline.adapter = timelineAdapter
+
                     visibility = View.VISIBLE
                 }
             },

@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "1032203046261",
+    "firebase_url": "https://yogis-e26d1-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "yogis-e26d1",
+    "storage_bucket": "yogis-e26d1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1032203046261:android:cc074d172b5837d18d973c",
+        "android_client_info": {
+          "package_name": "com.tamara.a25b_11345b_yogis"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0W5nDFuZSGuEMlmnkH-dMhk4Q7zR9ug0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.tamara.a25b_11345b_yogis.data.firebase.AuthManager
 import com.tamara.a25b_11345b_yogis.databinding.CreateNewPasswordBinding
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 
@@ -27,15 +28,19 @@ class CreateNewPasswordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnCpReset.setOnClickListener {
-            val p1 = binding.etNewPassword.text.toString().trim()
-            val p2 = binding.etConfirmPassword.text.toString().trim()
-            if (p1.isEmpty() || p2.isEmpty() || p1 != p2) {
-                Toast.makeText(requireContext(),
-                    "Passwords must match and not be empty",
-                    Toast.LENGTH_SHORT).show()
-            } else {
-                // TODO: actually update password in Firebase
-                navigateSmoothly(PasswordChangedFragment())
+            if (binding.etNewPassword.text.isNullOrBlank() ||
+                binding.etConfirmPassword.text.isNullOrBlank()) {
+                Toast.makeText(requireContext(), "Please fill in both fields", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val newPass = binding.etNewPassword.text.toString().trim()
+            AuthManager.updatePassword(newPass) { success, ex ->
+                if (success) {
+                    navigateSmoothly(PasswordChangedFragment())
+                } else {
+                    Toast.makeText(requireContext(),
+                        "Could not update password: ${ex?.message}", Toast.LENGTH_LONG).show()
+                }
             }
         }
         binding.btnCpBack.setOnClickListener {

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.tamara.a25b_11345b_yogis.data.manager.RegistrationManager
 import com.tamara.a25b_11345b_yogis.databinding.SignUpBinding
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 
@@ -29,7 +30,16 @@ class RegisterFragment : Fragment() {
 
         // “Next” button on sign_up.xml
         binding.btnSignUpNext.setOnClickListener {
-            // for now skip straight to Main
+            RegistrationManager.apply {
+                this.username = binding.etUsername.text.toString().trim()
+                this.email = binding.etEmailReg.text.toString().trim()
+                if (binding.etPasswordReg.text.toString().trim() !=
+                    binding.etConfirmPasswordReg.text.toString().trim()) {
+                    binding.etConfirmPasswordReg.error = "Passwords do not match"
+                    return@setOnClickListener
+                }
+                this.password = binding.etPasswordReg.text.toString().trim()
+            }
             navigateSmoothly(RegisterProfessionalInfoFragment())
         }
 

@@ -24,7 +24,7 @@ fun Fragment.wireBack(btn: View) {
 }
 
 fun Fragment.navigateBackToMain() {
-    val destination = if (AuthManager.currentUserUid() != null) {
+    val destination = if (AuthManager.currentUser() != null) {
         MainLoggedInFragment()
     } else {
         MainGuestFragment()

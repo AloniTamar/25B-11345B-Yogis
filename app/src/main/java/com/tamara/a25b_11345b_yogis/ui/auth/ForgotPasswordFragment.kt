@@ -1,11 +1,13 @@
 package com.tamara.a25b_11345b_yogis.ui.auth
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.tamara.a25b_11345b_yogis.data.firebase.AuthManager
 import com.tamara.a25b_11345b_yogis.databinding.ForgotPasswordBinding
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 
@@ -27,14 +29,29 @@ class ForgotPasswordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnFpSendCode.setOnClickListener {
+            // 1) Read & validate the email
             val email = binding.etFpEmail.text.toString().trim()
-            if (email.isEmpty()) {
+            if (email.isBlank()) {
                 Toast.makeText(requireContext(),
-                    "Please enter your email",
+                    "Please enter your email address",
                     Toast.LENGTH_SHORT).show()
-            } else {
-                // TODO: AuthManager.sendPasswordReset(email)
-                navigateSmoothly(OtpVerificationFragment())
+                return@setOnClickListener
+            }
+
+            // 2) Trigger Firebase’s built-in reset email
+            AuthManager.sendPasswordResetEmail(email) { success, exception ->
+                if (success) {
+                    Toast.makeText(requireContext(),
+                        "Password reset link sent to $email",
+                        Toast.LENGTH_LONG).show()
+                    // 3) Navigate back to login (replace with your actual action ID)
+                    navigateSmoothly(LoginFragment())
+                } else {
+                    Log.e("ForgotPwd", "Reset failed", exception)
+                    Toast.makeText(requireContext(),
+                        "Error sending reset email: ${exception?.message}",
+                        Toast.LENGTH_LONG).show()
+                }
             }
         }
 

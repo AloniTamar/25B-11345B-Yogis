@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.tamara.a25b_11345b_yogis.data.firebase.AuthManager
 import com.tamara.a25b_11345b_yogis.databinding.LoginBinding
 import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
@@ -31,14 +32,13 @@ class LoginFragment : Fragment() {
             val email = binding.etEmail.text.toString().trim()
             val pass  = binding.etPassword.text.toString().trim()
 
-            if (email.isEmpty() || pass.isEmpty()) {
-                Toast.makeText(requireContext(),
-                    "Please enter both email and password",
-                    Toast.LENGTH_SHORT).show()
-            } else {
-                // TODO: perform your Firebase Auth sign-in here.
-                // on success:
-                navigateSmoothly(MainLoggedInFragment())
+            AuthManager.signIn(email, pass) { success, ex ->
+                if (success) {
+                    navigateSmoothly(MainLoggedInFragment())
+                } else {
+                    Toast.makeText(requireContext(),
+                        "Login failed: ${ex?.message}", Toast.LENGTH_LONG).show()
+                }
             }
         }
 

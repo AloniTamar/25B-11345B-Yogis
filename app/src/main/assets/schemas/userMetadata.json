@@ -17,15 +17,6 @@
       "format": "email",
       "description": "User's email address"
     },
-    "phone": {
-      "type": "string",
-      "description": "User's phone number"
-    },
-    "dateOfBirth": {
-      "type": "string",
-      "format": "date",
-      "description": "User's birth date (YYYY-MM-DD)"
-    },
     "yogaType": {
       "type": "array",
       "description": "Selected styles of yoga taught",
@@ -64,8 +55,6 @@
     "userId",
     "username",
     "email",
-    "phone",
-    "dateOfBirth",
     "yogaType",
     "level",
     "createdAt",

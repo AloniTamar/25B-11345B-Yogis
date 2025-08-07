@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.tamara.a25b_11345b_yogis.data.firebase.AuthManager
 import com.tamara.a25b_11345b_yogis.databinding.MainLoggedInBinding
 import com.tamara.a25b_11345b_yogis.ui.auth.WelcomeFragment
 import com.tamara.a25b_11345b_yogis.ui.builder.ClassBuilderFragment
@@ -52,6 +53,7 @@ class MainLoggedInFragment : Fragment() {
 
         // “Log Out” button (footer)
         binding.tvLogOut.setOnClickListener {
+            AuthManager.signOut()
             navigateSmoothly(WelcomeFragment())
         }
     }

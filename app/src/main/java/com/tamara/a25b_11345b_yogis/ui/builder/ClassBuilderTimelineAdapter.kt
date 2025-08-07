@@ -1,28 +1,15 @@
 package com.tamara.a25b_11345b_yogis.ui.builder
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.tamara.a25b_11345b_yogis.data.model.Pose
+import com.tamara.a25b_11345b_yogis.data.model.ClassPlanElement
 import com.tamara.a25b_11345b_yogis.databinding.ItemBasicTimelineBinding
 
 class ClassBuilderTimelineAdapter(
-    private val poses: List<Pose>
+    private val elements: List<ClassPlanElement>
 ) : RecyclerView.Adapter<ClassBuilderTimelineAdapter.TimelineViewHolder>() {
-
-    inner class TimelineViewHolder(private val binding: ItemBasicTimelineBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(pose: Pose) {
-            binding.tvTitle.text = pose.name
-            // Example: Show duration or repetitions
-            binding.tvDuration.text = pose.duration?.let { "$it min" }
-                ?: pose.repetitions?.let { "$it reps" }
-                        ?: ""
-            // You can add more here (category, etc)
-            binding.tvSub.text = pose.category.name.replace('_', ' ').replaceFirstChar { it.uppercase() }
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TimelineViewHolder {
         val binding = ItemBasicTimelineBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -30,8 +17,30 @@ class ClassBuilderTimelineAdapter(
     }
 
     override fun onBindViewHolder(holder: TimelineViewHolder, position: Int) {
-        holder.bind(poses[position])
+        holder.bind(elements[position])
     }
 
-    override fun getItemCount(): Int = poses.size
+    override fun getItemCount(): Int = elements.size
+
+    inner class TimelineViewHolder(private val binding: ItemBasicTimelineBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+
+        @SuppressLint("SetTextI18n")
+        fun bind(element: ClassPlanElement) {
+            when (element) {
+                is ClassPlanElement.PoseElement -> {
+                    binding.tvTitle.text = element.pose.name
+                    binding.tvDuration.text = element.pose.duration?.let { "$it min" }
+                        ?: element.pose.repetitions?.let { "$it reps" }
+                                ?: ""
+                    binding.tvSub.text = element.pose.category.name.replace('_', ' ').replaceFirstChar { it.uppercase() }
+                }
+                is ClassPlanElement.FlowElement -> {
+                    binding.tvTitle.text = element.flow.flowName
+                    binding.tvDuration.text = "${element.flow.recommendedRounds} rounds"
+                    binding.tvSub.text = "Flow"
+                }
+            }
+        }
+    }
 }

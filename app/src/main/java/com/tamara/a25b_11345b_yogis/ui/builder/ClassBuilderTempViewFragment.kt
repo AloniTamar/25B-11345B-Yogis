@@ -10,17 +10,17 @@ import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderTempViewBinding
 import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
-import com.tamara.a25b_11345b_yogis.ui.shared.ClassPlanAdapter
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 import com.tamara.a25b_11345b_yogis.utils.wireBack
-import com.tamara.a25b_11345b_yogis.viewmodel.ClassPlanBuilderViewModel
+import com.tamara.a25b_11345b_yogis.viewmodel.ClassBuilderClassPlanViewModel
 
 class ClassBuilderTempViewFragment : Fragment() {
 
     private var _binding: ClassBuilderTempViewBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: ClassPlanBuilderViewModel by activityViewModels()
+    // Shared builder ViewModel
+    private val viewModel: ClassBuilderClassPlanViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,25 +34,25 @@ class ClassBuilderTempViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // back arrow
         wireBack(binding.btnCtBack)
+        binding.rvTimeline.layoutManager = LinearLayoutManager(requireContext())
 
-        // RecyclerView initial setup
-        binding.rvTimeline.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = ClassPlanAdapter(emptyList())
+        // Observe and show both poses and flows
+        viewModel.elements.observe(viewLifecycleOwner) { elementList ->
+            binding.rvTimeline.adapter = ClassBuilderTimelineAdapter(elementList)
         }
 
         binding.btnSave.setOnClickListener {
-            viewModel.savePlan()
+            // TODO: Save logic (Firebase, etc)
+            navigateSmoothly(MainLoggedInFragment())
         }
 
-        // Discard changes
         binding.tvBackMenu.setOnClickListener {
             AlertDialog.Builder(requireContext())
                 .setTitle("Discard changes?")
                 .setMessage("Your changes won’t be saved. Continue?")
                 .setPositiveButton(android.R.string.yes) { _, _ ->
+                    viewModel.clearPlan()
                     navigateSmoothly(MainLoggedInFragment())
                 }
                 .setNegativeButton(android.R.string.no, null)

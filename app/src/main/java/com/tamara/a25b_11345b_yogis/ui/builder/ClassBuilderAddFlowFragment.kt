@@ -17,7 +17,7 @@ import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderAddFlowBinding
 import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
 import com.tamara.a25b_11345b_yogis.ui.shared.ClassPlanAdapter
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
-import com.tamara.a25b_11345b_yogis.viewmodel.ClassPlanBuilderViewModel
+import com.tamara.a25b_11345b_yogis.viewmodel.ClassBuilderClassPlanViewModel
 
 class ClassBuilderAddFlowFragment : Fragment() {
 
@@ -33,7 +33,7 @@ class ClassBuilderAddFlowFragment : Fragment() {
         }
     }
 
-    private val viewModel: ClassPlanBuilderViewModel by activityViewModels()
+    private val viewModel: ClassBuilderClassPlanViewModel by activityViewModels()
     private var _binding: ClassBuilderAddFlowBinding? = null
     private val binding get() = _binding!!
 

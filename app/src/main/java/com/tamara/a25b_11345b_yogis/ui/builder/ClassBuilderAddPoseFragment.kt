@@ -27,12 +27,12 @@ import com.tamara.a25b_11345b_yogis.ui.library.PosesByTypesFragment
 import com.tamara.a25b_11345b_yogis.ui.library.PosesListFragment
 import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
-import com.tamara.a25b_11345b_yogis.viewmodel.ClassPlanBuilderViewModel
+import com.tamara.a25b_11345b_yogis.viewmodel.ClassBuilderClassPlanViewModel
 import java.util.UUID
 
 class ClassBuilderAddPoseFragment : Fragment() {
 
-    private val viewModel: ClassPlanBuilderViewModel by activityViewModels()
+    private val viewModel: ClassBuilderClassPlanViewModel by activityViewModels()
     private var _binding: ClassBuilderAddPoseContainerBinding? = null
     private val binding get() = _binding!!
 

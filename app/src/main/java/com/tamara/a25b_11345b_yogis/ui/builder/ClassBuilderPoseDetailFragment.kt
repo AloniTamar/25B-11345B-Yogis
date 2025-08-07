@@ -12,7 +12,7 @@ import com.tamara.a25b_11345b_yogis.data.repository.PoseRepository
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderPosePageBinding
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 import com.tamara.a25b_11345b_yogis.utils.wireBack
-import com.tamara.a25b_11345b_yogis.viewmodel.ClassPlanBuilderViewModel
+import com.tamara.a25b_11345b_yogis.viewmodel.ClassBuilderClassPlanViewModel
 
 class ClassBuilderPoseDetailFragment : Fragment() {
 
@@ -29,7 +29,7 @@ class ClassBuilderPoseDetailFragment : Fragment() {
     private var _binding: ClassBuilderPosePageBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: ClassPlanBuilderViewModel by activityViewModels()
+    private val viewModel: ClassBuilderClassPlanViewModel by activityViewModels()
     private val poseId: String by lazy {
         requireArguments().getString(ARG_POSE_ID)!!
     }

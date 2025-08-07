@@ -18,7 +18,7 @@ import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderBinding
 import com.tamara.a25b_11345b_yogis.utils.navigateBackToMain
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 import com.tamara.a25b_11345b_yogis.utils.wireBack
-import com.tamara.a25b_11345b_yogis.viewmodel.ClassPlanBuilderViewModel
+import com.tamara.a25b_11345b_yogis.viewmodel.TeachingModeViewModel
 import com.tamara.a25b_11345b_yogis.data.model.Pose
 
 class ClassBuilderFragment : Fragment() {
@@ -26,7 +26,7 @@ class ClassBuilderFragment : Fragment() {
     private var _binding: ClassBuilderBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: ClassPlanBuilderViewModel by activityViewModels()
+    private val viewModel: TeachingModeViewModel by activityViewModels()
 
     private fun checkForm() {
         val nameFilled = binding.etFocus.text.toString().isNotBlank()

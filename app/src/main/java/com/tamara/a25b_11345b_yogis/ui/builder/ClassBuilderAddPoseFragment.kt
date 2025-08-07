@@ -1,5 +1,7 @@
 package com.tamara.a25b_11345b_yogis.ui.builder
 
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +15,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.tabs.TabLayout
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
 import com.tamara.a25b_11345b_yogis.R
 import com.tamara.a25b_11345b_yogis.data.model.Pose
 import com.tamara.a25b_11345b_yogis.data.repository.PoseRepository
@@ -29,14 +33,63 @@ import java.util.UUID
 class ClassBuilderAddPoseFragment : Fragment() {
 
     private val viewModel: ClassPlanBuilderViewModel by activityViewModels()
-
     private var _binding: ClassBuilderAddPoseContainerBinding? = null
     private val binding get() = _binding!!
+
+    private var selectedImageUri: Uri? = null
+    private var uploadedAssetMeta: Map<String, Any>? = null
 
     private val pickImageLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
-        // TODO: handle selected image URI later
+        if (uri != null) {
+            selectedImageUri = uri
+            // Upload image to Firebase Storage
+            uploadImageAndSaveMetadata(uri)
+        }
+    }
+
+    private fun uploadImageAndSaveMetadata(localUri: Uri) {
+        binding.imageUploadOverlay.visibility = View.VISIBLE
+        val assetId = UUID.randomUUID().toString()
+        val fileRef = FirebaseStorage.getInstance()
+            .reference.child("pose_images/$assetId.jpg")
+
+        // Get image info
+        val context = requireContext()
+        val inputStream = context.contentResolver.openInputStream(localUri)
+        val options = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+        BitmapFactory.decodeStream(inputStream, null, options)
+        val width = options.outWidth
+        val height = options.outHeight
+        val mimeType = context.contentResolver.getType(localUri) ?: "image/jpeg"
+        val createdAt = System.currentTimeMillis()
+
+        fileRef.putFile(localUri)
+            .continueWithTask { task ->
+                if (!task.isSuccessful) throw task.exception ?: Exception("Upload failed")
+                fileRef.downloadUrl
+            }
+            .addOnSuccessListener { uri ->
+                binding.imageUploadOverlay.visibility = View.GONE
+                val url = uri.toString()
+                uploadedAssetMeta = mapOf(
+                    "assetId" to assetId,
+                    "url" to url,
+                    "mimeType" to mimeType,
+                    "width" to width,
+                    "height" to height,
+                    "createdAt" to createdAt,
+                    "updatedAt" to createdAt
+                )
+                FirebaseDatabase.getInstance().reference
+                    .child("mediaAssets")
+                    .child(assetId)
+                    .setValue(uploadedAssetMeta)
+            }
+            .addOnFailureListener { e ->
+                binding.imageUploadOverlay.visibility = View.GONE
+            }
     }
 
     override fun onCreateView(
@@ -178,17 +231,22 @@ class ClassBuilderAddPoseFragment : Fragment() {
                 }
             }
 
+            if (uploadedAssetMeta == null) {
+                return@setOnClickListener
+            }
+            val imageUrl = uploadedAssetMeta!!["url"] as String
+
             // 3) Build & upload
             val newPose = Pose(
-                id          = UUID.randomUUID().toString(),
-                name        = name,
-                level       = level,
-                category    = Pose.Category.standingPoses, // or let user pick
-                duration    = duration.takeIf { it > 0 },
+                id = UUID.randomUUID().toString(),
+                name = name,
+                level = level,
+                category = Pose.Category.standingPoses, // or let user pick
+                duration = duration.takeIf { it > 0 },
                 repetitions = reps.takeIf { it > 0 },
                 description = description,
-                notes       = null,
-                image       = ""
+                notes = null,
+                image = imageUrl
             )
 
             PoseRepository.savePose(newPose) { error ->

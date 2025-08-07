@@ -1,7 +1,7 @@
 package com.tamara.a25b_11345b_yogis.data.repository
 
 import com.google.firebase.database.*
-import com.tamara.a25b_11345b_yogis.data.model.ClassPlan
+import com.tamara.a25b_11345b_yogis.data.model.*
 
 /**
  * Simple wrapper around Firebase Realtime Database for ClassPlan objects.
@@ -26,10 +26,48 @@ class ClassPlanRepository {
         plansRef.child(planId)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    // Map the snapshot into your Kotlin data class
-                    val plan = snapshot.getValue(ClassPlan::class.java)
-                    onPlanLoaded(plan)
+                    if (!snapshot.exists()) {
+                        onPlanLoaded(null)
+                        return
+                    }
+                    try {
+                        // 1) pull the scalar fields
+                        val planName = snapshot.child("planName").getValue(String::class.java) ?: ""
+                        val userId   = snapshot.child("userId").getValue(String::class.java) ?: ""
+                        val level    = snapshot.child("level").getValue(String::class.java)   ?: ""
+                        val duration = snapshot.child("duration").getValue(Int::class.java)   ?: 0
+
+                        // 2) manually parse each element
+                        val elements = mutableListOf<ClassPlanElement>()
+                        for (elemNode in snapshot.child("elements").children) {
+                            val poseSnap = elemNode.child("pose")
+                            if (poseSnap.exists()) {
+                                poseSnap.getValue(Pose::class.java)
+                                    ?.let { elements.add(ClassPlanElement.PoseElement(it)) }
+                            } else {
+                                val flowSnap = elemNode.child("flow")
+                                if (flowSnap.exists()) {
+                                    flowSnap.getValue(Flow::class.java)
+                                        ?.let { elements.add(ClassPlanElement.FlowElement(it)) }
+                                }
+                            }
+                        }
+
+                        // 3) build and return
+                        val plan = ClassPlan(
+                            planId   = planId,
+                            planName = planName,
+                            userId   = userId,
+                            level    = level,
+                            duration = duration,
+                            elements = elements
+                        )
+                        onPlanLoaded(plan)
+                    } catch (e: Exception) {
+                        onError(DatabaseError.fromException(e))
+                    }
                 }
+
                 override fun onCancelled(error: DatabaseError) {
                     onError(error)
                 }
@@ -52,4 +90,60 @@ class ClassPlanRepository {
                 })
             }
     }
+
+    fun listForUser(
+        uid: String,
+        onLoaded: (List<ClassPlan>) -> Unit,
+        onError: (DatabaseError) -> Unit
+    ) {
+        database
+            .getReference("classPlans")
+            .orderByChild("userId")
+            .equalTo(uid)
+            .addListenerForSingleValueEvent(object: ValueEventListener {
+                override fun onDataChange(sn: DataSnapshot) {
+                    val list = sn.children.mapNotNull { snapshot ->
+                        try {
+                            // 1) pull the scalar fields
+                            val planId   = snapshot.key ?: return@mapNotNull null
+                            val planName = snapshot.child("planName").getValue(String::class.java) ?: ""
+                            val userId   = snapshot.child("userId").getValue(String::class.java) ?: ""
+                            val level    = snapshot.child("level").getValue(String::class.java)   ?: ""
+                            val duration = snapshot.child("duration").getValue(Int::class.java)   ?: 0
+
+                            // 2) manually parse each element
+                            val elements = mutableListOf<ClassPlanElement>()
+                            for (elemNode in snapshot.child("elements").children) {
+                                val poseSnap = elemNode.child("pose")
+                                if (poseSnap.exists()) {
+                                    poseSnap.getValue(Pose::class.java)
+                                        ?.let { elements.add(ClassPlanElement.PoseElement(it)) }
+                                } else {
+                                    val flowSnap = elemNode.child("flow")
+                                    if (flowSnap.exists()) {
+                                        flowSnap.getValue(Flow::class.java)
+                                            ?.let { elements.add(ClassPlanElement.FlowElement(it)) }
+                                    }
+                                }
+                            }
+
+                            // 3) build and return
+                            ClassPlan(
+                                planId   = planId,
+                                planName = planName,
+                                userId   = userId,
+                                level    = level,
+                                duration = duration,
+                                elements = elements
+                            )
+                        } catch (e: Exception) {
+                            null
+                        }
+                    }
+                    onLoaded(list)
+                }
+                override fun onCancelled(err: DatabaseError) = onError(err)
+            })
+    }
+
 }

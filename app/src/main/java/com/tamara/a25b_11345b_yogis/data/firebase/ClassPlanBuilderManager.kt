@@ -5,6 +5,7 @@ import com.tamara.a25b_11345b_yogis.data.model.ClassPlan
 import com.tamara.a25b_11345b_yogis.data.model.ClassPlanElement
 import com.tamara.a25b_11345b_yogis.data.model.Flow
 import com.tamara.a25b_11345b_yogis.data.model.Pose
+import com.tamara.a25b_11345b_yogis.data.model.TeachingSession
 import com.tamara.a25b_11345b_yogis.data.repository.ClassPlanRepository
 import java.util.UUID
 
@@ -22,6 +23,9 @@ class ClassPlanBuilderManager(
     private var className: String = ""
     private var durationMinutes: Int = 0
     private var level: String = ""
+
+    var latestSession: TeachingSession? = null
+        private set
 
     // ———————————————————————————
     // 2) Draft elements
@@ -50,12 +54,6 @@ class ClassPlanBuilderManager(
     }
 
     // ———————————————————————————
-    // Step 3: validity
-    // ———————————————————————————
-    fun canSave(): Boolean =
-        className.isNotBlank() && durationMinutes > 0 && _items.isNotEmpty()
-
-    // ———————————————————————————
     // Finalize in-memory plan
     // ———————————————————————————
     fun buildPlan(): ClassPlan {
@@ -80,47 +78,9 @@ class ClassPlanBuilderManager(
             elements = _items.toList() as MutableList<ClassPlanElement>
         )
     }
-
-    /** Completely reset draft (metadata + items) */
-    fun resetAll() {
-        planId = ""
-        className = ""
-        durationMinutes = 0
-        level = ""
-        _items.clear()
-    }
-
-    /** Reset just the elements and metadata from an existing ClassPlan */
-    fun resetFrom(plan: ClassPlan) {
-        planId          = plan.planId
-        className       = plan.planName
-        level           = plan.level
-        durationMinutes = plan.duration
-        _items.clear()
-        _items.addAll(plan.elements)
-    }
-
     // ———————————————————————————
     // Firebase integration
     // ———————————————————————————
-
-    /**
-     * Listen for live updates to the given planId.
-     * Calls `resetFrom(...)` internally when data arrives.
-     */
-    fun loadPlan(
-        planId: String,
-        onLoaded: () -> Unit,
-        onError: (DatabaseError) -> Unit
-    ) {
-        repository.observePlan(planId,
-            onPlanLoaded = { plan ->
-                plan?.let { resetFrom(it) }
-                onLoaded()
-            },
-            onError = onError
-        )
-    }
 
     /**
      * Save the current draft plan to Firebase.
@@ -128,8 +88,8 @@ class ClassPlanBuilderManager(
      */
     fun savePlan(onComplete: (DatabaseError?) -> Unit) {
         val draft = buildPlan()
-        repository.savePlan(draft.planId, draft) { error ->
-            onComplete(error)
+        repository.savePlan(draft.planId, draft) { err ->
+            onComplete(err)
         }
     }
 }

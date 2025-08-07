@@ -58,13 +58,6 @@
             android:text="@string/ct_duration"/>
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip_class_id"
-            style="@style/Widget.Yogis.Chip.Info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ct_class_id"/>
-
-        <com.google.android.material.chip.Chip
             android:id="@+id/chip_level"
             style="@style/Widget.Yogis.Chip.Info"
             android:layout_width="wrap_content"
@@ -76,7 +69,7 @@
         android:id="@+id/v_timeline_line"
         android:layout_width="2dp"
         android:layout_height="0dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="10dp"
         android:background="@color/grey_200"
         app:layout_constraintTop_toBottomOf="@id/chipgroup_ct_info"
         app:layout_constraintBottom_toTopOf="@+id/guideline_action_button"
@@ -86,8 +79,8 @@
         android:id="@+id/rv_timeline"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingStart="24dp"
-        android:paddingEnd="12dp"
+        android:paddingStart="0dp"
+        android:paddingEnd="0dp"
         android:clipToPadding="false"
         android:scrollbars="vertical"
         android:fadeScrollbars="false"

@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.database.DatabaseError
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderTempViewBinding
 import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
 import com.tamara.a25b_11345b_yogis.ui.shared.ClassPlanAdapter
@@ -36,51 +34,25 @@ class ClassBuilderTempViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // wire the back arrow
+        // back arrow
         wireBack(binding.btnCtBack)
 
-        // RecyclerView setup (use the ID from your XML: rv_timeline)
+        // RecyclerView initial setup
         binding.rvTimeline.apply {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = ClassPlanAdapter(emptyList())
         }
 
-        // Observe the shared items (poses + flows) and update UI
-        viewModel.items.observe(viewLifecycleOwner) { elements ->
-            binding.rvTimeline.adapter = ClassPlanAdapter(elements)
-            binding.btnSave.isEnabled = viewModel.canSave
-        }
-
-        // Save to firebase
         binding.btnSave.setOnClickListener {
-            viewModel.savePlan { error: DatabaseError? ->
-                if (error == null) {
-                    Toast.makeText(
-                        requireContext(),
-                        "Class plan saved successfully!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    navigateSmoothly(
-                        MainLoggedInFragment(),
-                        addToBackStack = false
-                    )
-                           } else {
-                               Toast.makeText(
-                                       requireContext(),
-                                       "Save failed: ${error.message}",
-                                       Toast.LENGTH_LONG
-                               ).show()
-                           }
-            }
+            viewModel.savePlan()
         }
 
-        // Discard changes dialog
+        // Discard changes
         binding.tvBackMenu.setOnClickListener {
             AlertDialog.Builder(requireContext())
                 .setTitle("Discard changes?")
                 .setMessage("Your changes won’t be saved. Continue?")
                 .setPositiveButton(android.R.string.yes) { _, _ ->
-                    viewModel.resetAll()
                     navigateSmoothly(MainLoggedInFragment())
                 }
                 .setNegativeButton(android.R.string.no, null)

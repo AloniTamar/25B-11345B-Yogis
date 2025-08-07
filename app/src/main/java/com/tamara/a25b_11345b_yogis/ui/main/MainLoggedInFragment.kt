@@ -10,7 +10,7 @@ import com.tamara.a25b_11345b_yogis.ui.auth.WelcomeFragment
 import com.tamara.a25b_11345b_yogis.ui.builder.ClassBuilderFragment
 import com.tamara.a25b_11345b_yogis.ui.library.PoseLibraryFragment
 import com.tamara.a25b_11345b_yogis.ui.profile.ProfileFragment
-import com.tamara.a25b_11345b_yogis.ui.teaching.TeachingModeFragment
+import com.tamara.a25b_11345b_yogis.ui.teaching.PlanListFragment
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 
 class MainLoggedInFragment : Fragment() {
@@ -42,7 +42,7 @@ class MainLoggedInFragment : Fragment() {
 
         // “Teaching Mode” card
         binding.cardTeacingMode.setOnClickListener {
-            navigateSmoothly(TeachingModeFragment())
+            navigateSmoothly(PlanListFragment())
         }
 
         // “View My Profile” button (footer)

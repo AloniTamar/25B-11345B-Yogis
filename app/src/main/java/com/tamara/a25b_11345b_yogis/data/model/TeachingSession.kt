@@ -1,5 +1,7 @@
 package com.tamara.a25b_11345b_yogis.data.model
+import com.google.firebase.database.IgnoreExtraProperties
 
+@IgnoreExtraProperties
 data class TeachingSession(
     val sessionId: String = "",
     val userId: String = "",

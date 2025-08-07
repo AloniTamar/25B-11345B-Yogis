@@ -48,6 +48,53 @@
         android:id="@+id/MainGuestFragment"
         android:name="com.tamara.a25b_11345b_yogis.ui.main.MainGuestFragment"
         android:label="Main Menu" />
+    <fragment
+        android:id="@+id/MainLoggedInFragment"
+        android:name="com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment"
+        android:label="Main (Logged In)" >
+        <action
+            android:id="@+id/action_MainLoggedInFragment_to_classBuilderFragment"
+            app:destination="@id/classBuilderFragment" />
+    </fragment>
 
+    <fragment
+        android:id="@+id/classBuilderFragment"
+        android:name="com.tamara.a25b_11345b_yogis.ui.builder.ClassBuilderFragment"
+        android:label="Class Info" >
+        <action
+            android:id="@+id/action_classBuilderFragment_to_classBuilderActionsFragment"
+            app:destination="@id/classBuilderActionsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/classBuilderActionsFragment"
+        android:name="com.tamara.a25b_11345b_yogis.ui.builder.ClassBuilderActionsFragment"
+        android:label="Add / View Items" >
+        <action
+            android:id="@+id/action_classBuilderActionsFragment_to_classBuilderTempViewFragment"
+            app:destination="@id/classBuilderTempViewFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/classBuilderTempViewFragment"
+        android:name="com.tamara.a25b_11345b_yogis.ui.builder.ClassBuilderTempViewFragment"
+        android:label="Review Plan" >
+        <action
+            android:id="@+id/action_classBuilderTempViewFragment_to_teachingModeFragment"
+            app:destination="@id/teachingModeFragment" >
+            <argument
+                android:name="sessionId"
+                app:argType="string" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/teachingModeFragment"
+        android:name="com.tamara.a25b_11345b_yogis.ui.teaching.TeachingModeFragment"
+        android:label="Teaching Mode" >
+        <argument
+            android:name="sessionId"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

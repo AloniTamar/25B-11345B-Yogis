@@ -1,0 +1,77 @@
+package com.tamara.a25b_11345b_yogis.ui.teaching
+
+import android.annotation.SuppressLint
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.tamara.a25b_11345b_yogis.data.repository.ClassPlanRepository
+import com.tamara.a25b_11345b_yogis.databinding.FlowViewBinding
+import com.tamara.a25b_11345b_yogis.ui.shared.TimelineAdapter
+import com.tamara.a25b_11345b_yogis.utils.navigateBackToMain
+
+class ClassPlanViewFragment : Fragment() {
+
+    private var _binding: FlowViewBinding? = null
+    private val binding get() = _binding!!
+    private val repo = ClassPlanRepository()
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View {
+        _binding = FlowViewBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    @SuppressLint("SetTextI18n")
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val planId = requireArguments().getString("planId")
+            ?: throw IllegalStateException("ClassPlanViewFragment needs a planId")
+
+        // hide until loaded
+        binding.chipgroupCtInfo.visibility = View.GONE
+        binding.rvTimeline.visibility = View.GONE
+
+        repo.observePlan(planId,
+            onPlanLoaded = { plan ->
+                if (plan == null) {
+                    Toast.makeText(requireContext(), "No such plan", Toast.LENGTH_SHORT).show()
+                    return@observePlan
+                }
+
+                // 1) header
+                binding.tvCtTitle.text       = plan.planName
+                binding.chipDuration.text    = "${plan.duration} min"
+                binding.chipLevel.text       = plan.level
+                binding.chipgroupCtInfo.visibility = View.VISIBLE
+
+                // 2) timeline + footer
+                binding.rvTimeline.apply {
+                    layoutManager = LinearLayoutManager(requireContext())
+                    adapter = TimelineAdapter(
+                        items         = plan.elements,
+//                        currentOrder = session.currentElementOrder,
+                        onFinish      = { navigateBackToMain() }
+                    )
+                    visibility = View.VISIBLE
+                }
+            },
+            onError = { e ->
+                Toast.makeText(requireContext(),
+                    "Failed to load plan: ${e.message}",
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        )
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+}

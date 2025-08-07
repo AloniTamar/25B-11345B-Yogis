@@ -89,7 +89,6 @@ class ClassBuilderAddFlowFragment : Fragment() {
                 .setTitle("Discard changes?")
                 .setMessage("Your changes won’t be saved. Continue?")
                 .setPositiveButton(android.R.string.yes) { _, _ ->
-                    viewModel.resetAll()
                     navigateSmoothly(MainLoggedInFragment())
                 }
                 .setNegativeButton(android.R.string.no, null)

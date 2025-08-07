@@ -1,11 +1,11 @@
 package com.tamara.a25b_11345b_yogis.ui.builder
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
@@ -15,6 +15,7 @@ import com.google.android.material.card.MaterialCardView
 import com.google.android.material.tabs.TabLayout
 import com.tamara.a25b_11345b_yogis.R
 import com.tamara.a25b_11345b_yogis.data.model.Pose
+import com.tamara.a25b_11345b_yogis.data.repository.PoseRepository
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderAddNewPoseBinding
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderAddPoseContainerBinding
 import com.tamara.a25b_11345b_yogis.ui.library.PosesByLevelsFragment
@@ -143,38 +144,66 @@ class ClassBuilderAddPoseFragment : Fragment() {
         }
 
         nb.btnAddPose.setOnClickListener {
-            // Read and normalize inputs
+            // 1) Read inputs
             val name = nb.etPoseName.text.toString().trim()
             val levelText = nb.acLevel.text.toString().trim().lowercase()
-            val level = Pose.Level.valueOf(levelText)
-            val duration = if (nb.rbDuration.isChecked) {
-                nb.etDuration.text.toString().toIntOrNull() ?: 0
-            } else 0
-            val reps = if (nb.rbRepetitions.isChecked) {
-                nb.etRepetitions.text.toString().toIntOrNull() ?: 0
-            } else 0
+            val level = try {
+                Pose.Level.valueOf(levelText)
+            } catch (e: Exception) {
+                null
+            }
+            val duration = nb.etDuration.text.toString().toIntOrNull() ?: 0
+            val reps = nb.etRepetitions.text.toString().toIntOrNull() ?: 0
             val description = nb.etDescription.text.toString().trim()
 
-            // Create and add the Pose
+            // 2) Local validations
+            when {
+                name.isBlank() -> {
+                    Toast.makeText(requireContext(), "Name is required", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                level == null -> {
+                    Toast.makeText(requireContext(), "Select a valid level", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                duration <= 0 && reps <= 0 -> {
+                    Toast.makeText(requireContext(),
+                        "Specify either duration or repetitions (>0)",
+                        Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                description.isBlank() -> {
+                    Toast.makeText(requireContext(),
+                        "Description is required", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+            }
+
+            // 3) Build & upload
             val newPose = Pose(
                 id          = UUID.randomUUID().toString(),
                 name        = name,
                 level       = level,
-                category    = Pose.Category.standingPoses,
+                category    = Pose.Category.standingPoses, // or let user pick
                 duration    = duration.takeIf { it > 0 },
                 repetitions = reps.takeIf { it > 0 },
                 description = description,
                 notes       = null,
                 image       = ""
             )
-            viewModel.addPose(newPose)
 
-            // Log to verify it was added
-            Log.d("AddPoseFragment", "After addPose, total items = ${viewModel.items.value?.size}")
-
-            // Return to the actions menu
-            navigateSmoothly(ClassBuilderActionsFragment())
+            PoseRepository.savePose(newPose) { error ->
+                if (error == null) {
+                    viewModel.addPose(newPose)
+                    navigateSmoothly(ClassBuilderActionsFragment())
+                } else {
+                    Toast.makeText(requireContext(),
+                        "Failed to upload pose: ${error.message}",
+                        Toast.LENGTH_LONG).show()
+                }
+            }
         }
+
     }
 
     override fun onDestroyView() {

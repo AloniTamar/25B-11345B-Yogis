@@ -3,7 +3,8 @@ package com.tamara.a25b_11345b_yogis.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.tamara.a25b_11345b_yogis.data.manager.ClassPlanBuilderManager
+import com.google.firebase.database.DatabaseError
+import com.tamara.a25b_11345b_yogis.data.firebase.ClassPlanBuilderManager
 import com.tamara.a25b_11345b_yogis.data.model.ClassPlan
 import com.tamara.a25b_11345b_yogis.data.model.ClassPlanElement
 import com.tamara.a25b_11345b_yogis.data.model.Pose
@@ -12,6 +13,20 @@ import com.tamara.a25b_11345b_yogis.data.model.Flow
 class ClassPlanBuilderViewModel : ViewModel() {
 
     private val manager = ClassPlanBuilderManager()
+
+    /**
+     * Persist the current draft ClassPlan to Firebase.
+     */
+    fun savePlan(onComplete: (DatabaseError?) -> Unit) {
+          manager.savePlan(onComplete)
+        }
+
+    /**
+     * (Optional, if you want to load an existing plan on start)
+     */
+    fun loadPlan(planId: String, onLoaded: () -> Unit, onError: (DatabaseError) -> Unit) {
+          manager.loadPlan(planId, onLoaded, onError)
+        }
 
     // Expose the evolving list as LiveData
     private val _items = MutableLiveData<List<ClassPlanElement>>(emptyList())

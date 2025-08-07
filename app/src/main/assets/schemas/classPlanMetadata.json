@@ -8,6 +8,10 @@
       "type": "string",
       "description": "Unique identifier for this class plan"
     },
+    "userId": {
+      "type": "string",
+      "description": "Reference to the user (Firebase UID) who created this plan"
+    },
     "planName": {
       "type": "string",
       "description": "Human-readable title of the class plan"

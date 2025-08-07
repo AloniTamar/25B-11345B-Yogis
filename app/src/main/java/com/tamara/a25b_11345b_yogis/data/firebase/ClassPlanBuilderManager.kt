@@ -68,9 +68,13 @@ class ClassPlanBuilderManager(
             planId = UUID.randomUUID().toString()
         }
 
+        val user = AuthManager.currentUser()
+            ?: throw IllegalStateException("No authenticated user; cannot save ClassPlan")
+
         return ClassPlan(
             planId = planId,
             planName = className,
+            userId = user.uid,
             level = level,
             duration = durationMinutes,
             elements = _items.toList() as MutableList<ClassPlanElement>

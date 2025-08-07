@@ -73,7 +73,7 @@ class RegisterProfessionalInfoFragment : Fragment() {
                     uid = firebaseUser.uid,
                     email = RegistrationManager.email,
                     username = RegistrationManager.username,
-                    certification = RegistrationManager.yogatype,
+                    yogaType = RegistrationManager.yogatype,
                     yearsExperience = RegistrationManager.yearsExperience
                 )
 

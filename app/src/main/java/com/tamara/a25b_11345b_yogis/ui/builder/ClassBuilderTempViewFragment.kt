@@ -4,10 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.database.DatabaseError
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderTempViewBinding
 import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
 import com.tamara.a25b_11345b_yogis.ui.shared.ClassPlanAdapter
@@ -49,9 +51,27 @@ class ClassBuilderTempViewFragment : Fragment() {
             binding.btnSave.isEnabled = viewModel.canSave
         }
 
-        // Save locally: log + toast
+        // Save to firebase
         binding.btnSave.setOnClickListener {
-            navigateSmoothly(MainLoggedInFragment())
+            viewModel.savePlan { error: DatabaseError? ->
+                if (error == null) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Class plan saved successfully!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    navigateSmoothly(
+                        MainLoggedInFragment(),
+                        addToBackStack = false
+                    )
+                           } else {
+                               Toast.makeText(
+                                       requireContext(),
+                                       "Save failed: ${error.message}",
+                                       Toast.LENGTH_LONG
+                               ).show()
+                           }
+            }
         }
 
         // Discard changes dialog

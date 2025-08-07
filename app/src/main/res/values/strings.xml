@@ -145,10 +145,9 @@
     <string name="discard_changes_title">Discard changes?</string>
     <string name="discard_changes_message">Your changes won’t be saved. Continue?</string>
     <string-array name="class_levels">
-        <item>Beginners</item>
+        <item>Beginner</item>
         <item>Intermediate</item>
         <item>Advanced</item>
-        <item>All Levels</item>
     </string-array>
 
 

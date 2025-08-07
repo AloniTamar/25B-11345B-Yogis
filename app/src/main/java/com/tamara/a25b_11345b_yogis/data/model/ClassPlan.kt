@@ -6,6 +6,7 @@ package com.tamara.a25b_11345b_yogis.data.model
 data class ClassPlan(
     val planId: String,
     val planName: String,
+    val userId: String,
     val level: String,
     val duration: Int,
     val elements: MutableList<ClassPlanElement>

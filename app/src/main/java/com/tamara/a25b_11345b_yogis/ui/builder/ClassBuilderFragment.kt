@@ -4,22 +4,29 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.tamara.a25b_11345b_yogis.R
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderBinding
 import com.tamara.a25b_11345b_yogis.utils.navigateBackToMain
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 import com.tamara.a25b_11345b_yogis.utils.wireBack
+import com.tamara.a25b_11345b_yogis.viewmodel.ClassPlanBuilderViewModel
+import com.tamara.a25b_11345b_yogis.data.model.Pose
 
 class ClassBuilderFragment : Fragment() {
 
     private var _binding: ClassBuilderBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: ClassPlanBuilderViewModel by activityViewModels()
 
     private fun checkForm() {
         val nameFilled = binding.etFocus.text.toString().isNotBlank()
@@ -80,8 +87,34 @@ class ClassBuilderFragment : Fragment() {
         )
 
         binding.btnStart.setOnClickListener {
+            // 1) Read & validate the initial class info
+            val name = binding.etFocus.text.toString().trim()
+            val duration = binding.etDuration.text.toString().toIntOrNull() ?: 0
+            val levelText = binding.acLevel.text.toString().trim().lowercase()
+            Log.i("ClassBuilderFragment", "Level text: $levelText")
+            val levelEnum = try {
+                Pose.Level.valueOf(levelText)
+            } catch (e: IllegalArgumentException) {
+                null
+            }
+            Log.i("ClassBuilderFragment", "Level selected: $levelEnum")
+            Log.i("ClassBuilderFragment", "Duration: $duration")
+            Log.i("ClassBuilderFragment", "Name: $name")
+            if (name.isBlank() || duration <= 0 || levelEnum == null) {
+                Toast.makeText(
+                    requireContext(),
+                    "Please enter a valid name, duration, and level.",
+                    Toast.LENGTH_SHORT
+                ).show()
+                return@setOnClickListener
+            }
+
+            // 2) Store it in our shared builder ViewModel
+            viewModel.setClassInfo(name, duration, levelEnum)
+
+            // 3) Now move into the Class-Builder actions screen
             navigateSmoothly(ClassBuilderActionsFragment())
-        }
+            }
     }
 
     override fun onDestroyView() {

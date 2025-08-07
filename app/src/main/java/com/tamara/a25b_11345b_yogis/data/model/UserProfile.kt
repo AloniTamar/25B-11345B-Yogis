@@ -7,6 +7,6 @@ data class UserProfile(
     val uid: String = "",
     val email: String = "",
     val username: String = "",
-    val certification: String = "",
+    val yogaType: String = "",
     val yearsExperience: Int = 0
 )

@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.tamara.a25b_11345b_yogis.data.manager.RegistrationManager
+import com.tamara.a25b_11345b_yogis.data.firebase.RegistrationManager
 import com.tamara.a25b_11345b_yogis.databinding.SignUpBinding
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 

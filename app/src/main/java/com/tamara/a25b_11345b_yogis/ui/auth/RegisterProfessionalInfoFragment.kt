@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.tamara.a25b_11345b_yogis.data.firebase.AuthManager
-import com.tamara.a25b_11345b_yogis.data.manager.RegistrationManager
+import com.tamara.a25b_11345b_yogis.data.firebase.RegistrationManager
 import com.tamara.a25b_11345b_yogis.data.model.UserProfile
 import com.tamara.a25b_11345b_yogis.data.repository.UserRepository
 import com.tamara.a25b_11345b_yogis.databinding.SignUpProfInfoBinding

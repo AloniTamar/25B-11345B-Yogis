@@ -1,4 +1,4 @@
-package com.tamara.a25b_11345b_yogis.data.manager
+package com.tamara.a25b_11345b_yogis.data.firebase
 
 /**
  * Temporarily holds all the sign-up fields until we submit them as one payload.

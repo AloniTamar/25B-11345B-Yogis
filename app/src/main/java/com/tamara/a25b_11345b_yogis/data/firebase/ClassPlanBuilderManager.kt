@@ -1,10 +1,10 @@
-package com.tamara.a25b_11345b_yogis.data.manager
+package com.tamara.a25b_11345b_yogis.data.firebase
 
 import com.google.firebase.database.DatabaseError
 import com.tamara.a25b_11345b_yogis.data.model.ClassPlan
 import com.tamara.a25b_11345b_yogis.data.model.ClassPlanElement
-import com.tamara.a25b_11345b_yogis.data.model.Pose
 import com.tamara.a25b_11345b_yogis.data.model.Flow
+import com.tamara.a25b_11345b_yogis.data.model.Pose
 import com.tamara.a25b_11345b_yogis.data.repository.ClassPlanRepository
 import java.util.UUID
 
@@ -69,9 +69,9 @@ class ClassPlanBuilderManager(
         }
 
         return ClassPlan(
-            planId   = planId,
+            planId = planId,
             planName = className,
-            level    = level,
+            level = level,
             duration = durationMinutes,
             elements = _items.toList() as MutableList<ClassPlanElement>
         )

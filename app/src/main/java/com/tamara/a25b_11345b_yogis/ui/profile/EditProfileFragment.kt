@@ -17,6 +17,7 @@ import com.tamara.a25b_11345b_yogis.data.model.UserProfile
 import com.tamara.a25b_11345b_yogis.databinding.EditProfileBinding
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 import com.tamara.a25b_11345b_yogis.utils.wireBack
+import createTextAvatar
 
 class EditProfileFragment : Fragment() {
 
@@ -59,6 +60,12 @@ class EditProfileFragment : Fragment() {
                 binding.etYogaType.setText(profile.yogaType)
                 binding.etYearsExperience.setText(profile.yearsExperience.toString())
                 binding.etEmail.setText(profile.email)
+
+                val userName = profile.username
+                val firstLetter = userName.firstOrNull()?.uppercaseChar() ?: 'U'
+                binding.ivPhoto.setImageDrawable(
+                    createTextAvatar(requireContext(), firstLetter, 128)
+                )
             },
             onError = { error ->
                 Toast.makeText(requireContext(), "Failed to load profile: ${error.message}", Toast.LENGTH_LONG).show()

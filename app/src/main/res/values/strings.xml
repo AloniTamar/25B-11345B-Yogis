@@ -49,7 +49,6 @@
     <string name="example_gmail_com">example@gmail.com</string>
     <string name="personal_details">Personal Details</string>
     <string name="_12_jan_1995">12 Jan 1995</string>
-    <string name="edit_photo">Edit Photo</string>
     <string name="john_smith">John Smith</string>
     <string name="change_password">Change Password</string>
     <string name="save">Save</string>
@@ -146,6 +145,7 @@
     <string name="discard_changes_message">Your changes won’t be saved. Continue?</string>
     <string name="image_is_uploading_should_take_a_few_seconds">Image is uploading, should take a few seconds…</string>
     <string name="changing_password_please_wait">Changing password, please wait…</string>
+    <string name="change_photo">Change Photo</string>
     <string-array name="class_levels">
         <item>Beginner</item>
         <item>Intermediate</item>

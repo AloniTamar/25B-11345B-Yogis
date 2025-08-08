@@ -12,6 +12,7 @@ import com.tamara.a25b_11345b_yogis.data.repository.UserRepository
 import com.tamara.a25b_11345b_yogis.databinding.ProfileBinding
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 import com.tamara.a25b_11345b_yogis.utils.wireBack
+import createTextAvatar
 
 class ProfileFragment : Fragment() {
 
@@ -54,6 +55,12 @@ class ProfileFragment : Fragment() {
                 binding.tvValueEmail.text = profile.email
                 binding.tvValueYoga.text = profile.yogaType
                 binding.tvValueLevel.text = profile.yearsExperience.toString()
+
+                val userName = profile.username
+                val firstLetter = userName.firstOrNull()?.uppercaseChar() ?: 'U'
+                binding.ivProfilePic.setImageDrawable(
+                    createTextAvatar(requireContext(), firstLetter, 128)
+                )
             },
             onError = { error ->
                 Toast.makeText(requireContext(), "Failed to load profile: ${error.message}", Toast.LENGTH_LONG).show()
@@ -63,7 +70,6 @@ class ProfileFragment : Fragment() {
         binding.btnRegister.setOnClickListener {
             navigateSmoothly(EditProfileFragment())
         }
-
     }
 
     override fun onDestroyView() {

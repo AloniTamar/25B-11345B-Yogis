@@ -47,6 +47,11 @@ class PoseLibraryFragment : Fragment() {
         binding.cardAllPoses.setOnClickListener {
             navigateSmoothly(PosesListFragment.newInstanceAllForBuilder())
         }
+
+        // Flows
+        binding.cardFlows.setOnClickListener {
+            navigateSmoothly(PoseLibraryFlowListFragment())
+        }
     }
 
     override fun onDestroyView() {

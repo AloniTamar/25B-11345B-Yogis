@@ -42,7 +42,6 @@ class PoseLibraryFlowListFragment : Fragment() {
         val flows = FlowRepository.getAll()
 
         val adapter = FlowAdapter(flows) { flow ->
-            // TODO: Navigate to the flow details fragment (you'll build this next)
             navigateSmoothly(PoseLibraryFlowDetailFragment.newInstance(flow.flowId))
         }
         binding.rvPblLevels.layoutManager = LinearLayoutManager(requireContext())

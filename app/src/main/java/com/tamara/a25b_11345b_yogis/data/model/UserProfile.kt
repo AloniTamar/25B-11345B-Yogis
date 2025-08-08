@@ -10,7 +10,6 @@ data class UserProfile(
     val username: String = "",
     val email: String = "",
     val yogaType: String = "",
-    val level: String = "",
     val yearsExperience: Int = 0,
     val createdAt: Long = 0L,
     val updatedAt: Long = 0L

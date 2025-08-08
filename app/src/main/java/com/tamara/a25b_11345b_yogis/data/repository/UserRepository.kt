@@ -5,7 +5,6 @@ import com.google.firebase.database.FirebaseDatabase
 import com.tamara.a25b_11345b_yogis.data.model.UserProfile
 
 class UserRepository {
-    // ← point at your RTDB URL so it actually connects
     private val database = FirebaseDatabase
         .getInstance("https://yogis-e26d1-default-rtdb.europe-west1.firebasedatabase.app/")
     private val usersRef = database.getReference("users")

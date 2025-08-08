@@ -41,7 +41,7 @@ class RegisterProfessionalInfoFragment : Fragment() {
             val yogaType = binding.etYoga.text.toString().trim()
 
             RegistrationManager.yearsExperience = years
-            RegistrationManager.yogatype        = yogaType
+            RegistrationManager.yogaType = yogaType
 
             // — perform sign-up now that we have EVERYTHING —
             AuthManager.signUp(
@@ -73,7 +73,7 @@ class RegisterProfessionalInfoFragment : Fragment() {
                     uid = firebaseUser.uid,
                     email = RegistrationManager.email,
                     username = RegistrationManager.username,
-                    yogaType = RegistrationManager.yogatype,
+                    yogaType = RegistrationManager.yogaType,
                     yearsExperience = RegistrationManager.yearsExperience
                 )
 

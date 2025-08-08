@@ -10,14 +10,14 @@ object RegistrationManager {
     var username: String = ""
 
     // Step 2 (professional info)
-    var yogatype: String = ""
+    var yogaType: String = ""
     var yearsExperience: Int = 0
 
     fun clear() {
         email = ""
         password = ""
         username = ""
-        yogatype = ""
+        yogaType = ""
         yearsExperience = 0
     }
 }

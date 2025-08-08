@@ -110,7 +110,7 @@
         android:id="@+id/image_upload_overlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#B3000000"
+        android:background="@color/overlay_background"
         android:visibility="gone"
         android:elevation="10dp">
 
@@ -125,7 +125,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/image_is_uploading_should_take_a_few_seconds"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textSize="18sp"
                 android:layout_marginTop="24dp"
                 android:gravity="center" />

@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.tamara.a25b_11345b_yogis.data.repository.UserRepository
 import com.tamara.a25b_11345b_yogis.databinding.ProfileBinding
+import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 import com.tamara.a25b_11345b_yogis.utils.wireBack
 
 class ProfileFragment : Fragment() {
@@ -58,6 +59,11 @@ class ProfileFragment : Fragment() {
                 Toast.makeText(requireContext(), "Failed to load profile: ${error.message}", Toast.LENGTH_LONG).show()
             }
         )
+
+        binding.btnRegister.setOnClickListener {
+            navigateSmoothly(EditProfileFragment())
+        }
+
     }
 
     override fun onDestroyView() {

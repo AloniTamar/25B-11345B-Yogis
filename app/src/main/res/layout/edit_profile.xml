@@ -83,6 +83,7 @@
                 app:helperText="User Name">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_user_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"
@@ -98,11 +99,11 @@
                 app:helperTextEnabled="true"
                 app:helperText="Email Address">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:enabled="false"/>
             </com.google.android.material.textfield.TextInputLayout>
-
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.Yogis.TextField.Outlined"
@@ -114,9 +115,10 @@
                 app:helperText="Yoga Style"
                 tools:ignore="HardcodedText">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_yoga_type"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:enabled="false"/>
+                    android:enabled="true"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -128,11 +130,11 @@
                 app:helperTextEnabled="true"
                 app:helperText="Experience Level">
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_years_experience"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:enabled="false"/>
+                    android:enabled="true"/>
             </com.google.android.material.textfield.TextInputLayout>
-
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 

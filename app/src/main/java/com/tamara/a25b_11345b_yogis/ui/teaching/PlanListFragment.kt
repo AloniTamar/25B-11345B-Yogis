@@ -2,6 +2,7 @@ package com.tamara.a25b_11345b_yogis.ui.teaching
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseError
 import com.tamara.a25b_11345b_yogis.data.repository.ClassPlanRepository
 import com.tamara.a25b_11345b_yogis.databinding.PoseLibraryPosesListBinding
 import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
@@ -37,34 +37,34 @@ class PlanListFragment : Fragment() {
 
         // Get current user ID from FirebaseAuth
         val userId = FirebaseAuth.getInstance().currentUser?.uid
+        Log.i("PlanListFragment", "Current user ID: $userId")
         if (userId == null) {
             Toast.makeText(requireContext(), "You are not logged in.", Toast.LENGTH_SHORT).show()
             return
         }
-
         repo.listForUser(
             uid = userId,
             onLoaded = { plans ->
-                if (plans.isEmpty()) {
+                val visible = plans.isNotEmpty()
+                if (!visible) {
                     Toast.makeText(requireContext(), "No class plans found!", Toast.LENGTH_SHORT).show()
-                    return@listForUser
                 }
                 binding.rvPblLevels.apply {
                     layoutManager = LinearLayoutManager(requireContext())
                     adapter = PlanListAdapter(plans) { plan ->
-                        val fragment = ViewClassBeforeTeachingFragment()
-                        fragment.arguments = Bundle().apply {
-                            putString("planId", plan.planId)
+                        val fragment = ViewClassBeforeTeachingFragment().apply {
+                            arguments = Bundle().apply { putString("planId", plan.planId) }
                         }
                         navigateSmoothly(fragment)
                     }
-                    visibility = View.VISIBLE
+                    visibility = if (visible) View.VISIBLE else View.GONE
                 }
             },
-            onError = { err: DatabaseError ->
+            onError = { err ->
                 Toast.makeText(requireContext(), "Failed to load plans: ${err.message}", Toast.LENGTH_LONG).show()
             }
         )
+
 
         wireBack(binding.btnPblBack)
 

@@ -8,7 +8,9 @@ import com.tamara.a25b_11345b_yogis.data.model.*
  */
 class ClassPlanRepository {
 
-    private val database = FirebaseDatabase.getInstance()
+    private val database = FirebaseDatabase.getInstance(
+        "https://yogis-e26d1-default-rtdb.europe-west1.firebasedatabase.app/"
+    )
     private val plansRef = database.getReference("classPlans")
 
     /**
@@ -98,20 +100,19 @@ class ClassPlanRepository {
     ) {
         database
             .getReference("classPlans")
-            .orderByChild("userId")
-            .equalTo(uid)
-            .addListenerForSingleValueEvent(object: ValueEventListener {
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(sn: DataSnapshot) {
                     val list = sn.children.mapNotNull { snapshot ->
+
                         try {
-                            // 1) pull the scalar fields
                             val planId   = snapshot.key ?: return@mapNotNull null
                             val planName = snapshot.child("planName").getValue(String::class.java) ?: ""
                             val userId   = snapshot.child("userId").getValue(String::class.java) ?: ""
-                            val level    = snapshot.child("level").getValue(String::class.java)   ?: ""
-                            val duration = snapshot.child("duration").getValue(Int::class.java)   ?: 0
+                            val level    = snapshot.child("level").getValue(String::class.java) ?: ""
+                            val duration = snapshot.child("duration").getValue(Int::class.java) ?: 0
 
-                            // 2) manually parse each element
+                            if (userId != uid) return@mapNotNull null
+
                             val elements = mutableListOf<ClassPlanElement>()
                             for (elemNode in snapshot.child("elements").children) {
                                 val poseSnap = elemNode.child("pose")
@@ -127,18 +128,15 @@ class ClassPlanRepository {
                                 }
                             }
 
-                            // 3) build and return
                             ClassPlan(
-                                planId   = planId,
+                                planId = planId,
                                 planName = planName,
-                                userId   = userId,
-                                level    = level,
+                                userId = userId,
+                                level = level,
                                 duration = duration,
                                 elements = elements
                             )
-                        } catch (e: Exception) {
-                            null
-                        }
+                        } catch (_: Exception) { null }
                     }
                     onLoaded(list)
                 }

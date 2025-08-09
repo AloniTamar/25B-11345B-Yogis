@@ -11,6 +11,8 @@ import com.tamara.a25b_11345b_yogis.data.model.Pose.Level
 class ClassBuilderClassPlanViewModel : ViewModel() {
 
     // Metadata for the class (set from UI)
+    val className = MutableLiveData<String>()
+    val durationMinutes = MutableLiveData<Int>()
     private val _level = MutableLiveData<Level?>(null)
     val level: LiveData<Level?> = _level
 
@@ -28,15 +30,16 @@ class ClassBuilderClassPlanViewModel : ViewModel() {
         _elements.value = _elements.value.orEmpty() + ClassPlanElement.FlowElement(flow)
     }
 
-    // Remove an element by position
-    fun removeElement(index: Int) {
-        _elements.value = _elements.value.orEmpty().toMutableList().also { it.removeAt(index) }
-    }
-
     // Clear plan (for reset/new class)
     fun clearPlan() {
         _level.value = null
         _elements.value = emptyList()
+    }
+
+    fun setClassInfo(name: String, minutes: Int, lvl: Level) {
+        className.value = name
+        durationMinutes.value = minutes
+        _level.value = lvl
     }
 
 }

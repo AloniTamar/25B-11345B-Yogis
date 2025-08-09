@@ -1,5 +1,6 @@
 package com.tamara.a25b_11345b_yogis.ui.library
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +38,7 @@ class PoseLibraryFlowDetailFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -49,6 +51,9 @@ class PoseLibraryFlowDetailFragment : Fragment() {
             Toast.makeText(requireContext(), "Flow not found.", Toast.LENGTH_SHORT).show()
             return
         }
+
+        binding.chipDuration.text = flow.recommendedRounds.toString() + " rounds"
+        binding.chipLevel.text = flow.level.toString()
 
         // Set fields
         binding.tvCtTitle.text = flow.flowName

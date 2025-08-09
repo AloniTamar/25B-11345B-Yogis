@@ -146,6 +146,7 @@
     <string name="image_is_uploading_should_take_a_few_seconds">Image is uploading, should take a few seconds…</string>
     <string name="changing_password_please_wait">Changing password, please wait…</string>
     <string name="change_photo">Change Photo</string>
+    <string name="loadinf_images_please_wait">Loadinf images, please wait…</string>
     <string-array name="class_levels">
         <item>Beginner</item>
         <item>Intermediate</item>

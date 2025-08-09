@@ -1,48 +1,35 @@
 package com.tamara.a25b_11345b_yogis.data.repository
 
+import com.google.firebase.database.FirebaseDatabase
 import com.tamara.a25b_11345b_yogis.data.model.Flow
-import com.tamara.a25b_11345b_yogis.data.model.Pose
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.tasks.await
 
 object FlowRepository {
+    // 1. MediatorLiveData that listens to PoseRepository.poses
+    private val flowsRef = FirebaseDatabase
+        .getInstance("https://yogis-e26d1-default-rtdb.europe-west1.firebasedatabase.app/")
+        .getReference("flows")
 
-    // Use PoseRepository to get real/dummy poses
-    private val samplePoses = PoseRepository.getAll().take(4) // or any number
+    /**
+     * Blocks and returns the full list of flows.
+     */
+    fun getAll(): List<Flow> = runBlocking(Dispatchers.IO) {
+        flowsRef.get().await()
+            .children
+            .mapNotNull { it.getValue(Flow::class.java) }
+    }
 
-    private val flows = listOf(
-        Flow(
-            flowId = "surya_a",
-            flowName = "Surya Namaskar A",
-            level = Pose.Level.beginner,
-            numberOfPoses = samplePoses.size,
-            recommendedRounds = 3,
-            poses = samplePoses
-        ),
-        Flow(
-            flowId = "surya_b",
-            flowName = "Surya Namaskar B",
-            level = Pose.Level.beginner,
-            numberOfPoses = samplePoses.size,
-            recommendedRounds = 2,
-            poses = samplePoses
-        ),
-        Flow(
-            flowId = "standing_seq",
-            flowName = "Standing Sequence",
-            level = Pose.Level.intermediate,
-            numberOfPoses = samplePoses.size,
-            recommendedRounds = 1,
-            poses = samplePoses
-        ),
-        Flow(
-            flowId = "primary_series",
-            flowName = "Primary Series",
-            level = Pose.Level.advanced,
-            numberOfPoses = samplePoses.size,
-            recommendedRounds = 1,
-            poses = samplePoses
-        )
-    )
+    /**
+     * New! Fetch a single Flow by its ID (the key under /flows).
+     * Returns null if not found or on parse failure.
+     */
+    fun getById(id: String): Flow? = runBlocking(Dispatchers.IO) {
+        flowsRef.child(id)
+            .get()
+            .await()
+            .getValue(Flow::class.java)
+    }
 
-    fun getAll(): List<Flow> = flows
-    fun getById(id: String): Flow? = flows.find { it.flowId == id }
 }

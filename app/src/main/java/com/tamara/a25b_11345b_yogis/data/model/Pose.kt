@@ -10,7 +10,7 @@ import com.google.firebase.database.IgnoreExtraProperties
  */
 @IgnoreExtraProperties
 data class Pose(
-    val id: String = "",
+    var id: String = "",
     val name: String = "",
     val level: Level = Level.beginner,
     val category: Category = Category.standingPoses,

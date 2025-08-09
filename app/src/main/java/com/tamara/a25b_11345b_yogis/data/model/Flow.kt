@@ -4,7 +4,7 @@ import com.google.firebase.database.IgnoreExtraProperties
 /** A tiny model just to hold our placeholder flow name. */
 @IgnoreExtraProperties
 data class Flow(
-    val flowId: String = "",
+    var flowId: String = "",
     val flowName: String = "",
     val level: Pose.Level = Pose.Level.beginner,
     val numberOfPoses: Int = 0,

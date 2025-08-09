@@ -6,6 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tamara.a25b_11345b_yogis.data.repository.FlowRepository
 import com.tamara.a25b_11345b_yogis.databinding.PoseLibraryFlowListBinding
@@ -32,20 +36,25 @@ class PoseLibraryFlowListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // UI setup
         binding.tvPblTitle.text = "Flows"
         wireBack(binding.btnPblBack)
         binding.tvBackMain.setOnClickListener { navigateBackToMain() }
-        binding.btnAddFlow.visibility = View.GONE // Hide "Define New Flow" for library
+        binding.btnAddFlow.visibility = View.GONE
 
-        // Load flows (replace with real Firebase fetch when ready)
-        val flows = FlowRepository.getAll()
-
-        val adapter = FlowAdapter(flows) { flow ->
-            navigateSmoothly(PoseLibraryFlowDetailFragment.newInstance(flow.flowId))
-        }
         binding.rvPblLevels.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvPblLevels.adapter = adapter
+
+        lifecycleScope.launch {
+            val flows = withContext(Dispatchers.IO) {
+                FlowRepository.getAll()
+            }
+
+            val adapter = FlowAdapter(flows) { flow ->
+                navigateSmoothly(
+                    PoseLibraryFlowDetailFragment.newInstance(flow.flowId)
+                )
+            }
+            binding.rvPblLevels.adapter = adapter
+        }
     }
 
     override fun onDestroyView() {

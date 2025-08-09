@@ -1,5 +1,6 @@
 package com.tamara.a25b_11345b_yogis.ui.library
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -7,8 +8,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tamara.a25b_11345b_yogis.R
 import com.tamara.a25b_11345b_yogis.data.model.Pose
 import com.tamara.a25b_11345b_yogis.data.repository.PoseRepository
 import com.tamara.a25b_11345b_yogis.databinding.PoseLibraryPosesListBinding
@@ -57,13 +61,6 @@ class PosesListFragment : Fragment() {
                 }
             }
 
-        fun newInstanceAll(): PosesListFragment =
-            PosesListFragment().apply {
-                arguments = Bundle().apply {
-                    putBoolean(ARG_FOR_CLASS_BUILDER, false)
-                }
-            }
-
         fun newInstanceAllForBuilder(): PosesListFragment =
             PosesListFragment().apply {
                 arguments = Bundle().apply {
@@ -88,62 +85,53 @@ class PosesListFragment : Fragment() {
         .also { _binding = it }
         .root
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         wireBack(binding.btnPblBack)
         binding.tvBackMain.setOnClickListener { navigateBackToMain() }
-
-        arguments?.getString(ARG_LEVEL)?.let { filterLevel = Pose.Level.valueOf(it) }
-        arguments?.getString(ARG_CATEGORY)?.let { filterCategory = Pose.Category.valueOf(it) }
-        forClassBuilder = arguments?.getBoolean(ARG_FOR_CLASS_BUILDER, false) == true
-
-        val titleRes = when {
-            filterLevel != null -> when (filterLevel!!) {
-                Pose.Level.beginner     -> R.string.beginners_poses
-                Pose.Level.intermediate -> R.string.intermediate_poses
-                Pose.Level.advanced     -> R.string.advanced_poses
-            }
-            else -> R.string.all_poses
-        }
-        binding.tvPblTitle.setText(titleRes)
-
-        allPoses = PoseRepository.getAll()
         binding.rvPblLevels.layoutManager = LinearLayoutManager(requireContext())
+        binding.tvPblTitle.text = "All Poses"
+        lifecycleScope.launch {
+            val poses = withContext(Dispatchers.IO) {
+                PoseRepository.getAll()
+            }
 
-        fun show(list: List<Pose>) {
-            binding.rvPblLevels.adapter = PoseAdapter(list) { pose ->
-                if (forClassBuilder) {
-                    navigateSmoothly(
-                        ClassBuilderPoseDetailFragment.newInstance(pose.id)
-                    )
-                } else {
-                    navigateSmoothly(
-                        PoseDetailFragment.newInstance(pose.id)
-                    )
+            allPoses = poses
+            val baseline = poses.filter {
+                (filterLevel    == null || it.level    == filterLevel   ) &&
+                        (filterCategory == null || it.category == filterCategory)
+            }
+
+            displayPoses(baseline)
+            binding.etLpSearch.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun afterTextChanged(s: Editable?) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    val q = s.toString().trim().lowercase()
+                    displayPoses(baseline.filter { it.name.lowercase().contains(q) })
                 }
-            }
+            })
         }
-
-        val baseline = allPoses.filter {
-            (filterLevel == null || it.level == filterLevel!!)
-                    && (filterCategory == null || it.category == filterCategory!!)
-        }
-
-        show(baseline)
-
-        binding.etLpSearch.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                val q = s.toString().trim().lowercase()
-                show(baseline.filter { it.name.lowercase().contains(q) })
-            }
-            override fun afterTextChanged(s: Editable?) {}
-        })
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun displayPoses(list: List<Pose>) {
+        binding.rvPblLevels.adapter = PoseAdapter(list) { pose ->
+            if (forClassBuilder) {
+                navigateSmoothly(
+                    ClassBuilderPoseDetailFragment.newInstance(pose.id)
+                )
+            } else {
+                navigateSmoothly(
+                    PoseDetailFragment.newInstance(pose.id)
+                )
+            }
+        }
     }
 }

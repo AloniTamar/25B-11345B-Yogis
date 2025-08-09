@@ -17,10 +17,6 @@ class PosesByTypesFragment : Fragment() {
     companion object {
         private const val ARG_FOR_CLASS_BUILDER = "for_class_builder"
 
-        fun newInstance() = PosesByTypesFragment().apply {
-            arguments = Bundle().apply { putBoolean(ARG_FOR_CLASS_BUILDER, false) }
-        }
-
         fun newInstanceForBuilder() = PosesByTypesFragment().apply {
             arguments = Bundle().apply { putBoolean(ARG_FOR_CLASS_BUILDER, true) }
         }

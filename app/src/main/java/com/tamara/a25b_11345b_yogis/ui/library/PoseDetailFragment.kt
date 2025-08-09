@@ -115,7 +115,7 @@ class PoseDetailFragment : Fragment() {
             // Duration & Reps texts + highlight
             val duration = pose.duration ?: 0
             val reps     = pose.repetitions ?: 0
-            binding.tvPdValueDuration.text    = "$duration min"
+            binding.tvPdValueDuration.text    = "$duration seconds"
             binding.tvPdValueRepetitions.text = "$reps reps"
 
             val colorBlack    = ContextCompat.getColor(requireContext(), R.color.black)

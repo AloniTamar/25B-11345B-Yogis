@@ -13,6 +13,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.tamara.a25b_11345b_yogis.R
 import com.tamara.a25b_11345b_yogis.data.model.Pose
 import com.tamara.a25b_11345b_yogis.data.repository.PoseRepository
 import com.tamara.a25b_11345b_yogis.databinding.PoseLibraryPosesListBinding
@@ -88,11 +89,23 @@ class PosesListFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        filterLevel = arguments?.getString(ARG_LEVEL)?.let(Pose.Level::valueOf)
+        filterCategory = arguments?.getString(ARG_CATEGORY)?.let(Pose.Category::valueOf)
+        forClassBuilder = arguments?.getBoolean(ARG_FOR_CLASS_BUILDER, false) == true
 
         wireBack(binding.btnPblBack)
         binding.tvBackMain.setOnClickListener { navigateBackToMain() }
         binding.rvPblLevels.layoutManager = LinearLayoutManager(requireContext())
-        binding.tvPblTitle.text = "All Poses"
+
+        binding.tvPblTitle.text = when {
+            filterLevel != null -> when (filterLevel!!) {
+                Pose.Level.beginner     -> getString(R.string.beginners_poses)
+                Pose.Level.intermediate -> getString(R.string.intermediate_poses)
+                Pose.Level.advanced     -> getString(R.string.advanced_poses)
+            }
+            filterCategory != null -> filterCategory!!.toTitle()
+            else -> getString(R.string.all_poses)
+        }
         lifecycleScope.launch {
             val poses = withContext(Dispatchers.IO) {
                 PoseRepository.getAll()
@@ -133,5 +146,16 @@ class PosesListFragment : Fragment() {
                 )
             }
         }
+    }
+
+    private fun Pose.Category.toTitle(): String = when (this) {
+        Pose.Category.standingPoses   -> "Standing poses"
+        Pose.Category.forwardBends    -> "Forward bends"
+        Pose.Category.backendArches   -> "Backbend arches"
+        Pose.Category.twists          -> "Twists"
+        Pose.Category.inversions      -> "Inversions"
+        Pose.Category.seatedPoses     -> "Seated poses"
+        Pose.Category.boatPoses       -> "Boat poses"
+        Pose.Category.balancingPoses  -> "Balancing poses"
     }
 }

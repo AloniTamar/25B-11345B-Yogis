@@ -15,12 +15,6 @@ class PosesByLevelsFragment : Fragment() {
     companion object {
         private const val ARG_FOR_CLASS_BUILDER = "for_class_builder"
 
-        fun newInstance() = PosesByLevelsFragment().apply {
-            arguments = Bundle().apply {
-                putBoolean(ARG_FOR_CLASS_BUILDER, false)
-            }
-        }
-
         fun newInstanceForBuilder() = PosesByLevelsFragment().apply {
             arguments = Bundle().apply {
                 putBoolean(ARG_FOR_CLASS_BUILDER, true)

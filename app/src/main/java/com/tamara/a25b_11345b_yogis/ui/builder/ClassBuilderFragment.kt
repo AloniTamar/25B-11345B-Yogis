@@ -1,5 +1,6 @@
 package com.tamara.a25b_11345b_yogis.ui.builder
 
+import android.annotation.SuppressLint
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.CheckedTextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -51,6 +53,7 @@ class ClassBuilderFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("PrivateResource")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -60,13 +63,12 @@ class ClassBuilderFragment : Fragment() {
         }
 
         val levels = resources.getStringArray(R.array.class_levels)
-        val adapter = ArrayAdapter(
-            requireContext(),
-            R.layout.item_dropdown_menu,
-            levels
-        )
+        val adapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_menu, levels)
         binding.acLevel.setAdapter(adapter)
-        binding.acLevel.setOnItemClickListener { _, _, _, _ ->
+
+        // Keep this if you still want the checkmark to toggle
+        binding.acLevel.setOnItemClickListener { _, view, _, _ ->
+            (view as? CheckedTextView)?.isChecked = true
             checkForm()
         }
 

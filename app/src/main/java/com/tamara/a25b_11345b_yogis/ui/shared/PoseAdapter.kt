@@ -1,5 +1,6 @@
 package com.tamara.a25b_11345b_yogis.ui.shared
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -13,8 +14,10 @@ class PoseAdapter(
 
     inner class ViewHolder(private val binding: ItemPoseBinding)
         : RecyclerView.ViewHolder(binding.root) {
+        @SuppressLint("SetTextI18n")
         fun bind(pose: Pose) {
             binding.tvLevelTitle.text = pose.name
+            binding.tvLevelSubtitle.text = pose.level.toString() + " ● " + pose.category.toString()
             binding.root.setOnClickListener {
                 onClick(pose)
             }

@@ -34,12 +34,12 @@ class BasicTimelineAdapter(
                 is ClassPlanElement.PoseElement -> {
                     binding.tvDuration.text = "${e.pose.duration ?: e.pose.repetitions} ${if (e.pose.duration != null) "seconds" else "reps"}"
                     binding.tvTitle.text    = e.pose.name
-                    binding.tvSub.text      = "Level ${e.pose.level}"
+                    binding.tvSub.text      = "${e.pose.level}"
                 }
                 is ClassPlanElement.FlowElement -> {
                     binding.tvDuration.text = "${e.flow.recommendedRounds} rounds"
                     binding.tvTitle.text    = e.flow.flowName
-                    binding.tvSub.text      = "Level ${e.flow.level}"
+                    binding.tvSub.text      = "${e.flow.level}"
                 }
             }
         }

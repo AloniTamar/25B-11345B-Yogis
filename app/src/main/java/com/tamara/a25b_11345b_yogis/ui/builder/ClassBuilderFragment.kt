@@ -100,10 +100,8 @@ class ClassBuilderFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            // 👇 Store meta in the **builder** VM
             viewModel.setClassInfo(name, duration, levelEnum)
 
-            // proceed
             navigateSmoothly(ClassBuilderActionsFragment())
         }
 

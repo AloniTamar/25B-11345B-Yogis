@@ -2,68 +2,109 @@ package com.tamara.a25b_11345b_yogis.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.tamara.a25b_11345b_yogis.utils.IdUtils
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.tamara.a25b_11345b_yogis.data.model.Pose
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
+import android.util.Log
 
 object PoseRepository {
-    // 1. Point to your “poses” node
+    private const val TAG = "PoseRepository"
+
     private val posesRef = FirebaseDatabase
         .getInstance("https://yogis-e26d1-default-rtdb.europe-west1.firebasedatabase.app/")
         .getReference("poses")
 
-    // 2. Backing LiveData
     private val _poses = MutableLiveData<List<Pose>>(emptyList())
     val poses: LiveData<List<Pose>> = _poses
 
+    // Raw DTO to avoid enum-mapping crashes
+    private data class PoseRaw(
+        var id: String? = null,
+        var name: String? = null,
+        var level: String? = null,
+        var category: String? = null,
+        var duration: Int? = null,
+        var repetitions: Int? = null,
+        var description: String? = null,
+        var notes: String? = null,
+        var image: String? = null
+    )
+
+    private fun parseCategory(s: String?): Pose.Category? {
+        if (s.isNullOrBlank()) return null
+        val key = s.lowercase()
+            .replace(" ", "")
+            .replace("_", "")
+            .replace("-", "")
+        return when (key) {
+            "standingposes"  -> Pose.Category.standingPoses
+            "forwardbends"   -> Pose.Category.forwardBends
+            "backendarches"  -> Pose.Category.backendArches
+            "twists"         -> Pose.Category.twists
+            "inversions"     -> Pose.Category.inversions
+            "seatedposes"    -> Pose.Category.seatedPoses
+            "boatposes"      -> Pose.Category.boatPoses
+            "balancingposes" -> Pose.Category.balancingPoses
+            else -> null
+        }
+    }
+
+    private fun parseLevel(s: String?): Pose.Level? {
+        if (s.isNullOrBlank()) return null
+        // Your enum names are already lowercase (you used valueOf(lowercase()) before)
+        return try { Pose.Level.valueOf(s) } catch (_: IllegalArgumentException) { null }
+    }
+
+    private fun PoseRaw.toPoseOrNull(snapshotKey: String?): Pose? {
+        val levelEnum = parseLevel(level) ?: return null
+        val categoryEnum = parseCategory(category)
+        if (categoryEnum == null) {
+            Log.w(TAG, "Unknown category '$category' for pose id=$snapshotKey; defaulting to standingPoses")
+        }
+        return Pose(
+            id = id ?: snapshotKey.orEmpty(),
+            name = name.orEmpty(),
+            level = levelEnum,
+            category = categoryEnum ?: Pose.Category.standingPoses,
+            duration = duration,
+            repetitions = repetitions,
+            description = description.orEmpty(),
+            notes = notes,
+            image = image
+        )
+    }
+
     init {
-        // 3. Fire up the listener once, for app-lifetime
         posesRef.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                _poses.postValue(
-                    snapshot.children
-                        .mapNotNull { it.getValue(Pose::class.java) }
-                )
+                val list = snapshot.children.mapNotNull { snap ->
+                    val raw = snap.getValue(PoseRaw::class.java)
+                    raw?.toPoseOrNull(snap.key)
+                }
+                _poses.postValue(list)
             }
             override fun onCancelled(error: DatabaseError) {
-                // you can log or ignore
+                Log.e(TAG, "poses listener cancelled: ${error.message}")
             }
         })
     }
 
-    /** Legacy API — now returns a LiveData that stays up-to-date */
+    /** Legacy API — now resilient */
     fun getAll(): List<Pose> = runBlocking {
         val snapshot = posesRef.get().await()
-        snapshot.children
-            .mapNotNull { it.getValue(Pose::class.java) }
+        snapshot.children.mapNotNull { snap ->
+            val raw = snap.getValue(PoseRaw::class.java)
+            raw?.toPoseOrNull(snap.key)
+        }
     }
 
-    /**
-     * Save or update a Pose in RTDB.
-     * @param pose the Pose to save. If pose.id is null or blank we generate a new key.
-     * @param callback invoked with null on success, or with the exception on failure.
-     */
     fun savePose(pose: Pose, callback: (Exception?) -> Unit) {
-        val key: String = pose.id
-            .takeUnless { it.isBlank() }
-            ?: posesRef.push().key!!
-                .also { generated -> pose.id = generated }
+        val key: String = pose.id.takeUnless { it.isBlank() }
+            ?: posesRef.push().key!!.also { generated -> pose.id = generated }
 
-        posesRef
-            .child(key)
-            .setValue(pose)
+        posesRef.child(key).setValue(pose)
             .addOnSuccessListener { callback(null) }
             .addOnFailureListener { ex -> callback(ex) }
-    }
-
-    suspend fun savePoseByName(pose: Pose): String {
-        val key = pose.id.ifBlank { IdUtils.nextAvailableId(posesRef, IdUtils.slugify(pose.name)).also { pose.id = it } }
-        posesRef.child(key).setValue(pose).await()
-        return key
     }
 }

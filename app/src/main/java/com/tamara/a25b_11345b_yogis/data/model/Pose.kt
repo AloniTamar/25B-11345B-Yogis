@@ -18,7 +18,7 @@ data class Pose(
     val repetitions: Int? = null,
     val description: String = "",
     val notes: String? = null,
-    val image: String = ""
+    val image: String? = ""
 ) {
     enum class Level { beginner, intermediate, advanced }
     enum class Category {

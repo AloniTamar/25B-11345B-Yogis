@@ -15,8 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
-        app:strokeColor="@color/white"
+        app:strokeColor="@color/disabled_button"
         app:cardBackgroundColor="@android:color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -67,8 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
-        app:strokeColor="@color/white"
+        app:strokeColor="@color/disabled_button"
         app:cardBackgroundColor="@android:color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -131,8 +129,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
-        app:strokeColor="@color/white"
+        app:strokeColor="@color/disabled_button"
         app:cardBackgroundColor="@android:color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout

@@ -2,6 +2,8 @@ package com.tamara.a25b_11345b_yogis.data.repository
 
 import com.google.firebase.database.*
 import com.tamara.a25b_11345b_yogis.data.model.*
+import com.tamara.a25b_11345b_yogis.utils.IdUtils
+import kotlinx.coroutines.tasks.await
 
 /**
  * Simple wrapper around Firebase Realtime Database for ClassPlan objects.
@@ -91,6 +93,15 @@ class ClassPlanRepository {
                     DatabaseError.fromException(it)
                 })
             }
+    }
+
+    suspend fun savePlanByName(plan: ClassPlan): String {
+        val plansRef = database.getReference("classPlans")
+        val base = IdUtils.slugify(plan.planName)
+        val id   = IdUtils.nextAvailableId(plansRef, base)
+        val final = plan.copy(planId = id)
+        plansRef.child(id).setValue(final).await()
+        return id
     }
 
     fun listForUser(

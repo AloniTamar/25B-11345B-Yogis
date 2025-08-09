@@ -13,6 +13,7 @@ import androidx.annotation.LayoutRes
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.card.MaterialCardView
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.database.FirebaseDatabase
@@ -26,9 +27,13 @@ import com.tamara.a25b_11345b_yogis.ui.library.PosesByLevelsFragment
 import com.tamara.a25b_11345b_yogis.ui.library.PosesByTypesFragment
 import com.tamara.a25b_11345b_yogis.ui.library.PosesListFragment
 import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
+import com.tamara.a25b_11345b_yogis.utils.IdUtils
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 import com.tamara.a25b_11345b_yogis.viewmodel.ClassBuilderClassPlanViewModel
-import java.util.UUID
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class ClassBuilderAddPoseFragment : Fragment() {
 
@@ -36,60 +41,45 @@ class ClassBuilderAddPoseFragment : Fragment() {
     private var _binding: ClassBuilderAddPoseContainerBinding? = null
     private val binding get() = _binding!!
 
+    // user-picked image (we upload it only when saving)
     private var selectedImageUri: Uri? = null
-    private var uploadedAssetMeta: Map<String, Any>? = null
+    // local info we read from the selected image
+    private var selectedImageWidth: Int? = null
+    private var selectedImageHeight: Int? = null
+    private var selectedImageMime: String? = null
+
+    private val DB_URL =
+        "https://yogis-e26d1-default-rtdb.europe-west1.firebasedatabase.app/"
 
     private val pickImageLauncher = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { uri ->
         if (uri != null) {
-            selectedImageUri = uri
-            // Upload image to Firebase Storage
-            uploadImageAndSaveMetadata(uri)
+            captureLocalImageInfo(uri)
+            Toast.makeText(requireContext(), "Image selected ✓", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun uploadImageAndSaveMetadata(localUri: Uri) {
+    /** Read width/height/mime locally; do NOT upload yet */
+    private fun captureLocalImageInfo(localUri: Uri) {
+        selectedImageUri = localUri
         binding.imageUploadOverlay.visibility = View.VISIBLE
-        val assetId = UUID.randomUUID().toString()
-        val fileRef = FirebaseStorage.getInstance()
-            .reference.child("pose_images/$assetId.jpg")
 
-        // Get image info
-        val context = requireContext()
-        val inputStream = context.contentResolver.openInputStream(localUri)
-        val options = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-        BitmapFactory.decodeStream(inputStream, null, options)
-        val width = options.outWidth
-        val height = options.outHeight
-        val mimeType = context.contentResolver.getType(localUri) ?: "image/jpeg"
-        val createdAt = System.currentTimeMillis()
+        val ctx = requireContext()
+        val mime = ctx.contentResolver.getType(localUri) ?: "image/jpeg"
+        selectedImageMime = mime
 
-        fileRef.putFile(localUri)
-            .continueWithTask { task ->
-                if (!task.isSuccessful) throw task.exception ?: Exception("Upload failed")
-                fileRef.downloadUrl
+        lifecycleScope.launch(Dispatchers.IO) {
+            ctx.contentResolver.openInputStream(localUri)?.use { stream ->
+                val opts = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+                BitmapFactory.decodeStream(stream, null, opts)
+                selectedImageWidth = opts.outWidth
+                selectedImageHeight = opts.outHeight
             }
-            .addOnSuccessListener { uri ->
-                binding.imageUploadOverlay.visibility = View.GONE
-                val url = uri.toString()
-                uploadedAssetMeta = mapOf(
-                    "assetId" to assetId,
-                    "url" to url,
-                    "mimeType" to mimeType,
-                    "width" to width,
-                    "height" to height,
-                    "createdAt" to createdAt,
-                    "updatedAt" to createdAt
-                )
-                FirebaseDatabase.getInstance().reference
-                    .child("mediaAssets")
-                    .child(assetId)
-                    .setValue(uploadedAssetMeta)
-            }
-            .addOnFailureListener { e ->
+            withContext(Dispatchers.Main) {
                 binding.imageUploadOverlay.visibility = View.GONE
             }
+        }
     }
 
     override fun onCreateView(
@@ -199,16 +189,12 @@ class ClassBuilderAddPoseFragment : Fragment() {
             // 1) Read inputs
             val name = nb.etPoseName.text.toString().trim()
             val levelText = nb.acLevel.text.toString().trim().lowercase()
-            val level = try {
-                Pose.Level.valueOf(levelText)
-            } catch (e: Exception) {
-                null
-            }
+            val level = try { Pose.Level.valueOf(levelText) } catch (_: Exception) { null }
             val duration = nb.etDuration.text.toString().toIntOrNull() ?: 0
             val reps = nb.etRepetitions.text.toString().toIntOrNull() ?: 0
             val description = nb.etDescription.text.toString().trim()
 
-            // 2) Local validations
+            // 2) Validations
             when {
                 name.isBlank() -> {
                     Toast.makeText(requireContext(), "Name is required", Toast.LENGTH_SHORT).show()
@@ -229,38 +215,87 @@ class ClassBuilderAddPoseFragment : Fragment() {
                         "Description is required", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
-            }
-
-            if (uploadedAssetMeta == null) {
-                return@setOnClickListener
-            }
-            val imageUrl = uploadedAssetMeta!!["url"] as String
-
-            // 3) Build & upload
-            val newPose = Pose(
-                id = UUID.randomUUID().toString(),
-                name = name,
-                level = level,
-                category = Pose.Category.standingPoses, // or let user pick
-                duration = duration.takeIf { it > 0 },
-                repetitions = reps.takeIf { it > 0 },
-                description = description,
-                notes = null,
-                image = imageUrl
-            )
-
-            PoseRepository.savePose(newPose) { error ->
-                if (error == null) {
-                    viewModel.addPose(newPose)
-                    navigateSmoothly(ClassBuilderActionsFragment())
-                } else {
+                selectedImageUri == null -> {
                     Toast.makeText(requireContext(),
-                        "Failed to upload pose: ${error.message}",
-                        Toast.LENGTH_LONG).show()
+                        "Please select an image", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+            }
+
+            // 3) Save flow (id + image) atomically
+            binding.imageUploadOverlay.visibility = View.VISIBLE
+
+            viewLifecycleOwner.lifecycleScope.launch {
+                try {
+                    val db = FirebaseDatabase.getInstance(DB_URL)
+                    val posesRef = db.getReference("poses")
+                    val mediaRef = db.getReference("mediaAssets")
+
+                    // poseId = readable & unique
+                    val base = IdUtils.slugify(name)
+                    val poseId = IdUtils.nextAvailableId(posesRef, base)
+
+                    // upload image using the same id
+                    val storage = FirebaseStorage.getInstance()
+                    val fileRef = storage.reference.child("pose_images/$poseId.jpg")
+
+                    val localUri = selectedImageUri!!
+                    fileRef.putFile(localUri).await()
+                    val downloadUrl = fileRef.downloadUrl.await().toString()
+
+                    val width = selectedImageWidth ?: 0
+                    val height = selectedImageHeight ?: 0
+                    val mime = selectedImageMime ?: "image/jpeg"
+                    val now = System.currentTimeMillis()
+
+                    // write media metadata under the SAME id
+                    val meta = mapOf(
+                        "assetId" to poseId,
+                        "url" to downloadUrl,
+                        "mimeType" to mime,
+                        "width" to width,
+                        "height" to height,
+                        "createdAt" to now,
+                        "updatedAt" to now
+                    )
+                    mediaRef.child(poseId).setValue(meta).await()
+
+                    // build and save Pose (repo will keep the provided id)
+                    val newPose = Pose(
+                        id = poseId,
+                        name = name,
+                        level = level,
+                        category = Pose.Category.standingPoses,
+                        duration = duration.takeIf { it > 0 },
+                        repetitions = reps.takeIf { it > 0 },
+                        description = description,
+                        notes = null,
+                        image = downloadUrl
+                    )
+
+                    PoseRepository.savePose(newPose) { error ->
+                        binding.imageUploadOverlay.visibility = View.GONE
+                        if (error == null) {
+                            viewModel.addPose(newPose)
+                            navigateSmoothly(ClassBuilderActionsFragment())
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "Failed to upload pose: ${error.message}",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+                } catch (e: Exception) {
+                    binding.imageUploadOverlay.visibility = View.GONE
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed: ${e.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
         }
-
     }
 
     override fun onDestroyView() {

@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.tamara.a25b_11345b_yogis.utils.IdUtils
 import com.google.firebase.database.ValueEventListener
 import com.tamara.a25b_11345b_yogis.data.model.Pose
 import kotlinx.coroutines.runBlocking
@@ -58,5 +59,11 @@ object PoseRepository {
             .setValue(pose)
             .addOnSuccessListener { callback(null) }
             .addOnFailureListener { ex -> callback(ex) }
+    }
+
+    suspend fun savePoseByName(pose: Pose): String {
+        val key = pose.id.ifBlank { IdUtils.nextAvailableId(posesRef, IdUtils.slugify(pose.name)).also { pose.id = it } }
+        posesRef.child(key).setValue(pose).await()
+        return key
     }
 }

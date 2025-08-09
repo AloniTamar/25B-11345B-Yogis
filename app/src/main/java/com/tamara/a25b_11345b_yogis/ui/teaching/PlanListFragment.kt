@@ -2,7 +2,6 @@ package com.tamara.a25b_11345b_yogis.ui.teaching
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +12,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.tamara.a25b_11345b_yogis.data.repository.ClassPlanRepository
 import com.tamara.a25b_11345b_yogis.databinding.PoseLibraryPosesListBinding
 import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
+import com.tamara.a25b_11345b_yogis.utils.IdUtils
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 import com.tamara.a25b_11345b_yogis.utils.wireBack
 
@@ -36,14 +36,15 @@ class PlanListFragment : Fragment() {
         binding.rvPblLevels.visibility = View.GONE
 
         // Get current user ID from FirebaseAuth
-        val userId = FirebaseAuth.getInstance().currentUser?.uid
-        Log.i("PlanListFragment", "Current user ID: $userId")
-        if (userId == null) {
+        val emailKey = FirebaseAuth.getInstance().currentUser?.email
+            ?.let { IdUtils.emailKey(it) }
+
+        if (emailKey == null) {
             Toast.makeText(requireContext(), "You are not logged in.", Toast.LENGTH_SHORT).show()
             return
         }
         repo.listForUser(
-            uid = userId,
+            uid = emailKey,
             onLoaded = { plans ->
                 val visible = plans.isNotEmpty()
                 if (!visible) {

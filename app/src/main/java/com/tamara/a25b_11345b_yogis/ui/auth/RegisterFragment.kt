@@ -25,10 +25,6 @@ class RegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // TODO: form validation…
-
-        // “Next” button on sign_up.xml
         binding.btnSignUpNext.setOnClickListener {
             RegistrationManager.apply {
                 this.username = binding.etUsername.text.toString().trim()
@@ -43,9 +39,7 @@ class RegisterFragment : Fragment() {
             navigateSmoothly(RegisterProfessionalInfoFragment())
         }
 
-        // “Already have an account? Log in” text
         binding.tvSignUpLogin.setOnClickListener {
-            // for now skip straight to Main
             navigateSmoothly(LoginFragment())
         }
 

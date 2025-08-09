@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.tamara.a25b_11345b_yogis.data.firebase.AuthManager
 import com.tamara.a25b_11345b_yogis.data.firebase.RegistrationManager
-import com.tamara.a25b_11345b_yogis.data.model.UserProfile
 import com.tamara.a25b_11345b_yogis.data.repository.UserRepository
 import com.tamara.a25b_11345b_yogis.databinding.SignUpProfInfoBinding
 import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
+import kotlinx.coroutines.launch
 
 class RegisterProfessionalInfoFragment : Fragment() {
 
@@ -30,20 +31,20 @@ class RegisterProfessionalInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.btnProfessionalBack.setOnClickListener {
             navigateSmoothly(RegisterFragment())
         }
 
         binding.btnProfessionalRegister.setOnClickListener {
-            // — collect prof fields —
-            val years = binding.etLevel.text
-                .toString().trim().toIntOrNull() ?: 0
+            // Collect prof fields
+            val years = binding.etLevel.text.toString().trim().toIntOrNull() ?: 0
             val yogaType = binding.etYoga.text.toString().trim()
 
             RegistrationManager.yearsExperience = years
             RegistrationManager.yogaType = yogaType
 
-            // — perform sign-up now that we have EVERYTHING —
+            // Perform sign-up now that we have everything
             AuthManager.signUp(
                 RegistrationManager.email,
                 RegistrationManager.password
@@ -57,7 +58,7 @@ class RegisterProfessionalInfoFragment : Fragment() {
                     return@signUp
                 }
 
-                // — we’re now signed in, grab the user —
+                // We’re now signed in, grab the user
                 val firebaseUser = AuthManager.currentUser()
                 if (firebaseUser == null) {
                     Toast.makeText(
@@ -68,34 +69,36 @@ class RegisterProfessionalInfoFragment : Fragment() {
                     return@signUp
                 }
 
-                // — build & save the profile object —
-                val profile = UserProfile(
-                    uid = firebaseUser.uid,
-                    email = RegistrationManager.email,
-                    username = RegistrationManager.username,
-                    yogaType = RegistrationManager.yogaType,
-                    yearsExperience = RegistrationManager.yearsExperience
-                )
+                // Save profile under /users/{uid} and index by email at /users_by_email/{emailKey}
+                viewLifecycleOwner.lifecycleScope.launch {
+                    try {
+                        UserRepository().createOrUpdateUser(
+                            uid = firebaseUser.uid,
+                            email = RegistrationManager.email,
+                            data = mapOf(
+                                "uid" to firebaseUser.uid,
+                                "email" to RegistrationManager.email,
+                                "username" to RegistrationManager.username,
+                                "yogaType" to RegistrationManager.yogaType,
+                                "yearsExperience" to RegistrationManager.yearsExperience
+                            )
+                        )
 
-                UserRepository().saveUser(profile) { dbError ->
-                    if (dbError != null) {
-                        Toast.makeText(
-                            requireContext(),
-                            "Couldn’t save profile: ${dbError.message}",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    } else {
                         RegistrationManager.clear()
                         navigateSmoothly(
                             MainLoggedInFragment(),
                             addToBackStack = false
                         )
+                    } catch (e: Exception) {
+                        Toast.makeText(
+                            requireContext(),
+                            "Couldn’t save profile: ${e.message}",
+                            Toast.LENGTH_LONG
+                        ).show()
                     }
                 }
             }
         }
-
-
 
         binding.tvProfessionalLogin.setOnClickListener {
             navigateSmoothly(LoginFragment(), addToBackStack = false)

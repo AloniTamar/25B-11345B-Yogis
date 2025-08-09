@@ -138,6 +138,7 @@
                     android:paddingVertical="4dp">
 
                     <TextView
+                        android:id="@+id/tv_pd_duration_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/duration"
@@ -146,7 +147,7 @@
                         android:textColor="@color/black"/>
 
                     <TextView
-                        android:id="@+id/tv_pd_duration_label"
+                        android:id="@+id/tv_pd_reps_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/__repetitions"
@@ -236,5 +237,39 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+
+    <FrameLayout
+        android:id="@+id/pd_image_loader_overlay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@color/overlay_background"
+        android:visibility="gone"
+        android:clickable="true"
+        app:layout_constraintTop_toTopOf="@id/vp_pd_images"
+        app:layout_constraintBottom_toBottomOf="@id/vp_pd_images"
+        app:layout_constraintStart_toStartOf="@id/vp_pd_images"
+        app:layout_constraintEnd_toEndOf="@id/vp_pd_images">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ProgressBar
+                style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/pd_tv_loader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/loadinf_images_please_wait"
+                android:textColor="@android:color/black"
+                android:textSize="16sp"
+                android:layout_marginTop="16dp"/>
+        </LinearLayout>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

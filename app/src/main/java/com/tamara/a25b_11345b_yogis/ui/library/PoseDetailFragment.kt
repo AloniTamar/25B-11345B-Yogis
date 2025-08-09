@@ -39,8 +39,6 @@ class PoseDetailFragment : Fragment() {
         }
     }
 
-    /** ViewHolder for the pager */
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -63,7 +61,6 @@ class PoseDetailFragment : Fragment() {
         binding.pdImageLoaderOverlay.visibility = View.VISIBLE
         binding.vpPdImages.setBackgroundResource(R.color.background_text_field)
 
-        // attach an empty adapter to silence "No adapter attached" logs
         binding.vpPdImages.adapter = ImagePagerAdapter(emptyList()) { }
 
         lifecycleScope.launch {
@@ -82,10 +79,8 @@ class PoseDetailFragment : Fragment() {
                 return@launch
             }
 
-            // Title
             binding.tvPdTitle.text = pose.name
 
-            // Build list from DB and resolve EVERYTHING to fresh HTTPS URLs (with token)
             val imageSources = listOfNotNull(pose.image).filter { it.isNotBlank() }
             val httpsUrls = toHttpsUrls(imageSources)
             Log.d("PoseDetail", "resolved urls=$httpsUrls")
@@ -99,7 +94,6 @@ class PoseDetailFragment : Fragment() {
             }
             binding.vpPdImages.adapter = pagerAdapter
 
-            // Text fields
             binding.tvPdValueLevel.text       = pose.level.name
             binding.tvPdValueFamily.text      = pose.category.name
             binding.tvPdValueDescription.text = pose.description
@@ -112,7 +106,6 @@ class PoseDetailFragment : Fragment() {
                 binding.tvPdValueNotes.text = pose.notes
             }
 
-            // Duration & Reps texts + highlight
             val duration = pose.duration ?: 0
             val reps     = pose.repetitions ?: 0
             binding.tvPdValueDuration.text    = "$duration seconds"
@@ -135,9 +128,6 @@ class PoseDetailFragment : Fragment() {
         _binding = null
     }
 
-    // ---------------- helpers ----------------
-
-    /** FirebaseStorage instance using your configured bucket (google-services.json) */
     private fun storage(): FirebaseStorage {
         val bucket = FirebaseApp.getInstance().options.storageBucket // e.g. yogis-e26d1.firebasestorage.app
         return if (!bucket.isNullOrBlank()) {
@@ -147,10 +137,6 @@ class PoseDetailFragment : Fragment() {
         }
     }
 
-    /**
-     * Convert whatever strings are stored (plain path / gs:// / https)
-     * into fresh HTTPS download URLs with access tokens.
-     */
     private suspend fun toHttpsUrls(sources: List<String>): List<String> = withContext(Dispatchers.IO) {
         sources.mapNotNull { raw ->
             try {

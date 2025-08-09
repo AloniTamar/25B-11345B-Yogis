@@ -8,7 +8,7 @@ import com.tamara.a25b_11345b_yogis.databinding.ItemPoseBinding
 import com.tamara.a25b_11345b_yogis.data.model.Pose
 
 class PoseAdapter(
-    private val items: List<Pose>,
+    private var items: List<Pose>,
     private val onClick: (Pose) -> Unit
 ) : RecyclerView.Adapter<PoseAdapter.ViewHolder>() {
 
@@ -38,4 +38,10 @@ class PoseAdapter(
     }
 
     override fun getItemCount(): Int = items.size
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun update(newItems: List<Pose>) {
+        items = newItems
+        notifyDataSetChanged()
+    }
 }

@@ -78,11 +78,11 @@ class PosesListFragment : Fragment() {
 
     private var _binding: PoseLibraryPosesListBinding? = null
     private val binding get() = _binding!!
-
-    private lateinit var allPoses: List<Pose>
     private var filterLevel: Pose.Level? = null
     private var filterCategory: Pose.Category? = null
     private var forClassBuilder: Boolean = false
+    private lateinit var adapter: PoseAdapter
+    private var baseline: List<Pose> = emptyList()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -99,9 +99,19 @@ class PosesListFragment : Fragment() {
         filterCategory = arguments?.getString(ARG_CATEGORY)?.let(Pose.Category::valueOf)
         forClassBuilder = arguments?.getBoolean(ARG_FOR_CLASS_BUILDER, false) == true
 
+        binding.rvPblLevels.layoutManager = LinearLayoutManager(requireContext())
+
+        adapter = PoseAdapter(emptyList()) { pose ->
+            if (forClassBuilder) {
+                navigateSmoothly(ClassBuilderPoseDetailFragment.newInstance(pose.id))
+            } else {
+                navigateSmoothly(PoseDetailFragment.newInstance(pose.id))
+            }
+        }
+        binding.rvPblLevels.adapter = adapter
+
         wireBack(binding.btnPblBack)
         binding.tvBackMain.setOnClickListener { navigateBackToMain() }
-        binding.rvPblLevels.layoutManager = LinearLayoutManager(requireContext())
 
         binding.tvPblTitle.text = when {
             filterLevel != null -> when (filterLevel!!) {
@@ -112,46 +122,34 @@ class PosesListFragment : Fragment() {
             filterCategory != null -> filterCategory!!.toTitle()
             else -> getString(R.string.all_poses)
         }
-        lifecycleScope.launch {
-            val poses = withContext(Dispatchers.IO) {
-                PoseRepository.getAll()
-            }
 
-            allPoses = poses
-            val baseline = poses.filter {
-                (filterLevel    == null || it.level    == filterLevel   ) &&
+        lifecycleScope.launch {
+            val poses = withContext(Dispatchers.IO) { PoseRepository.getAll() }
+
+            baseline = poses.filter {
+                (filterLevel == null || it.level == filterLevel) &&
                         (filterCategory == null || it.category == filterCategory)
             }
 
-            displayPoses(baseline)
+            adapter.update(baseline)
+
             binding.etLpSearch.addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun afterTextChanged(s: Editable?) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                    val q = s.toString().trim().lowercase()
-                    displayPoses(baseline.filter { it.name.lowercase().contains(q) })
+                    val q = s?.toString()?.trim().orEmpty()
+                    val filtered = if (q.isEmpty()) baseline
+                    else baseline.filter { it.name.contains(q, ignoreCase = true) }
+                    adapter.update(filtered)
                 }
             })
         }
     }
 
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun displayPoses(list: List<Pose>) {
-        binding.rvPblLevels.adapter = PoseAdapter(list) { pose ->
-            if (forClassBuilder) {
-                navigateSmoothly(
-                    ClassBuilderPoseDetailFragment.newInstance(pose.id)
-                )
-            } else {
-                navigateSmoothly(
-                    PoseDetailFragment.newInstance(pose.id)
-                )
-            }
-        }
     }
 
     private fun Pose.Category.toTitle(): String = when (this) {

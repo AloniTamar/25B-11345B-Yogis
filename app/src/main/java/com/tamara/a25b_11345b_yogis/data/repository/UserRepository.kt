@@ -1,5 +1,6 @@
 package com.tamara.a25b_11345b_yogis.data.repository
 
+import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.tamara.a25b_11345b_yogis.data.model.UserProfile
@@ -10,22 +11,6 @@ class UserRepository {
     private val database = FirebaseDatabase
         .getInstance("https://yogis-e26d1-default-rtdb.europe-west1.firebasedatabase.app/")
     private val usersRef = database.getReference("users")
-
-    /**
-     * Save or overwrite a UserProfile under /users/{uid}.
-     */
-    fun saveUser(
-        profile: UserProfile,
-        onComplete: (DatabaseError?) -> Unit
-    ) {
-        usersRef.child(profile.uid)
-            .setValue(profile)
-            .addOnCompleteListener { task ->
-                onComplete(if (task.isSuccessful) null else task.exception?.let {
-                    DatabaseError.fromException(it)
-                })
-            }
-    }
 
     suspend fun createOrUpdateUser(
         uid: String,           // kept for payload, not used as key
@@ -48,20 +33,49 @@ class UserRepository {
             .setValue(profile)
             .await()
     }
+
     /**
-     * (Optional) Load a single user profile once.
+     * Read a profile by email (keys are normalized email strings).
      */
-    fun getUser(
-        uid: String,
+    fun getUserByEmail(
+        email: String,
         onLoaded: (UserProfile?) -> Unit,
         onError: (DatabaseError) -> Unit
     ) {
-        usersRef.child(uid)
+        val emailKey = IdUtils.emailKey(email)
+        usersRef.child(emailKey)
             .addListenerForSingleValueEvent(object : com.google.firebase.database.ValueEventListener {
-                override fun onDataChange(snapshot: com.google.firebase.database.DataSnapshot) {
+                override fun onDataChange(snapshot: DataSnapshot) {
                     onLoaded(snapshot.getValue(UserProfile::class.java))
                 }
                 override fun onCancelled(error: DatabaseError) = onError(error)
             })
+    }
+
+    /**
+     * Create or update a profile under /users/{emailKey}.
+     * Uses profile.email to build the key.
+     */
+    fun saveUserByEmail(
+        profile: UserProfile,
+        onComplete: (DatabaseError?) -> Unit
+    ) {
+        require(profile.email.isNotBlank()) { "UserProfile.email must not be blank" }
+
+        val now = System.currentTimeMillis()
+        val payload = profile.copy(
+            createdAt = if (profile.createdAt == 0L) now else profile.createdAt,
+            updatedAt = now
+        )
+
+        val emailKey = IdUtils.emailKey(profile.email)
+        usersRef.child(emailKey)
+            .setValue(payload)
+            .addOnCompleteListener { task ->
+                onComplete(
+                    if (task.isSuccessful) null
+                    else task.exception?.let { DatabaseError.fromException(it) }
+                )
+            }
     }
 }

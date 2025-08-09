@@ -1,7 +1,6 @@
 package com.tamara.a25b_11345b_yogis.ui.profile
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,13 +17,10 @@ class ProfileFragment : Fragment() {
 
     private var _binding: ProfileBinding? = null
     private val binding get() = _binding!!
-
     private val userRepo = UserRepository()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = ProfileBinding.inflate(inflater, container, false)
         return binding.root
@@ -34,33 +30,27 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         wireBack(binding.btnProfileBack)
 
-        val user = FirebaseAuth.getInstance().currentUser
-        val uid = user?.uid
-
-        if (uid == null) {
+        val email = FirebaseAuth.getInstance().currentUser?.email
+        if (email.isNullOrBlank()) {
             Toast.makeText(requireContext(), "Not logged in.", Toast.LENGTH_SHORT).show()
             return
         }
 
-        userRepo.getUser(
-            uid,
+        userRepo.getUserByEmail(
+            email = email,
             onLoaded = onLoaded@{ profile ->
                 if (profile == null) {
                     Toast.makeText(requireContext(), "Profile not found.", Toast.LENGTH_SHORT).show()
                     return@onLoaded
                 }
-                Log.i("ProfileFragment", "Loaded profile: $profile")
-                // Fill the UI with user profile data
-                binding.tvProfileName.text = profile.username
-                binding.tvValueEmail.text = profile.email
-                binding.tvValueYoga.text = profile.yogaType
-                binding.tvValueLevel.text = profile.yearsExperience.toString()
 
-                val userName = profile.username
-                val firstLetter = userName.firstOrNull()?.uppercaseChar() ?: 'U'
-                binding.ivProfilePic.setImageDrawable(
-                    createTextAvatar(requireContext(), firstLetter, 128)
-                )
+                binding.tvProfileName.text = profile.username
+                binding.tvValueEmail.text  = profile.email
+                binding.tvValueYoga.text   = profile.yogaType
+                binding.tvValueLevel.text  = profile.yearsExperience.toString()
+
+                val first = (profile.username.firstOrNull() ?: 'U').uppercaseChar()
+                binding.ivProfilePic.setImageDrawable(createTextAvatar(requireContext(), first, 128))
             },
             onError = { error ->
                 Toast.makeText(requireContext(), "Failed to load profile: ${error.message}", Toast.LENGTH_LONG).show()

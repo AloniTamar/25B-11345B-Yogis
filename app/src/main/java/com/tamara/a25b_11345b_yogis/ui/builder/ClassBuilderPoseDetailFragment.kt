@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
-import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.FirebaseApp
 import com.google.firebase.storage.FirebaseStorage
 import com.tamara.a25b_11345b_yogis.R
@@ -71,23 +70,6 @@ class ClassBuilderPoseDetailFragment : Fragment() {
 
             val pagerAdapter = ImagePagerAdapter(https) { /* no loader here */ }
             binding.vpPdImages.adapter = pagerAdapter
-
-            val single = pagerAdapter.itemCount <= 1
-            binding.btnPdPrev.visibility = if (single) View.GONE else View.VISIBLE
-            binding.btnPdNext.visibility = if (single) View.GONE else View.VISIBLE
-            binding.tlPdIndicator.visibility = if (single) View.GONE else View.VISIBLE
-            if (!single) {
-                TabLayoutMediator(binding.tlPdIndicator, binding.vpPdImages) { _, _ -> }.attach()
-                binding.btnPdPrev.setOnClickListener {
-                    binding.vpPdImages.currentItem =
-                        (binding.vpPdImages.currentItem - 1).coerceAtLeast(0)
-                }
-                binding.btnPdNext.setOnClickListener {
-                    binding.vpPdImages.currentItem =
-                        (binding.vpPdImages.currentItem + 1)
-                            .coerceAtMost((pagerAdapter.itemCount - 1).coerceAtLeast(0))
-                }
-            }
         }
 
         // Add to plan
@@ -102,10 +84,9 @@ class ClassBuilderPoseDetailFragment : Fragment() {
         _binding = null
     }
 
-    // -------- helpers (same logic you used in PoseDetail) --------
 
     private fun storage(): FirebaseStorage {
-        val bucket = FirebaseApp.getInstance().options.storageBucket // e.g. yogis-xxx.firebasestorage.app
+        val bucket = FirebaseApp.getInstance().options.storageBucket
         return if (!bucket.isNullOrBlank()) FirebaseStorage.getInstance("gs://$bucket")
         else FirebaseStorage.getInstance()
     }

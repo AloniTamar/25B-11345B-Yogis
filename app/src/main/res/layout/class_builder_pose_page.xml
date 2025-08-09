@@ -52,39 +52,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
-    <ImageButton
-        android:id="@+id/btn_pd_prev"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:backgroundTint="@android:color/transparent"
-        android:src="@drawable/ic_chevron_left"
-        app:tint="@color/sub_titles_text"
-        app:layout_constraintTop_toTopOf="@id/vp_pd_images"
-        app:layout_constraintBottom_toBottomOf="@id/vp_pd_images"
-        app:layout_constraintStart_toStartOf="@id/vp_pd_images"/>
-
-    <ImageButton
-        android:id="@+id/btn_pd_next"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:backgroundTint="@android:color/transparent"
-        android:src="@drawable/ic_chevron_right"
-        app:tint="@color/sub_titles_text"
-        app:layout_constraintTop_toTopOf="@id/vp_pd_images"
-        app:layout_constraintBottom_toBottomOf="@id/vp_pd_images"
-        app:layout_constraintEnd_toEndOf="@id/vp_pd_images"/>
-
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tl_pd_indicator"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:tabIndicatorHeight="0dp"
-        app:tabGravity="center"
-        app:tabMode="fixed"
-        app:layout_constraintTop_toBottomOf="@id/vp_pd_images"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_pd"
         android:layout_width="0dp"
@@ -96,7 +63,7 @@
         android:scrollbarStyle="outsideOverlay"
         android:scrollbarThumbVertical="@drawable/scrollbar_thumb"
         android:scrollbarTrackVertical="@drawable/scrollbar_track"
-        app:layout_constraintTop_toBottomOf="@id/tl_pd_indicator"
+        app:layout_constraintTop_toBottomOf="@id/vp_pd_images"
         app:layout_constraintBottom_toTopOf="@+id/guideline_ap_action_button"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

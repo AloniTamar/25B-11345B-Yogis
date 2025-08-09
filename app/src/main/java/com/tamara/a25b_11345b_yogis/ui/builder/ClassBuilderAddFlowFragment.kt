@@ -1,41 +1,33 @@
 package com.tamara.a25b_11345b_yogis.ui.builder
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tamara.a25b_11345b_yogis.data.model.ClassPlanElement
 import com.tamara.a25b_11345b_yogis.data.repository.FlowRepository
-import com.tamara.a25b_11345b_yogis.data.model.Flow
-import com.tamara.a25b_11345b_yogis.data.model.Pose
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderAddFlowBinding
-import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
-import com.tamara.a25b_11345b_yogis.ui.shared.ClassPlanAdapter
+import com.tamara.a25b_11345b_yogis.ui.shared.BasicTimelineAdapter
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
+import com.tamara.a25b_11345b_yogis.utils.wireBack
 import com.tamara.a25b_11345b_yogis.viewmodel.ClassBuilderClassPlanViewModel
 
 class ClassBuilderAddFlowFragment : Fragment() {
 
     companion object {
         private const val ARG_FLOW_ID = "flow_id"
-
-        fun newInstance(flowId: String): ClassBuilderAddFlowFragment {
-            val fragment = ClassBuilderAddFlowFragment()
-            val args = Bundle()
-            args.putString(ARG_FLOW_ID, flowId)
-            fragment.arguments = args
-            return fragment
+        fun newInstance(flowId: String) = ClassBuilderAddFlowFragment().apply {
+            arguments = Bundle().apply { putString(ARG_FLOW_ID, flowId) }
         }
     }
 
-    private val viewModel: ClassBuilderClassPlanViewModel by activityViewModels()
     private var _binding: ClassBuilderAddFlowBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: ClassBuilderClassPlanViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,53 +38,34 @@ class ClassBuilderAddFlowFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        wireBack(binding.btnCtBack)
 
-        val flowId = arguments?.getString(ARG_FLOW_ID) ?: return
-        val flow: Flow = FlowRepository.getById(flowId)
-            ?: run {
-                // TODO: handle missing flow
-                navigateSmoothly(ClassBuilderActionsFragment())
-                return
-            }
-
-        // show the flow details in the timeline
-        binding.rvTimeline.apply {
-            layoutManager = LinearLayoutManager(requireContext())
-            adapter = ClassPlanAdapter(listOf(ClassPlanElement.FlowElement(flow)))
+        val flowId = requireArguments().getString(ARG_FLOW_ID)
+        if (flowId.isNullOrBlank()) {
+            Toast.makeText(requireContext(), "Missing flow id", Toast.LENGTH_SHORT).show()
+            return
         }
 
-        // display basic info
+        val flow = FlowRepository.getById(flowId)
+        if (flow == null) {
+            Toast.makeText(requireContext(), "Flow not found.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Title/metadata
         binding.tvCtTitle.text = flow.flowName
-        binding.chipDuration.text = "${flow.recommendedRounds} rounds"
-        binding.chipLevel.text = when (flow.level) {
-            Pose.Level.beginner     -> "Beginner"
-            Pose.Level.intermediate -> "Intermediate"
-            Pose.Level.advanced     -> "Advanced"
-        }
 
-        // back button
-        binding.btnCtBack.setOnClickListener {
-            navigateSmoothly(ClassBuilderActionsFragment())
-        }
+        // ✅ Show the actual poses inside the flow (like the library screen)
+        binding.rvTimeline.layoutManager = LinearLayoutManager(requireContext())
+        val poseElements = flow.poses.map { ClassPlanElement.PoseElement(it) }
+        binding.rvTimeline.adapter = BasicTimelineAdapter(poseElements)
 
-        // add flow button
+        // Add flow to current class plan
         binding.btnAddFlow.setOnClickListener {
             viewModel.addFlow(flow)
             navigateSmoothly(ClassBuilderActionsFragment())
-        }
-
-        binding.tvBackMenu.setOnClickListener {
-            AlertDialog.Builder(requireContext())
-                .setTitle("Discard changes?")
-                .setMessage("Your changes won’t be saved. Continue?")
-                .setPositiveButton(android.R.string.yes) { _, _ ->
-                    navigateSmoothly(MainLoggedInFragment())
-                }
-                .setNegativeButton(android.R.string.no, null)
-                .show()
         }
     }
 

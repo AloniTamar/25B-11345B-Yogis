@@ -45,13 +45,15 @@ class PoseLibraryFragment : Fragment() {
 
         // All Poses
         binding.cardAllPoses.setOnClickListener {
-            navigateSmoothly(PosesListFragment.newInstanceAllForBuilder())
+            navigateSmoothly(PosesListFragment.newInstanceAll())
         }
 
         // Flows
         binding.cardFlows.setOnClickListener {
             navigateSmoothly(PoseLibraryFlowListFragment())
         }
+
+        binding.btnPlAdd.visibility = View.GONE
     }
 
     override fun onDestroyView() {

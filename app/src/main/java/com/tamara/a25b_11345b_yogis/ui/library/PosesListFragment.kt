@@ -54,6 +54,12 @@ class PosesListFragment : Fragment() {
                 }
             }
 
+        fun newInstanceAll(): PosesListFragment = PosesListFragment().apply {
+            arguments = Bundle().apply {
+                putBoolean(ARG_FOR_CLASS_BUILDER, false)
+            }
+        }
+
         fun newInstanceForBuilder(category: Pose.Category): PosesListFragment =
             PosesListFragment().apply {
                 arguments = Bundle().apply {

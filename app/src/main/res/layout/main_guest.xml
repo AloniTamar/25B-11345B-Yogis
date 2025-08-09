@@ -66,7 +66,7 @@
                 android:text="@string/class_builder"
                 android:textSize="16sp"
                 android:fontFamily="@font/urbanist"
-                android:textColor="@color/black"
+                android:textColor="@color/disabled_button"
                 app:layout_constraintBaseline_toBaselineOf="@id/ic_class_builder"
                 app:layout_constraintStart_toEndOf="@id/ic_class_builder"
                 app:layout_constraintEnd_toEndOf="parent"/>
@@ -79,20 +79,11 @@
                 android:text="@string/plan_your_next_class"
                 android:textSize="14sp"
                 android:fontFamily="@font/urbanist"
-                android:textColor="@color/sub_titles_text"
+                android:textColor="@color/disabled_button"
                 app:layout_constraintTop_toBottomOf="@id/tv_class_builder_title"
                 app:layout_constraintStart_toStartOf="@id/tv_class_builder_title"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
-            <ImageView
-                android:id="@+id/ic_class_builder_chev"
-                android:layout_width="16dp"
-                android:layout_height="16dp"
-                android:src="@drawable/ic_chevron_right"
-                app:tint="@color/sub_titles_text"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
@@ -158,6 +149,62 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/sub_titles_text" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/card_teacing_mode"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:strokeColor="@color/white"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/card_pose_library"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/ic_teaching_mode"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_card_mark"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_teaching_mode_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:fontFamily="@font/urbanist_bold"
+                android:text="@string/teaching_mode"
+                android:textSize="16sp"
+                android:textColor="@color/disabled_button"
+                app:layout_constraintBaseline_toBaselineOf="@id/ic_teaching_mode"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ic_teaching_mode" />
+
+            <TextView
+                android:id="@+id/tv_teaching_mode_sub"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:fontFamily="@font/urbanist"
+                android:text="@string/view_your_class_while_you_teach"
+                android:textColor="@color/disabled_button"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@id/tv_teaching_mode_title"
+                app:layout_constraintTop_toBottomOf="@id/tv_teaching_mode_title" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 

@@ -31,5 +31,4 @@ object FlowRepository {
             .await()
             .getValue(Flow::class.java)
     }
-
 }

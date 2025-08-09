@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.tamara.a25b_11345b_yogis.ui.auth.RegisterFragment
-import com.tamara.a25b_11345b_yogis.ui.builder.ClassBuilderFragment
 import com.tamara.a25b_11345b_yogis.ui.library.PoseLibraryFragment
 import com.tamara.a25b_11345b_yogis.databinding.MainGuestBinding
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
@@ -29,8 +28,8 @@ class MainGuestFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // TODO: hook up each card/button:
-        binding.cardClassBuilder.setOnClickListener { navigateSmoothly(ClassBuilderFragment()) }
+        binding.cardClassBuilder.isClickable = false
+        binding.cardTeacingMode.isClickable = false
         binding.cardPoseLibrary.setOnClickListener { navigateSmoothly(PoseLibraryFragment()) }
         binding.tvRegisterNow.setOnClickListener { navigateSmoothly(RegisterFragment()) }
     }

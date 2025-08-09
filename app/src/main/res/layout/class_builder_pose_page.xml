@@ -123,6 +123,7 @@
                     android:textColor="@color/black"/>
 
                 <TextView
+                    android:id="@+id/tv_pd_level"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/beginners"
@@ -147,6 +148,7 @@
                     android:textColor="@color/black"/>
 
                 <TextView
+                    android:id="@+id/tv_pd_family"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/forward_bends"
@@ -177,6 +179,7 @@
                         android:textColor="@color/black"/>
 
                     <TextView
+                        android:id="@+id/tv_pd_duration_label"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/__repetitions"
@@ -186,6 +189,7 @@
                 </LinearLayout>
 
                 <TextView
+                    android:id="@+id/tv_pd_duration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/_2_minutes"
@@ -204,6 +208,7 @@
                 android:paddingVertical="8dp"/>
 
             <TextView
+                android:id="@+id/tv_pd_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/start_on_all_fours_tuck_your_toes"
@@ -213,6 +218,7 @@
                 android:lineSpacingExtra="4dp"/>
 
             <TextView
+                android:id="@+id/tv_pd_notes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/notes"
@@ -223,6 +229,7 @@
                 android:paddingBottom="8dp"/>
 
             <TextView
+                android:id="@+id/tv_pd_notes_content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/keep_feet_hip_width_apart"

@@ -46,7 +46,6 @@ class LoginFragment : Fragment() {
             navigateSmoothly(ForgotPasswordFragment())
         }
 
-        // if you have a “Register Now” link in your login.xml:
         binding.tvRegisterNow.setOnClickListener {
             navigateSmoothly(RegisterFragment())
         }

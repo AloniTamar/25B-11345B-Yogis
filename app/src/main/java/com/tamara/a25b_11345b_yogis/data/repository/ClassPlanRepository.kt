@@ -35,13 +35,11 @@ class ClassPlanRepository {
                         return
                     }
                     try {
-                        // 1) pull the scalar fields
                         val planName = snapshot.child("planName").getValue(String::class.java) ?: ""
                         val userId   = snapshot.child("userId").getValue(String::class.java) ?: ""
                         val level    = snapshot.child("level").getValue(String::class.java)   ?: ""
                         val duration = snapshot.child("duration").getValue(Int::class.java)   ?: 0
 
-                        // 2) manually parse each element
                         val elements = mutableListOf<ClassPlanElement>()
                         for (elemNode in snapshot.child("elements").children) {
                             val poseSnap = elemNode.child("pose")
@@ -57,7 +55,6 @@ class ClassPlanRepository {
                             }
                         }
 
-                        // 3) build and return
                         val plan = ClassPlan(
                             planId   = planId,
                             planName = planName,

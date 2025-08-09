@@ -9,10 +9,10 @@ import com.tamara.a25b_11345b_yogis.R
 fun Fragment.navigateSmoothly(to: Fragment, addToBackStack: Boolean = true) {
     parentFragmentManager.beginTransaction()
         .setCustomAnimations(
-            R.anim.fade_in,   // enter
-            R.anim.fade_out,  // exit
-            R.anim.fade_in,   // popEnter
-            R.anim.fade_out   // popExit
+            R.anim.fade_in,
+            R.anim.fade_out,
+            R.anim.fade_in,
+            R.anim.fade_out
         )
         .replace(R.id.container, to)
         .apply { if (addToBackStack) addToBackStack(null) }

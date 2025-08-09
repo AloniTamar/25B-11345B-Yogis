@@ -31,27 +31,22 @@ class MainLoggedInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // “Class Builder” card
         binding.cardClassBuilder.setOnClickListener {
             navigateSmoothly(ClassBuilderFragment())
         }
 
-        // “Pose Library” card
         binding.cardPoseLibrary.setOnClickListener {
             navigateSmoothly(PoseLibraryFragment())
         }
 
-        // “Teaching Mode” card
         binding.cardTeacingMode.setOnClickListener {
             navigateSmoothly(PlanListFragment())
         }
 
-        // “View My Profile” button (footer)
         binding.btnViewProfile.setOnClickListener {
             navigateSmoothly(ProfileFragment())
         }
 
-        // “Log Out” button (footer)
         binding.tvLogOut.setOnClickListener {
             AuthManager.signOut()
             navigateSmoothly(WelcomeFragment())

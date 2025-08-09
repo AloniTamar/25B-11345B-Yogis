@@ -41,9 +41,7 @@ class ClassBuilderAddPoseFragment : Fragment() {
     private var _binding: ClassBuilderAddPoseContainerBinding? = null
     private val binding get() = _binding!!
 
-    // user-picked image (we upload it only when saving)
     private var selectedImageUri: Uri? = null
-    // local info we read from the selected image
     private var selectedImageWidth: Int? = null
     private var selectedImageHeight: Int? = null
     private var selectedImageMime: String? = null
@@ -60,7 +58,6 @@ class ClassBuilderAddPoseFragment : Fragment() {
         }
     }
 
-    /** Read width/height/mime locally; do NOT upload yet */
     private fun captureLocalImageInfo(localUri: Uri) {
         selectedImageUri = localUri
         binding.imageUploadOverlay.visibility = View.VISIBLE
@@ -186,7 +183,6 @@ class ClassBuilderAddPoseFragment : Fragment() {
         }
 
         nb.btnAddPose.setOnClickListener {
-            // 1) Read inputs
             val name = nb.etPoseName.text.toString().trim()
             val levelText = nb.acLevel.text.toString().trim().lowercase()
             val level = try { Pose.Level.valueOf(levelText) } catch (_: Exception) { null }
@@ -194,7 +190,6 @@ class ClassBuilderAddPoseFragment : Fragment() {
             val reps = nb.etRepetitions.text.toString().toIntOrNull() ?: 0
             val description = nb.etDescription.text.toString().trim()
 
-            // 2) Validations
             when {
                 name.isBlank() -> {
                     Toast.makeText(requireContext(), "Name is required", Toast.LENGTH_SHORT).show()
@@ -222,7 +217,6 @@ class ClassBuilderAddPoseFragment : Fragment() {
                 }
             }
 
-            // 3) Save flow (id + image) atomically
             binding.imageUploadOverlay.visibility = View.VISIBLE
 
             viewLifecycleOwner.lifecycleScope.launch {
@@ -231,11 +225,9 @@ class ClassBuilderAddPoseFragment : Fragment() {
                     val posesRef = db.getReference("poses")
                     val mediaRef = db.getReference("mediaAssets")
 
-                    // poseId = readable & unique
                     val base = IdUtils.slugify(name)
                     val poseId = IdUtils.nextAvailableId(posesRef, base)
 
-                    // upload image using the same id
                     val storage = FirebaseStorage.getInstance()
                     val fileRef = storage.reference.child("pose_images/$poseId.jpg")
 
@@ -248,7 +240,6 @@ class ClassBuilderAddPoseFragment : Fragment() {
                     val mime = selectedImageMime ?: "image/jpeg"
                     val now = System.currentTimeMillis()
 
-                    // write media metadata under the SAME id
                     val meta = mapOf(
                         "assetId" to poseId,
                         "url" to downloadUrl,
@@ -260,7 +251,6 @@ class ClassBuilderAddPoseFragment : Fragment() {
                     )
                     mediaRef.child(poseId).setValue(meta).await()
 
-                    // build and save Pose (repo will keep the provided id)
                     val newPose = Pose(
                         id = poseId,
                         name = name,

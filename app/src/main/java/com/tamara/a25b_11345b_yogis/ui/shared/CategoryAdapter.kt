@@ -15,7 +15,6 @@ class CategoryAdapter(
         : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(category: Pose.Category) {
-            // display a human‐friendly title (e.g. “Forward Bends” instead of “forwardBends”)
             binding.tvLevelTitle.text = category.name
                 .replace(Regex("([a-z])([A-Z])"), "$1 $2")
                 .replaceFirstChar { it.uppercase() }

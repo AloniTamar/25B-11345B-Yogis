@@ -29,7 +29,6 @@ class ForgotPasswordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnFpSendCode.setOnClickListener {
-            // 1) Read & validate the email
             val email = binding.etFpEmail.text.toString().trim()
             if (email.isBlank()) {
                 Toast.makeText(requireContext(),
@@ -38,13 +37,11 @@ class ForgotPasswordFragment : Fragment() {
                 return@setOnClickListener
             }
 
-            // 2) Trigger Firebase’s built-in reset email
             AuthManager.sendPasswordResetEmail(email) { success, exception ->
                 if (success) {
                     Toast.makeText(requireContext(),
                         "Password reset link sent to $email",
                         Toast.LENGTH_LONG).show()
-                    // 3) Navigate back to login (replace with your actual action ID)
                     navigateSmoothly(LoginFragment())
                 } else {
                     Log.e("ForgotPwd", "Reset failed", exception)

@@ -32,10 +32,8 @@ class PlanListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Hide until loaded
         binding.rvPblLevels.visibility = View.GONE
 
-        // Get current user ID from FirebaseAuth
         val emailKey = FirebaseAuth.getInstance().currentUser?.email
             ?.let { IdUtils.emailKey(it) }
 

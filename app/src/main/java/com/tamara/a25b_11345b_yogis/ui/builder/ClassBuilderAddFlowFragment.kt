@@ -59,15 +59,12 @@ class ClassBuilderAddFlowFragment : Fragment() {
         binding.chipDuration.text = flow.recommendedRounds.toString() + " rounds"
         binding.chipLevel.text = flow.level.toString()
 
-        // Title/metadata
         binding.tvCtTitle.text = flow.flowName
 
-        // ✅ Show the actual poses inside the flow (like the library screen)
         binding.rvTimeline.layoutManager = LinearLayoutManager(requireContext())
         val poseElements = flow.poses.map { ClassPlanElement.PoseElement(it) }
         binding.rvTimeline.adapter = BasicTimelineAdapter(poseElements)
 
-        // Add flow to current class plan
         binding.btnAddFlow.setOnClickListener {
             viewModel.addFlow(flow)
             navigateSmoothly(ClassBuilderActionsFragment())

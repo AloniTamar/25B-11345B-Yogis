@@ -66,7 +66,6 @@ class ClassBuilderFragment : Fragment() {
         val adapter = ArrayAdapter(requireContext(), R.layout.item_dropdown_menu, levels)
         binding.acLevel.setAdapter(adapter)
 
-        // Keep this if you still want the checkmark to toggle
         binding.acLevel.setOnItemClickListener { _, view, _, _ ->
             (view as? CheckedTextView)?.isChecked = true
             checkForm()

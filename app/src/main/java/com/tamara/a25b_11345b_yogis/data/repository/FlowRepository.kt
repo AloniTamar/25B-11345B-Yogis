@@ -7,7 +7,6 @@ import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.tasks.await
 
 object FlowRepository {
-    // 1. MediatorLiveData that listens to PoseRepository.poses
     private val flowsRef = FirebaseDatabase
         .getInstance("https://yogis-e26d1-default-rtdb.europe-west1.firebasedatabase.app/")
         .getReference("flows")

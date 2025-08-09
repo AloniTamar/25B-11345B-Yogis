@@ -18,7 +18,6 @@ object PoseRepository {
     private val _poses = MutableLiveData<List<Pose>>(emptyList())
     val poses: LiveData<List<Pose>> = _poses
 
-    // Raw DTO to avoid enum-mapping crashes
     private data class PoseRaw(
         var id: String? = null,
         var name: String? = null,
@@ -52,7 +51,6 @@ object PoseRepository {
 
     private fun parseLevel(s: String?): Pose.Level? {
         if (s.isNullOrBlank()) return null
-        // Your enum names are already lowercase (you used valueOf(lowercase()) before)
         return try { Pose.Level.valueOf(s) } catch (_: IllegalArgumentException) { null }
     }
 

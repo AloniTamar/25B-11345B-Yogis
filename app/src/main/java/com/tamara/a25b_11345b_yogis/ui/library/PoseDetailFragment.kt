@@ -129,7 +129,7 @@ class PoseDetailFragment : Fragment() {
     }
 
     private fun storage(): FirebaseStorage {
-        val bucket = FirebaseApp.getInstance().options.storageBucket // e.g. yogis-e26d1.firebasestorage.app
+        val bucket = FirebaseApp.getInstance().options.storageBucket
         return if (!bucket.isNullOrBlank()) {
             FirebaseStorage.getInstance("gs://$bucket")
         } else {
@@ -149,7 +149,7 @@ class PoseDetailFragment : Fragment() {
 
                     raw.startsWith("http", true) -> {
                         val uri = raw.toUri()
-                        val seg = uri.pathSegments // [v0, b, <bucket>, o, <encodedPath>]
+                        val seg = uri.pathSegments
                         val bucketFromUrl = seg.getOrNull(2) ?: return@mapNotNull null
                         val encodedPath   = seg.getOrNull(4) ?: return@mapNotNull null
                         val objectPath = URLDecoder.decode(encodedPath, StandardCharsets.UTF_8.name())

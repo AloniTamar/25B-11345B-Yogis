@@ -6,7 +6,6 @@ import com.google.firebase.database.FirebaseDatabase
 class YogisApp : Application() {
     override fun onCreate() {
         super.onCreate()
-        // Enable disk persistence for Realtime Database
         FirebaseDatabase.getInstance().setPersistenceEnabled(true)
     }
 }

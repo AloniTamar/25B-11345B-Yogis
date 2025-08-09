@@ -10,27 +10,22 @@ import com.tamara.a25b_11345b_yogis.data.model.Pose.Level
 
 class ClassBuilderClassPlanViewModel : ViewModel() {
 
-    // Metadata for the class (set from UI)
     val className = MutableLiveData<String>()
     val durationMinutes = MutableLiveData<Int>()
     private val _level = MutableLiveData<Level?>(null)
     val level: LiveData<Level?> = _level
 
-    // List of plan elements (poses and flows)
     private val _elements = MutableLiveData<List<ClassPlanElement>>(emptyList())
     val elements: LiveData<List<ClassPlanElement>> = _elements
 
-    // Add pose
     fun addPose(pose: Pose) {
         _elements.value = _elements.value.orEmpty() + ClassPlanElement.PoseElement(pose)
     }
 
-    // Add flow
     fun addFlow(flow: Flow) {
         _elements.value = _elements.value.orEmpty() + ClassPlanElement.FlowElement(flow)
     }
 
-    // Clear plan (for reset/new class)
     fun clearPlan() {
         _level.value = null
         _elements.value = emptyList()

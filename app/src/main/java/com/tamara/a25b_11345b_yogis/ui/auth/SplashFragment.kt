@@ -33,10 +33,8 @@ class SplashFragment : Fragment() {
             delay(2000)
             val user = AuthManager.currentUser()
             if (user != null) {
-                // User is logged in
                 navigateSmoothly(MainLoggedInFragment())
             } else {
-                // No user logged in
                 navigateSmoothly(WelcomeFragment())
             }
         }

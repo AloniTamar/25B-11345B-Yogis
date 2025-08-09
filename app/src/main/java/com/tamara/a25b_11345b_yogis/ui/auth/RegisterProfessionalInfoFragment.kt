@@ -37,14 +37,12 @@ class RegisterProfessionalInfoFragment : Fragment() {
         }
 
         binding.btnProfessionalRegister.setOnClickListener {
-            // Collect prof fields
             val years = binding.etLevel.text.toString().trim().toIntOrNull() ?: 0
             val yogaType = binding.etYoga.text.toString().trim()
 
             RegistrationManager.yearsExperience = years
             RegistrationManager.yogaType = yogaType
 
-            // Perform sign-up now that we have everything
             AuthManager.signUp(
                 RegistrationManager.email,
                 RegistrationManager.password
@@ -58,7 +56,6 @@ class RegisterProfessionalInfoFragment : Fragment() {
                     return@signUp
                 }
 
-                // We’re now signed in, grab the user
                 val firebaseUser = AuthManager.currentUser()
                 if (firebaseUser == null) {
                     Toast.makeText(
@@ -69,7 +66,6 @@ class RegisterProfessionalInfoFragment : Fragment() {
                     return@signUp
                 }
 
-                // Save profile under /users/{uid} and index by email at /users_by_email/{emailKey}
                 viewLifecycleOwner.lifecycleScope.launch {
                     try {
                         UserRepository().createOrUpdateUser(

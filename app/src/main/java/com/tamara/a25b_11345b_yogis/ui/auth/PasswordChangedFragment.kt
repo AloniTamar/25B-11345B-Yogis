@@ -27,7 +27,6 @@ class PasswordChangedFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnPcLogin.setOnClickListener {
-            // Go back into your logged-in home
             navigateSmoothly(MainLoggedInFragment(), addToBackStack = false)
         }
     }

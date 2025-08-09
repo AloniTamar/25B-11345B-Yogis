@@ -36,13 +36,11 @@ class OtpVerificationFragment : Fragment() {
                     "Enter the 4-digit code",
                     Toast.LENGTH_SHORT).show()
             } else {
-                // TODO: verify code with Firebase
                 navigateSmoothly(CreateNewPasswordFragment())
             }
         }
 
         binding.tvResend.setOnClickListener {
-            // TODO: resend OTP
             Toast.makeText(requireContext(),
                 "Resend code not yet implemented",
                 Toast.LENGTH_SHORT).show()

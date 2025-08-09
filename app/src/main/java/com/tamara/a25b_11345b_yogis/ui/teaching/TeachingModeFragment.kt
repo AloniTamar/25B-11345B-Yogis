@@ -40,14 +40,12 @@ class TeachingModeFragment : Fragment() {
     override fun onViewCreated(view: View, saved: Bundle?) {
         super.onViewCreated(view, saved)
 
-        // read the planId argument
         val planId = requireArguments().getString("planId")
             ?: return showPlaceholder("No class plan specified.")
 
         binding.tvCtTitle.text = "Teaching Class"
         binding.rvTimeline.visibility = View.GONE
 
-        // load the ClassPlan and show its timeline
         planRepo.observePlan(
             planId,
             onPlanLoaded = { plan ->
@@ -63,15 +61,15 @@ class TeachingModeFragment : Fragment() {
                                     val prev = currentOrder
                                     currentOrder += 1
                                     timelineAdapter.currentOrder = currentOrder
-                                    timelineAdapter.notifyItemChanged(prev) // checked now!
+                                    timelineAdapter.notifyItemChanged(prev)
                                     if (currentOrder < plan.elements.size)
-                                        timelineAdapter.notifyItemChanged(currentOrder) // next one is now clickable
+                                        timelineAdapter.notifyItemChanged(currentOrder)
                                     else
                                         Toast.makeText(requireContext(), "Class finished!", Toast.LENGTH_SHORT).show()
                                 }
                             }
                         )
-                        adapter = timelineAdapter      // <<-- THIS LINE WAS MISSING!
+                        adapter = timelineAdapter
                         visibility = View.VISIBLE
                     }
                 }
@@ -85,7 +83,6 @@ class TeachingModeFragment : Fragment() {
             }
         )
 
-        // back nav
         wireBack(binding.btnCtBack)
         binding.tvBackMenu.visibility = View.GONE
 

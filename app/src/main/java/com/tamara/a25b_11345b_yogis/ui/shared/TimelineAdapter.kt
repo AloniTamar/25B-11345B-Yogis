@@ -12,7 +12,7 @@ import com.tamara.a25b_11345b_yogis.databinding.ItemAdvancedTimelineBinding
 class TimelineAdapter(
     private val items: List<ClassPlanElement>,
     var currentOrder: Int = -1,
-    private val onItemClick: (Int) -> Unit // New!
+    private val onItemClick: (Int) -> Unit
 ) : RecyclerView.Adapter<TimelineAdapter.ElementHolder>() {
 
     override fun getItemCount() = items.size
@@ -59,10 +59,9 @@ class TimelineAdapter(
                 }
             }
             if (isNext) {
-                // e.g., highlight the border, change card color, show animation, etc.
                 binding.cardEvent.strokeColor = ContextCompat.getColor(binding.root.context, R.color.primary_light)
             } else {
-                binding.cardEvent.strokeColor = ContextCompat.getColor(binding.root.context, R.color.white)
+                binding.cardEvent.strokeColor = ContextCompat.getColor(binding.root.context, R.color.disabled_button)
             }
 
             binding.ivCheckbox.setImageResource(

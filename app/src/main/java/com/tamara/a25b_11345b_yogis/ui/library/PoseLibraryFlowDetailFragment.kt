@@ -55,10 +55,8 @@ class PoseLibraryFlowDetailFragment : Fragment() {
         binding.chipDuration.text = flow.recommendedRounds.toString() + " rounds"
         binding.chipLevel.text = flow.level.toString()
 
-        // Set fields
         binding.tvCtTitle.text = flow.flowName
 
-        // Show poses inside the flow, if available
         binding.rvTimeline.layoutManager = LinearLayoutManager(requireContext())
         val poseElements: List<ClassPlanElement> = flow.poses.map { pose ->
             ClassPlanElement.PoseElement(pose)

@@ -15,7 +15,6 @@ class LevelAdapter(
     inner class ViewHolder(private val binding: ItemPoseBinding)
         : RecyclerView.ViewHolder(binding.root) {
         fun bind(level: Pose.Level) {
-            // Display human-friendly level name
             val text = when(level) {
                 Pose.Level.beginner -> "Beginner"
                 Pose.Level.intermediate -> "Intermediate"

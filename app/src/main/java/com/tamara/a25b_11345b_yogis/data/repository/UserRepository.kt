@@ -13,19 +13,19 @@ class UserRepository {
     private val usersRef = database.getReference("users")
 
     suspend fun createOrUpdateUser(
-        uid: String,           // kept for payload, not used as key
+        uid: String,
         email: String,
         data: Map<String, Any?>
     ) {
         val db = FirebaseDatabase.getInstance(
             "https://yogis-e26d1-default-rtdb.europe-west1.firebasedatabase.app/"
         )
-        val emailKey = IdUtils.emailKey(email) // e.g. "name,domain,com"
+        val emailKey = IdUtils.emailKey(email)
 
         val profile = HashMap<String, Any?>().apply {
-            put("uid", uid)          // still stored inside object for reference
+            put("uid", uid)
             put("email", email)
-            putAll(data)             // username, yogaType, yearsExperience, timestamps, etc.
+            putAll(data)
         }
 
         db.getReference("users")
@@ -34,9 +34,6 @@ class UserRepository {
             .await()
     }
 
-    /**
-     * Read a profile by email (keys are normalized email strings).
-     */
     fun getUserByEmail(
         email: String,
         onLoaded: (UserProfile?) -> Unit,
@@ -52,10 +49,6 @@ class UserRepository {
             })
     }
 
-    /**
-     * Create or update a profile under /users/{emailKey}.
-     * Uses profile.email to build the key.
-     */
     fun saveUserByEmail(
         profile: UserProfile,
         onComplete: (DatabaseError?) -> Unit

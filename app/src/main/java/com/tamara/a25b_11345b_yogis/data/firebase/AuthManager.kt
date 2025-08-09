@@ -66,12 +66,10 @@ object AuthManager {
         val user = FirebaseAuth.getInstance().currentUser
         val email = user?.email ?: return callback(false, "User not logged in")
 
-        // Re-authenticate
         val credential = com.google.firebase.auth.EmailAuthProvider.getCredential(email, currentPassword)
         user.reauthenticate(credential)
             .addOnCompleteListener { reauthTask ->
                 if (reauthTask.isSuccessful) {
-                    // Update password
                     user.updatePassword(newPassword)
                         .addOnCompleteListener { updateTask ->
                             if (updateTask.isSuccessful) {

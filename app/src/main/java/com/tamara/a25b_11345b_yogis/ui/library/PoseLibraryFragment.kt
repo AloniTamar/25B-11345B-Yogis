@@ -27,28 +27,23 @@ class PoseLibraryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // back arrow
         wireBack(binding.btnPlBack)
         binding.tvBackMain.setOnClickListener {
             navigateBackToMain()
         }
 
-        // View by Levels
         binding.cardViewByLevels.setOnClickListener {
             navigateSmoothly(PosesByLevelsFragment())
         }
 
-        // View by Types
         binding.cardViewByTypes.setOnClickListener {
             navigateSmoothly(PosesByTypesFragment())
         }
 
-        // All Poses
         binding.cardAllPoses.setOnClickListener {
             navigateSmoothly(PosesListFragment.newInstanceAll())
         }
 
-        // Flows
         binding.cardFlows.setOnClickListener {
             navigateSmoothly(PoseLibraryFlowListFragment())
         }

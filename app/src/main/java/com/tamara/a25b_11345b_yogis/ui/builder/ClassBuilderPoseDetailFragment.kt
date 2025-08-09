@@ -24,9 +24,13 @@ import kotlinx.coroutines.withContext
 import java.net.URLDecoder
 import java.nio.charset.StandardCharsets
 import androidx.core.net.toUri
+import androidx.fragment.app.activityViewModels
 import com.google.firebase.database.FirebaseDatabase
 import com.tamara.a25b_11345b_yogis.ui.library.PoseDetailFragment
 import com.tamara.a25b_11345b_yogis.utils.navigateBackToMain
+import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
+import com.tamara.a25b_11345b_yogis.viewmodel.ClassBuilderClassPlanViewModel
+import kotlin.getValue
 
 class ClassBuilderPoseDetailFragment : Fragment() {
 
@@ -39,6 +43,8 @@ class ClassBuilderPoseDetailFragment : Fragment() {
 
     private var _binding: ClassBuilderPosePageBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: ClassBuilderClassPlanViewModel by activityViewModels()
     private val poseId: String by lazy { requireArguments().getString(ARG_POSE_ID)!! }
 
     override fun onCreateView(
@@ -118,6 +124,10 @@ class ClassBuilderPoseDetailFragment : Fragment() {
                 binding.tvPdDuration.setTextColor(colorSubtitle)
                 binding.tvPdRepsLabel.setTextColor(colorBlack)
             }
+            binding.btnAddPose.setOnClickListener {
+                viewModel.addPose(pose)
+                navigateSmoothly(ClassBuilderActionsFragment())
+            }
         }
     }
 
@@ -145,7 +155,7 @@ class ClassBuilderPoseDetailFragment : Fragment() {
 
                     raw.startsWith("http", true) -> {
                         val uri = raw.toUri()
-                        val seg = uri.pathSegments // [v0, b, <bucket>, o, <encodedPath>]
+                        val seg = uri.pathSegments
                         val bucketFromUrl = seg.getOrNull(2) ?: return@mapNotNull null
                         val encodedPath   = seg.getOrNull(4) ?: return@mapNotNull null
                         val objectPath = URLDecoder.decode(encodedPath, StandardCharsets.UTF_8.name())

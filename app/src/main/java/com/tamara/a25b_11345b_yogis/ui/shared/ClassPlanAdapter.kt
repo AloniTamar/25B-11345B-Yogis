@@ -29,7 +29,6 @@ class ClassPlanAdapter(
     override fun onBindViewHolder(holder: TimelineViewHolder, position: Int) {
         holder.bind(elements[position])
 
-        // highlight if needed
         val card = holder.binding.root as? MaterialCardView
         if (highlightPosition == position) {
             card?.setCardBackgroundColor(

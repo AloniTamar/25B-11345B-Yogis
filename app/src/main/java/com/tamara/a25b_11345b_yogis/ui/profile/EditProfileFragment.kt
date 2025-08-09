@@ -47,12 +47,10 @@ class EditProfileFragment : Fragment() {
             return
         }
 
-        // Load existing profile by email
         userRepo.getUserByEmail(
             email = email,
             onLoaded = onLoaded@{ profile ->
                 if (profile == null) {
-                    // Pre-fill with auth values if no profile exists yet
                     loadedProfile = UserProfile(
                         uid = uid,
                         email = email,
@@ -100,7 +98,6 @@ class EditProfileFragment : Fragment() {
                 username = newName,
                 yogaType = newType,
                 yearsExperience = newYears
-                // createdAt kept; updatedAt handled in repository
             )
 
             userRepo.saveUserByEmail(updated) { err ->

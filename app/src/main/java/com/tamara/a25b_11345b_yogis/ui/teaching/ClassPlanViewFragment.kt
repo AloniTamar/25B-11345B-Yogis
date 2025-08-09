@@ -36,7 +36,6 @@ class ClassPlanViewFragment : Fragment() {
         val planId = requireArguments().getString("planId")
             ?: throw IllegalStateException("ClassPlanViewFragment needs a planId")
 
-        // hide until loaded
         binding.chipgroupCtInfo.visibility = View.GONE
         binding.rvTimeline.visibility = View.GONE
 
@@ -47,13 +46,11 @@ class ClassPlanViewFragment : Fragment() {
                     return@observePlan
                 }
 
-                // 1) header
                 binding.tvCtTitle.text       = plan.planName
                 binding.chipDuration.text    = "${plan.duration} min"
                 binding.chipLevel.text       = plan.level
                 binding.chipgroupCtInfo.visibility = View.VISIBLE
 
-                // 2) timeline + footer
                 binding.rvTimeline.apply {
                     layoutManager = LinearLayoutManager(requireContext())
                     timelineAdapter = TimelineAdapter(

@@ -47,7 +47,6 @@ class ViewClassBeforeTeachingFragment : Fragment() {
                 binding.chipDuration.text = "${plan.duration} min"
                 binding.chipLevel.text = plan.level
 
-                // Show elements in a RecyclerView, use plain view adapter (no checkboxes!)
                 binding.rvTimeline.apply {
                     layoutManager = LinearLayoutManager(requireContext())
                     adapter = BasicTimelineAdapter(plan.elements)
@@ -66,7 +65,6 @@ class ViewClassBeforeTeachingFragment : Fragment() {
             navigateSmoothly(fragment)
         }
 
-        // Handle back navigation
         binding.tvBackMenu.setOnClickListener { requireActivity().onBackPressed() }
         binding.btnCtBack.setOnClickListener { requireActivity().onBackPressed() }
     }

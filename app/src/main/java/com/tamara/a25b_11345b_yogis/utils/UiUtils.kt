@@ -17,7 +17,6 @@ fun colorForLetter(letter: Char): Int {
         0xFFB2DFDB.toInt(), // Pastel teal
         0xFFF8BBD0.toInt()  // Pastel pink
     )
-    // Use letter's code to index into the color array
     val idx = (letter.uppercaseChar().code - 'A'.code) % colors.size
     return colors[idx]
 }
@@ -33,13 +32,11 @@ fun createTextAvatar(context: Context, letter: Char, size: Int = 128): BitmapDra
     }
     canvas.drawCircle(size / 2f, size / 2f, size / 2f, paint)
 
-    // Draw letter
     paint.color = Color.WHITE
     paint.textSize = size * 0.55f
     paint.typeface = Typeface.create(Typeface.DEFAULT, Typeface.BOLD)
     paint.textAlign = Paint.Align.CENTER
 
-    // Center the text vertically
     val fm = paint.fontMetrics
     val textY = size / 2f - (fm.ascent + fm.descent) / 2
 

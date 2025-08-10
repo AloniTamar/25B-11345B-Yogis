@@ -41,7 +41,7 @@ class ClassBuilderActionsFragment : Fragment() {
             binding.tvCaTitle.text = name?.trim().orEmpty()
         }
         viewModel.durationMinutes.observe(viewLifecycleOwner) { minutes ->
-            binding.tvCaDuration.text = "${minutes ?: 0} min"
+            binding.tvCaDuration.text = "${minutes ?: 0} min ● ${viewModel.level.value?.name ?: "Any Level"}"
         }
 
         binding.tvBackMain.setOnClickListener {

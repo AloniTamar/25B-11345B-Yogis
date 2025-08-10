@@ -185,5 +185,5 @@ Open the project in Android Studio → *Sync Gradle* → Run on emulator/device.
 ---
 
 ## 📬 Contact
-Maintainer: **Tamar Aloni**  
+Author: **Tamar Aloni**  
 Project repo: `AloniTamar/25B-11345B-Yogis`

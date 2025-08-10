@@ -180,11 +180,10 @@ Open the project in Android Studio → *Sync Gradle* → Run on emulator/device.
 ## 🙌 Credits
 - **Course:** Mobile Application Development (final project)
 - **Fonts:** Urbanist (in `res/font/`)
-- **Thanks:** classmates & instructors for feedback and testing
 - **Images:** 2013-2025 WorkoutLabs, LLC. All rights reserved.
 
 ---
 
 ## 📬 Contact
-Maintainer: **Tamar Aloni**  
+Author: **Tamar Aloni**  
 Project repo: `AloniTamar/25B-11345B-Yogis`

@@ -58,7 +58,7 @@ app/
 Benefits: testable layers, single source of truth, and clear separation between UI and data.
 
 
-![Yogis – Architecture Flow](docs/yogis-architecture.svg)
+![Yogis – Architecture Flow](docs/YogisMermaidChart.svg)
 
 ---
 

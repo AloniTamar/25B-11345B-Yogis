@@ -56,6 +56,8 @@ app/
 - **Data layer** includes Firebase helpers, DTOs, and mappers (if needed) to keep models/UI clean.
 
 Benefits: testable layers, single source of truth, and clear separation between UI and data.
+
+
 ![Yogis – Architecture Flow](docs/yogis-architecture.svg)
 
 ---

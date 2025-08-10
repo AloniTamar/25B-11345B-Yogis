@@ -49,6 +49,36 @@ app/
 
 ---
 
+## 🎨 UI/UX Design (Figma)
+
+The full set of screen designs lives here:  
+**[`docs/FigmaScreens_Design`](docs/FigmaScreens_Design)**
+
+**Design goals.** Instructor-first, minimal distraction during class, high contrast, large readable type (Urbanist), Material 3 components.
+
+**Design → Code map (quick):**
+- **Auth:** Login / Register → `LoginFragment`, `RegisterFragment`
+- **Home:** Entry to Library/Builder/Teaching/Profile → `MainLoggedInFragment`
+- **Pose Library:** Lists, filters, details → `PoseLibraryFragment`, `PosesListFragment`, `PoseDetailFragment`
+- **Class Builder:** Compose, reorder, save plan → `ClassBuilderFragment`, `ClassBuilderAddPoseFragment`, `ClassBuilderAddFlowFragment`
+- **Teaching Mode:** Step-by-step view → `TeachingModeFragment`
+- **Profile:** View & edit → `ProfileFragment`, `EditProfileFragment`
+
+### 📸 Preview (selected screens)
+<!-- Tip: replace the filenames below with actual exports from docs/FigmaScreens_Design.
+     Keep width ~260–320 so the grid looks good on GitHub. -->
+<p align="center">
+  <img src="docs/FigmaScreens_Design/Welcome.png" width="280" alt="Welcome screen" />
+  <img src="docs/FigmaScreens_Design/Log In.png" width="280" alt="Login" />
+</p>
+<p align="center">
+  <img src="docs/FigmaScreens_Design/Class Builder 1.png" width="280" alt="Class Builder" />
+  <img src="docs/FigmaScreens_Design/Pose Library.png" width="280" alt="Pose Library" />
+  <img src="docs/FigmaScreens_Design/Teaching Mode.png" width="280" alt="Teaching Mode" />
+</p>
+
+---
+
 ## 🧩 Architecture (MVVM)
 - **UI (Fragments/Activities)** render state and forward user intents.
 - **ViewModel** holds screen state and business logic; talks to repositories (Kotlin coroutines).
@@ -128,36 +158,6 @@ This project uses **Firebase Realtime Database** (for structured data) and **Fir
   ]
 }
 ```
-
----
-
-## 🎨 UI/UX Design (Figma)
-
-The full set of screen designs lives here:  
-**[`docs/FigmaScreens_Design`](docs/FigmaScreens_Design)**
-
-**Design goals.** Instructor-first, minimal distraction during class, high contrast, large readable type (Urbanist), Material 3 components.
-
-**Design → Code map (quick):**
-- **Auth:** Login / Register → `LoginFragment`, `RegisterFragment`
-- **Home:** Entry to Library/Builder/Teaching/Profile → `MainLoggedInFragment`
-- **Pose Library:** Lists, filters, details → `PoseLibraryFragment`, `PosesListFragment`, `PoseDetailFragment`
-- **Class Builder:** Compose, reorder, save plan → `ClassBuilderFragment`, `ClassBuilderAddPoseFragment`, `ClassBuilderAddFlowFragment`
-- **Teaching Mode:** Step-by-step view → `TeachingModeFragment`
-- **Profile:** View & edit → `ProfileFragment`, `EditProfileFragment`
-
-### 📸 Preview (selected screens)
-<!-- Tip: replace the filenames below with actual exports from docs/FigmaScreens_Design.
-     Keep width ~260–320 so the grid looks good on GitHub. -->
-<p align="center">
-  <img src="docs/FigmaScreens_Design/Welcome.png" width="280" alt="Welcome screen" />
-  <img src="docs/FigmaScreens_Design/Log In.png" width="280" alt="Login" />
-</p>
-<p align="center">
-  <img src="docs/FigmaScreens_Design/Class Builder 1.png" width="280" alt="Class Builder" />
-  <img src="docs/FigmaScreens_Design/Pose Library.png" width="280" alt="Pose Library" />
-  <img src="docs/FigmaScreens_Design/Teaching Mode.png" width="280" alt="Teaching Mode" />
-</p>
 
 ---
 

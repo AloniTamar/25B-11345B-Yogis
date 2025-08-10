@@ -52,7 +52,7 @@ class ClassPlanAdapter(
                     binding.tvTitle.text = element.pose.name
                     binding.tvSub.text = "Level ${element.pose.level}"
                     binding.tvDuration.text =
-                        element.pose.duration?.let { "$it min" } ?: ""
+                        element.pose.duration?.let { "$it seconds" } ?: ""
                 }
                 is ClassPlanElement.FlowElement -> {
                     binding.tvTitle.text = element.flow.flowName

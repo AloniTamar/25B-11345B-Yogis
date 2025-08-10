@@ -48,13 +48,14 @@ class ClassBuilderTempViewFragment : Fragment() {
         }
 
         binding.btnSave.setOnClickListener {
-            val name     = viewModel.className.value ?: "Untitled class"
+            val name = viewModel.className.value ?: "Untitled class"
             val duration = viewModel.durationMinutes.value ?: 0
-            val level    = viewModel.level.value ?: Pose.Level.beginner
+            val level = viewModel.level.value ?: Pose.Level.beginner
 
 
             if (name.isBlank() || duration <= 0) {
-                Toast.makeText(requireContext(), "Missing name or duration", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Missing name or duration", Toast.LENGTH_SHORT)
+                    .show()
                 return@setOnClickListener
             }
 
@@ -73,9 +74,16 @@ class ClassBuilderTempViewFragment : Fragment() {
                     Toast.makeText(requireContext(), "Class saved ✅", Toast.LENGTH_SHORT).show()
                     navigateSmoothly(MainLoggedInFragment())
                 } else {
-                    Toast.makeText(requireContext(), "Save failed: ${err.message}", Toast.LENGTH_LONG).show()
+                    Toast.makeText(
+                        requireContext(),
+                        "Save failed: ${err.message}",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
+
+            viewModel.clearPlan()
+
         }
 
         binding.tvBackMenu.setOnClickListener {

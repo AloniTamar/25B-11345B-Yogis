@@ -64,20 +64,6 @@ More screens designs lives here:
 - **Teaching Mode:** Step-by-step view → `TeachingModeFragment`
 - **Profile:** View & edit → `ProfileFragment`, `EditProfileFragment`
 
-### 📸 Preview (selected screens)
-<!-- Tip: replace the filenames below with actual exports from docs/FigmaScreens_Design.
-     Keep width ~260–320 so the grid looks good on GitHub. -->
-<p align="center">
-  <img src="docs/FigmaScreens_Design/Welcome.png" width="280" alt="Welcome screen" />
-  <img src="docs/FigmaScreens_Design/Log In.png" width="280" alt="Login" />
-  <img src="docs/FigmaScreens_Design/Adho Mukha Shvanasana.png" width="280" alt="Login" />
-</p>
-<p align="center">
-  <img src="docs/FigmaScreens_Design/Class Builder 1.png" width="280" alt="Class Builder" />
-  <img src="docs/FigmaScreens_Design/Pose Library.png" width="280" alt="Pose Library" />
-  <img src="docs/FigmaScreens_Design/Teaching Mode.png" width="280" alt="Teaching Mode" />
-</p>
-
 ---
 
 ## 🧩 Architecture (MVVM)
@@ -93,18 +79,6 @@ Benefits: testable layers, single source of truth, and clear separation between 
 
 ---
 
-## 🎨 Design (Figma) & Screens
-**Design goals:** instructor‑first, minimal distraction in class, large readable typography, high contrast, simple navigation.
-
-**Primary screens** (as implemented in the app and reflected in the Figma set):
-- **Auth** — login / signup (email as identifier)
-- **Home** — entry points to Library, Class Plan Builder, Teaching Mode, Profile
-- **Pose Library** — list + filters; **Pose Details** with image and key tips
-- **Class Plan Builder** — add from library, reorder, remove, set recommended rounds
-- **Teaching Mode** — step‑by‑step sequence view with next/previous controls
-- **Profile** — view & edit basic info
----
-
 ## 🗄️ Data Model (Firebase)
 This project uses **Firebase Realtime Database** (for structured data) and **Firebase Storage** (for images). Data is shaped and validated with **Draft‑07 JSON Schemas** (see `docs/schemas/`).
 
@@ -114,51 +88,6 @@ This project uses **Firebase Realtime Database** (for structured data) and **Fir
 - **flows** — reusable sub‑sequences of poses (see `flowMetadata.json`).
 - **classPlans** — full class plans that can mix poses and flows (see `classPlanMetadata.json`).
 - **users** — instructor profile (see `userMetadata.json`).
-
-### Example — Pose
-```json
-{
-  "id": "adho_mukha_svanasana",
-  "name": "Adho Mukha Svanasana",
-  "level": "beginner",
-  "category": "standingPoses",
-  "duration": 30,
-  "description": "Lengthens posterior chain; builds shoulder stability.",
-  "notes": "Avoid with wrist injury.",
-  "image": "https://.../pose_images%2Fadho_mukha_svanasana.png?alt=media"
-}
-```
-
-### Example — Flow
-```json
-{
-  "flowId": "sun_salutation_a",
-  "flowName": "Sun Salutation A",
-  "level": "beginner",
-  "numberOfPoses": 12,
-  "recommendedRounds": 3,
-  "poses": [
-    { "id": "tadasana", "name": "Tadasana", "level": "beginner", "category": "standingPoses", "duration": 10, "description": "...", "image": "https://.../tadasana.png" },
-    { "id": "uttanasana", "name": "Uttanasana", "level": "beginner", "category": "forwardBends", "duration": 20, "description": "...", "image": "https://.../uttanasana.png" }
-  ]
-}
-```
-
-### Example — Class Plan
-```json
-{
-  "planId": "intro_vinyasa_45",
-  "userId": "<firebase-uid>",
-  "planName": "Intro Vinyasa (45m)",
-  "level": "beginner",
-  "numberOfElements": 8,
-  "duration": 45,
-  "elements": [
-    { "id": "tadasana", "name": "Tadasana", "level": "beginner", "category": "standingPoses", "duration": 10, "description": "...", "image": "https://.../tadasana.png" },
-    { "flowId": "sun_salutation_a", "flowName": "Sun Salutation A", "level": "beginner", "numberOfPoses": 12, "recommendedRounds": 2, "poses": [/* ... */] }
-  ]
-}
-```
 
 ---
 

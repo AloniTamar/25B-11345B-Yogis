@@ -10,11 +10,6 @@ import com.bumptech.glide.load.engine.GlideException
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.target.Target
 
-/**
- * Tiny, reusable ViewPager2 adapter that shows a list of image URLs.
- * - Uses FIT_CENTER so images aren’t cropped.
- * - Calls [onFirstImageSettled] once (success/fail) so caller can hide loaders.
- */
 class ImagePagerAdapter(
     private val images: List<String>,
     private val onFirstImageSettled: () -> Unit

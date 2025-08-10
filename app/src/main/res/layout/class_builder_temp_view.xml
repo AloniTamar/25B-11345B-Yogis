@@ -58,13 +58,6 @@
             android:text="@string/ct_duration"/>
 
         <com.google.android.material.chip.Chip
-            android:id="@+id/chip_class_id"
-            style="@style/Widget.Yogis.Chip.Info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ct_class_id"/>
-
-        <com.google.android.material.chip.Chip
             android:id="@+id/chip_level"
             style="@style/Widget.Yogis.Chip.Info"
             android:layout_width="wrap_content"

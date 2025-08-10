@@ -51,7 +51,7 @@ app/
 
 ## 🎨 UI/UX Design (Figma)
 
-The full set of screen designs lives here:  
+More screens designs lives here:  
 **[`docs/FigmaScreens_Design`](docs/FigmaScreens_Design)**
 
 **Design goals.** Instructor-first, minimal distraction during class, high contrast, large readable type (Urbanist), Material 3 components.
@@ -70,6 +70,7 @@ The full set of screen designs lives here:
 <p align="center">
   <img src="docs/FigmaScreens_Design/Welcome.png" width="280" alt="Welcome screen" />
   <img src="docs/FigmaScreens_Design/Log In.png" width="280" alt="Login" />
+  <img src="docs/FigmaScreens_Design/Adho Mukha Shvanasana.png" width="280" alt="Login" />
 </p>
 <p align="center">
   <img src="docs/FigmaScreens_Design/Class Builder 1.png" width="280" alt="Class Builder" />

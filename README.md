@@ -196,19 +196,6 @@ Open the project in Android Studio → *Sync Gradle* → Run on emulator/device.
 
 ---
 
-## 🔒 Security & Keys
-- Never commit `google-services.json` or API keys to Git.
-- If a key was exposed, rotate in Firebase console and update the file locally.
-- For production, tighten Realtime Database & Storage rules and restrict reads/writes to authenticated users.
-
----
-
-## 🧪 Testing data (quick start)
-- Create a test user with email/password.
-- Seed a few `poses` and one `classPlan` to see Teaching Mode in action.
-
----
-
 ## 🙌 Credits
 - **Course:** Mobile Application Development (final project)
 - **Fonts:** Urbanist (in `res/font/`)

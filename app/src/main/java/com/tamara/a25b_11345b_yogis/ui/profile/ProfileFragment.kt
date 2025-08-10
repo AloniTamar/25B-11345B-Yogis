@@ -1,5 +1,6 @@
 package com.tamara.a25b_11345b_yogis.ui.profile
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,7 @@ class ProfileFragment : Fragment() {
         return binding.root
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.btnProfileBack.setOnClickListener {
@@ -47,6 +49,7 @@ class ProfileFragment : Fragment() {
                 }
 
                 binding.tvProfileName.text = profile.username
+                binding.tvProfileRole.text = profile.yogaType + " Instructor"
                 binding.tvValueEmail.text  = profile.email
                 binding.tvValueYoga.text   = profile.yogaType
                 binding.tvValueLevel.text  = profile.yearsExperience.toString()

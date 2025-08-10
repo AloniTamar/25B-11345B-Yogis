@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.tamara.a25b_11345b_yogis.data.repository.ClassPlanRepository
 import com.tamara.a25b_11345b_yogis.databinding.TeachingModeViewClassBinding
+import com.tamara.a25b_11345b_yogis.ui.library.PoseDetailFragment
+import com.tamara.a25b_11345b_yogis.ui.library.PoseLibraryFlowDetailFragment
 import com.tamara.a25b_11345b_yogis.ui.shared.BasicTimelineAdapter
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 
@@ -49,7 +51,25 @@ class ViewClassBeforeTeachingFragment : Fragment() {
 
                 binding.rvTimeline.apply {
                     layoutManager = LinearLayoutManager(requireContext())
-                    adapter = BasicTimelineAdapter(plan.elements)
+                    adapter = BasicTimelineAdapter(
+                        plan.elements,
+                        onPoseClick = { pose ->
+                            val id = pose.id
+                            if (id.isBlank()) {
+                                Toast.makeText(requireContext(), "Missing pose id", Toast.LENGTH_SHORT).show()
+                            } else {
+                                navigateSmoothly(PoseDetailFragment.newInstance(id))
+                            }
+                        },
+                        onFlowClick = { flow ->
+                            val fid = flow.flowId
+                            if (fid.isBlank()) {
+                                Toast.makeText(requireContext(), "Missing flow id", Toast.LENGTH_SHORT).show()
+                            } else {
+                                navigateSmoothly(PoseLibraryFlowDetailFragment.newInstance(fid))
+                            }
+                        }
+                    )
                     visibility = View.VISIBLE
                 }
             },

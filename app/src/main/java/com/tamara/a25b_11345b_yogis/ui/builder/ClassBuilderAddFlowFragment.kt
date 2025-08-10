@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.tamara.a25b_11345b_yogis.data.model.ClassPlanElement
 import com.tamara.a25b_11345b_yogis.data.repository.FlowRepository
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderAddFlowBinding
+import com.tamara.a25b_11345b_yogis.ui.library.PoseDetailFragment
 import com.tamara.a25b_11345b_yogis.ui.shared.BasicTimelineAdapter
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 import com.tamara.a25b_11345b_yogis.viewmodel.ClassBuilderClassPlanViewModel
@@ -64,7 +65,14 @@ class ClassBuilderAddFlowFragment : Fragment() {
 
         binding.rvTimeline.layoutManager = LinearLayoutManager(requireContext())
         val poseElements = flow.poses.map { ClassPlanElement.PoseElement(it) }
-        binding.rvTimeline.adapter = BasicTimelineAdapter(poseElements)
+        binding.rvTimeline.adapter = BasicTimelineAdapter(poseElements) { pose ->
+            val id = pose.id
+            if (id.isBlank()) {
+                Toast.makeText(requireContext(), "Missing pose id", Toast.LENGTH_SHORT).show()
+            } else {
+                navigateSmoothly(PoseDetailFragment.newInstance(id))
+            }
+        }
 
         binding.btnAddFlow.setOnClickListener {
             viewModel.addFlow(flow)

@@ -212,6 +212,20 @@
     </androidx.core.widget.NestedScrollView>
 
     <TextView
+        android:id="@+id/tv_credits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/images_credits_2013_2025_workoutlabs_llc_all_rights_reserved"
+        android:textSize="12sp"
+        android:textColor="@color/sub_titles_text"
+        android:fontFamily="@font/urbanist"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/guideline_ap_action_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="8dp"/>
+
+    <TextView
         android:id="@+id/tv_back_main"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

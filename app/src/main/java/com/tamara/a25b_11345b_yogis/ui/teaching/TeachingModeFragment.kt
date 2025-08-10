@@ -64,8 +64,6 @@ class TeachingModeFragment : Fragment() {
                                     timelineAdapter.notifyItemChanged(prev)
                                     if (currentOrder < plan.elements.size)
                                         timelineAdapter.notifyItemChanged(currentOrder)
-                                    else
-                                        Toast.makeText(requireContext(), "Class finished!", Toast.LENGTH_SHORT).show()
                                 }
                             }
                         )

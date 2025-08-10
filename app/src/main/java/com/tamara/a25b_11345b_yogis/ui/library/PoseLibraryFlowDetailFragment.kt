@@ -12,6 +12,7 @@ import com.tamara.a25b_11345b_yogis.data.repository.FlowRepository
 import com.tamara.a25b_11345b_yogis.data.model.ClassPlanElement
 import com.tamara.a25b_11345b_yogis.databinding.FlowViewBinding
 import com.tamara.a25b_11345b_yogis.ui.shared.BasicTimelineAdapter
+import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 import com.tamara.a25b_11345b_yogis.utils.wireBack
 
 class PoseLibraryFlowDetailFragment : Fragment() {
@@ -61,7 +62,15 @@ class PoseLibraryFlowDetailFragment : Fragment() {
         val poseElements: List<ClassPlanElement> = flow.poses.map { pose ->
             ClassPlanElement.PoseElement(pose)
         }
-        binding.rvTimeline.adapter = BasicTimelineAdapter(poseElements)    }
+        binding.rvTimeline.adapter = BasicTimelineAdapter(poseElements) { pose ->
+            val id = pose.id
+            if (id.isBlank()) {
+                Toast.makeText(requireContext(), "Missing pose id", Toast.LENGTH_SHORT).show()
+            } else {
+                navigateSmoothly(PoseDetailFragment.newInstance(id))
+            }
+        }
+    }
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -224,6 +224,20 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 
+    <TextView
+        android:id="@+id/tv_credits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/images_credits_2013_2025_workoutlabs_llc_all_rights_reserved"
+        android:textSize="12sp"
+        android:textColor="@color/sub_titles_text"
+        android:fontFamily="@font/urbanist"
+        android:gravity="center"
+        app:layout_constraintBottom_toTopOf="@id/guideline_action_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginBottom="8dp"/>
+
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_view_profile"
         style="@style/Widget.Yogis.Button.Secondary"

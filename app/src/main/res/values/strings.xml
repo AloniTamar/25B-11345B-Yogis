@@ -147,6 +147,7 @@
     <string name="loadinf_images_please_wait">Loadinf images, please wait…</string>
     <string name="duration_seconds">Duration (seconds)</string>
     <string name="select_yoga_type">Select Yoga Type</string>
+    <string name="images_credits_2013_2025_workoutlabs_llc_all_rights_reserved">Images Credits: 2013-2025 WorkoutLabs, LLC. All rights reserved.</string>
     <string-array name="class_levels">
         <item>Beginner</item>
         <item>Intermediate</item>

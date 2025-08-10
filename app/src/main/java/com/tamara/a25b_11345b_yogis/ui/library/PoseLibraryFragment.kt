@@ -49,7 +49,9 @@ class PoseLibraryFragment : Fragment() {
             navigateSmoothly(PoseLibraryFlowListFragment())
         }
 
-        binding.btnPlAdd.visibility = View.GONE
+        binding.btnPlAdd.setOnClickListener {
+            navigateSmoothly(PoseLibraryAddNewPoseFragment())
+        }
     }
 
     override fun onDestroyView() {

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.LayoutRes
@@ -58,15 +59,22 @@ class ClassBuilderAddPoseFragment : Fragment() {
         }
     }
 
+    private fun setLoaderText(msg: String) {
+        // works whether tvLoaderText is on the container overlay or the inner page
+        binding.root.findViewById<TextView>(R.id.tvLoaderText)?.let { it.text = msg }
+    }
+
     private fun captureLocalImageInfo(localUri: Uri) {
         selectedImageUri = localUri
+
         binding.imageUploadOverlay.visibility = View.VISIBLE
+        setLoaderText("Processing photo…")
 
         val ctx = requireContext()
         val mime = ctx.contentResolver.getType(localUri) ?: "image/jpeg"
         selectedImageMime = mime
 
-        lifecycleScope.launch(Dispatchers.IO) {
+        viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
             ctx.contentResolver.openInputStream(localUri)?.use { stream ->
                 val opts = BitmapFactory.Options().apply { inJustDecodeBounds = true }
                 BitmapFactory.decodeStream(stream, null, opts)
@@ -90,6 +98,10 @@ class ClassBuilderAddPoseFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // make sure overlay sits on top if present
+        binding.imageUploadOverlay.bringToFront()
+
         binding.btnApBack.setOnClickListener {
             navigateSmoothly(ClassBuilderActionsFragment())
         }
@@ -153,12 +165,9 @@ class ClassBuilderAddPoseFragment : Fragment() {
     private fun initNewPosePageWithBinding(nb: ClassBuilderAddNewPoseBinding) {
         nb.scrollRegion.isFillViewport = true
 
-        val catLabels = resources.getStringArray(R.array.pose_categories_labels)   // what user sees
-        val catValues = resources.getStringArray(R.array.pose_categories_values)   // must match Pose.Category names
-
-        nb.acType.setAdapter(
-            ArrayAdapter(requireContext(), R.layout.item_dropdown_menu, catLabels)
-        )
+        val catLabels = resources.getStringArray(R.array.pose_categories_labels)
+        val catValues = resources.getStringArray(R.array.pose_categories_values)
+        nb.acType.setAdapter(ArrayAdapter(requireContext(), R.layout.item_dropdown_menu, catLabels))
 
         var selectedCategory: Pose.Category? = null
         nb.acType.setOnItemClickListener { _, _, pos, _ ->
@@ -166,9 +175,7 @@ class ClassBuilderAddPoseFragment : Fragment() {
         }
 
         val levels = resources.getStringArray(R.array.class_levels)
-        nb.acLevel.setAdapter(
-            ArrayAdapter(requireContext(), R.layout.item_dropdown_menu, levels)
-        )
+        nb.acLevel.setAdapter(ArrayAdapter(requireContext(), R.layout.item_dropdown_menu, levels))
         fun parseLevel(text: String): Pose.Level? = when (text.trim().lowercase()) {
             "beginner", "beginners" -> Pose.Level.beginner
             "intermediate"          -> Pose.Level.intermediate
@@ -192,33 +199,17 @@ class ClassBuilderAddPoseFragment : Fragment() {
                 }
 
             when {
-                name.isBlank() -> {
-                    Toast.makeText(requireContext(), "Name is required", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
-                category == null -> {
-                    Toast.makeText(requireContext(), "Select a yoga type", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
-                level == null -> {
-                    Toast.makeText(requireContext(), "Select a valid level", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
-                durationSec <= 0 -> {
-                    Toast.makeText(requireContext(), "Duration (seconds) must be > 0", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
-                selectedImageUri == null -> {
-                    Toast.makeText(requireContext(), "Please select an image", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
-                description.isBlank() -> {
-                    Toast.makeText(requireContext(), "Description is required", Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
+                name.isBlank() -> { Toast.makeText(requireContext(), "Name is required", Toast.LENGTH_SHORT).show(); return@setOnClickListener }
+                category == null -> { Toast.makeText(requireContext(), "Select a yoga type", Toast.LENGTH_SHORT).show(); return@setOnClickListener }
+                level == null -> { Toast.makeText(requireContext(), "Select a valid level", Toast.LENGTH_SHORT).show(); return@setOnClickListener }
+                durationSec <= 0 -> { Toast.makeText(requireContext(), "Duration (seconds) must be > 0", Toast.LENGTH_SHORT).show(); return@setOnClickListener }
+                selectedImageUri == null -> { Toast.makeText(requireContext(), "Please select an image", Toast.LENGTH_SHORT).show(); return@setOnClickListener }
+                description.isBlank() -> { Toast.makeText(requireContext(), "Description is required", Toast.LENGTH_SHORT).show(); return@setOnClickListener }
             }
 
+            // show overlay with initial percentage
             binding.imageUploadOverlay.visibility = View.VISIBLE
+            setLoaderText("Uploading image… 0%")
 
             viewLifecycleOwner.lifecycleScope.launch {
                 try {
@@ -232,7 +223,19 @@ class ClassBuilderAddPoseFragment : Fragment() {
                     val storage = FirebaseStorage.getInstance()
                     val fileRef = storage.reference.child("pose_images/$poseId.jpg")
                     val localUri = selectedImageUri!!
-                    fileRef.putFile(localUri).await()
+
+                    // upload with progress
+                    val uploadTask = fileRef.putFile(localUri)
+                    uploadTask.addOnProgressListener { snap ->
+                        val pct = if (snap.totalByteCount > 0)
+                            (100.0 * snap.bytesTransferred / snap.totalByteCount).toInt()
+                        else 0
+                        if (isAdded) setLoaderText("Uploading image… $pct%")
+                    }
+                    uploadTask.await()
+
+                    if (isAdded) setLoaderText("Finalizing…")
+
                     val downloadUrl = fileRef.downloadUrl.await().toString()
 
                     val width  = selectedImageWidth ?: 0

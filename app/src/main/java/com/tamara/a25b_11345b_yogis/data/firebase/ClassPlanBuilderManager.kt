@@ -11,9 +11,6 @@ import com.tamara.a25b_11345b_yogis.data.repository.ClassPlanRepository
 import com.tamara.a25b_11345b_yogis.utils.IdUtils
 import java.util.UUID
 
-/**
- * In-memory builder for a ClassPlan, with Firebase hooks.
- */
 class ClassPlanBuilderManager(
     private val repository: ClassPlanRepository = ClassPlanRepository()
 ) {
@@ -33,7 +30,6 @@ class ClassPlanBuilderManager(
     fun addPose(pose: Pose) { _items.add(ClassPlanElement.PoseElement(pose)) }
     fun addFlow(flow: Flow) { _items.add(ClassPlanElement.FlowElement(flow)) }
 
-    /** Build the final in-memory plan (requires id already chosen or will fallback to UUID). */
     private fun buildPlan(): ClassPlan {
         require(className.isNotBlank())  { "Class name must be set" }
         require(durationMinutes > 0)     { "Duration must be > 0" }
@@ -57,10 +53,6 @@ class ClassPlanBuilderManager(
         )
     }
 
-    /**
-     * Save the current draft plan to Firebase.
-     * Picks a readable, unique ID from the class name (e.g., "morning_flow", "morning_flow-2").
-     */
     fun savePlan(onComplete: (DatabaseError?) -> Unit) {
         if (planId.isNotBlank() && !looksLikeUuid(planId)) {
             val draft = buildPlan()
@@ -103,9 +95,7 @@ class ClassPlanBuilderManager(
     private fun looksLikeUuid(s: String): Boolean =
         s.count { it == '-' } == 4 && s.length in 32..40
 
-    /**
-     * Recursively try base, base-2, base-3... until we find a free key under /classPlans.
-     */
+
     private fun findUniqueId(
         ref: DatabaseReference,
         base: String,

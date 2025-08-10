@@ -12,7 +12,6 @@ import com.tamara.a25b_11345b_yogis.data.repository.FlowRepository
 import com.tamara.a25b_11345b_yogis.databinding.PoseLibraryFlowListBinding
 import com.tamara.a25b_11345b_yogis.ui.shared.FlowAdapter
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
-import com.tamara.a25b_11345b_yogis.utils.wireBack
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -36,7 +35,9 @@ class ClassBuilderFlowListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.tvPblTitle.text = "Select a Flow"
-        wireBack(binding.btnPblBack)
+        binding.btnPblBack.setOnClickListener {
+            navigateSmoothly(ClassBuilderActionsFragment())
+        }
         binding.btnAddFlow.visibility = View.GONE
 
         binding.rvPblLevels.layoutManager = LinearLayoutManager(requireContext())

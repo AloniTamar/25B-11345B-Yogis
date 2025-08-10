@@ -16,7 +16,6 @@ import com.tamara.a25b_11345b_yogis.data.model.UserProfile
 import com.tamara.a25b_11345b_yogis.data.repository.UserRepository
 import com.tamara.a25b_11345b_yogis.databinding.EditProfileBinding
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
-import com.tamara.a25b_11345b_yogis.utils.wireBack
 import createTextAvatar
 
 class EditProfileFragment : Fragment() {
@@ -36,7 +35,9 @@ class EditProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        wireBack(binding.btnBack)
+        binding.btnBack.setOnClickListener {
+            navigateSmoothly(ProfileFragment())
+        }
 
         val authUser = FirebaseAuth.getInstance().currentUser
         val email = authUser?.email

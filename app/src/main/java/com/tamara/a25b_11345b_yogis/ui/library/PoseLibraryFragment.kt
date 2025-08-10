@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import com.tamara.a25b_11345b_yogis.databinding.PoseLibraryBinding
 import com.tamara.a25b_11345b_yogis.utils.navigateBackToMain
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
-import com.tamara.a25b_11345b_yogis.utils.wireBack
 
 class PoseLibraryFragment : Fragment() {
 
@@ -27,7 +26,9 @@ class PoseLibraryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        wireBack(binding.btnPlBack)
+        binding.btnPlBack.setOnClickListener {
+            navigateBackToMain()
+        }
         binding.tvBackMain.setOnClickListener {
             navigateBackToMain()
         }

@@ -36,11 +36,6 @@
       "description": "Recommended duration in seconds for holding the pose",
       "minimum": 0
     },
-    "repetitions": {
-      "type": "integer",
-      "description": "Recommended number of repetitions for the pose",
-      "minimum": 0
-    },
     "description": {
       "type": "string",
       "description": "Detailed description of the pose, including benefits and instructions"
@@ -54,7 +49,6 @@
       "description": "URL or path to an image representing the pose"
     }
   },
-  "required": ["id", "name", "level", "category", "description", "image"],
-  "anyOf": [{ "required": ["duration"] }, { "required": ["repetitions"] }],
+  "required": ["id", "name", "level", "category", "duration", "description", "image"],
   "additionalProperties": false
 }

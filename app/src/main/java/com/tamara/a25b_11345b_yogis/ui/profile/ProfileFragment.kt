@@ -9,8 +9,8 @@ import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
 import com.tamara.a25b_11345b_yogis.data.repository.UserRepository
 import com.tamara.a25b_11345b_yogis.databinding.ProfileBinding
+import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
-import com.tamara.a25b_11345b_yogis.utils.wireBack
 import createTextAvatar
 
 class ProfileFragment : Fragment() {
@@ -28,7 +28,9 @@ class ProfileFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        wireBack(binding.btnProfileBack)
+        binding.btnProfileBack.setOnClickListener {
+            navigateSmoothly(MainLoggedInFragment())
+        }
 
         val email = FirebaseAuth.getInstance().currentUser?.email
         if (email.isNullOrBlank()) {

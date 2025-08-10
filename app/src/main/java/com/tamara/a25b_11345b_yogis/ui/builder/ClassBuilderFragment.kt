@@ -18,9 +18,9 @@ import com.tamara.a25b_11345b_yogis.R
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderBinding
 import com.tamara.a25b_11345b_yogis.utils.navigateBackToMain
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
-import com.tamara.a25b_11345b_yogis.utils.wireBack
 import com.tamara.a25b_11345b_yogis.viewmodel.ClassBuilderClassPlanViewModel
 import com.tamara.a25b_11345b_yogis.data.model.Pose
+import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
 
 class ClassBuilderFragment : Fragment() {
 
@@ -57,7 +57,9 @@ class ClassBuilderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        wireBack(binding.btnCbBack)
+        binding.btnCbBack.setOnClickListener {
+            navigateSmoothly(MainLoggedInFragment())
+        }
         binding.tvBackMenu.setOnClickListener {
             navigateBackToMain()
         }

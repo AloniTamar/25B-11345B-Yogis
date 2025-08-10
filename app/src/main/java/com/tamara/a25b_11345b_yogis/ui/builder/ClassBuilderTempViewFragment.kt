@@ -15,7 +15,6 @@ import android.widget.Toast
 import com.tamara.a25b_11345b_yogis.data.firebase.ClassPlanBuilderManager
 import com.tamara.a25b_11345b_yogis.data.model.ClassPlanElement
 import com.tamara.a25b_11345b_yogis.data.model.Pose
-import com.tamara.a25b_11345b_yogis.utils.wireBack
 import com.tamara.a25b_11345b_yogis.viewmodel.ClassBuilderClassPlanViewModel
 
 class ClassBuilderTempViewFragment : Fragment() {
@@ -39,7 +38,9 @@ class ClassBuilderTempViewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        wireBack(binding.btnCtBack)
+        binding.btnCtBack.setOnClickListener {
+            navigateSmoothly(ClassBuilderActionsFragment())
+        }
         binding.rvTimeline.layoutManager = LinearLayoutManager(requireContext())
 
         viewModel.elements.observe(viewLifecycleOwner) { elementList ->

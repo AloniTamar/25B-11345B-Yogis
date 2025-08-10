@@ -153,66 +153,67 @@ class ClassBuilderAddPoseFragment : Fragment() {
     private fun initNewPosePageWithBinding(nb: ClassBuilderAddNewPoseBinding) {
         nb.scrollRegion.isFillViewport = true
 
-        fun selectDuration() = with(nb) {
-            rbDuration.isChecked = true
-            rbRepetitions.isChecked = false
-            etDuration.isEnabled = true
-            etRepetitions.isEnabled = false
-            etDuration.requestFocus()
-            etRepetitions.text?.clear()
+        val catLabels = resources.getStringArray(R.array.pose_categories_labels)   // what user sees
+        val catValues = resources.getStringArray(R.array.pose_categories_values)   // must match Pose.Category names
+
+        nb.acType.setAdapter(
+            ArrayAdapter(requireContext(), R.layout.item_dropdown_menu, catLabels)
+        )
+
+        var selectedCategory: Pose.Category? = null
+        nb.acType.setOnItemClickListener { _, _, pos, _ ->
+            selectedCategory = try { Pose.Category.valueOf(catValues[pos]) } catch (_: Exception) { null }
         }
-        fun selectReps() = with(nb) {
-            rbDuration.isChecked = false
-            rbRepetitions.isChecked = true
-            etDuration.isEnabled = false
-            etRepetitions.isEnabled = true
-            etRepetitions.requestFocus()
-            etDuration.text?.clear()
-        }
-        nb.rbDuration.setOnClickListener { selectDuration() }
-        nb.rbRepetitions.setOnClickListener { selectReps() }
-        selectDuration()
 
         val levels = resources.getStringArray(R.array.class_levels)
         nb.acLevel.setAdapter(
             ArrayAdapter(requireContext(), R.layout.item_dropdown_menu, levels)
         )
-
-        nb.btnRegister.setOnClickListener {
-            pickImageLauncher.launch("image/*")
+        fun parseLevel(text: String): Pose.Level? = when (text.trim().lowercase()) {
+            "beginner", "beginners" -> Pose.Level.beginner
+            "intermediate"          -> Pose.Level.intermediate
+            "advanced"              -> Pose.Level.advanced
+            else -> null
         }
 
+        nb.btnRegister.setOnClickListener { pickImageLauncher.launch("image/*") }
+
         nb.btnAddPose.setOnClickListener {
-            val name = nb.etPoseName.text.toString().trim()
-            val levelText = nb.acLevel.text.toString().trim().lowercase()
-            val level = try { Pose.Level.valueOf(levelText) } catch (_: Exception) { null }
-            val duration = nb.etDuration.text.toString().toIntOrNull() ?: 0
-            val reps = nb.etRepetitions.text.toString().toIntOrNull() ?: 0
-            val description = nb.etDescription.text.toString().trim()
+            val name         = nb.etPoseName.text.toString().trim()
+            val level        = parseLevel(nb.acLevel.text.toString())
+            val durationSec  = nb.evDuration.text.toString().toIntOrNull() ?: 0
+            val description  = nb.etDescription.text.toString().trim()
+            val notes        = nb.etNote.text?.toString()?.trim().takeUnless { it.isNullOrBlank() }
+            val category     = selectedCategory
+                ?: run {
+                    val typed = nb.acType.text?.toString()?.trim()
+                    val idx = catLabels.indexOfFirst { it.equals(typed, ignoreCase = true) }
+                    if (idx >= 0) Pose.Category.valueOf(catValues[idx]) else null
+                }
 
             when {
                 name.isBlank() -> {
                     Toast.makeText(requireContext(), "Name is required", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
+                category == null -> {
+                    Toast.makeText(requireContext(), "Select a yoga type", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
                 level == null -> {
                     Toast.makeText(requireContext(), "Select a valid level", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
-                duration <= 0 && reps <= 0 -> {
-                    Toast.makeText(requireContext(),
-                        "Specify either duration or repetitions (>0)",
-                        Toast.LENGTH_SHORT).show()
-                    return@setOnClickListener
-                }
-                description.isBlank() -> {
-                    Toast.makeText(requireContext(),
-                        "Description is required", Toast.LENGTH_SHORT).show()
+                durationSec <= 0 -> {
+                    Toast.makeText(requireContext(), "Duration (seconds) must be > 0", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
                 selectedImageUri == null -> {
-                    Toast.makeText(requireContext(),
-                        "Please select an image", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Please select an image", Toast.LENGTH_SHORT).show()
+                    return@setOnClickListener
+                }
+                description.isBlank() -> {
+                    Toast.makeText(requireContext(), "Description is required", Toast.LENGTH_SHORT).show()
                     return@setOnClickListener
                 }
             }
@@ -221,46 +222,44 @@ class ClassBuilderAddPoseFragment : Fragment() {
 
             viewLifecycleOwner.lifecycleScope.launch {
                 try {
-                    val db = FirebaseDatabase.getInstance(DB_URL)
-                    val posesRef = db.getReference("poses")
-                    val mediaRef = db.getReference("mediaAssets")
+                    val db        = FirebaseDatabase.getInstance(DB_URL)
+                    val posesRef  = db.getReference("poses")
+                    val mediaRef  = db.getReference("mediaAssets")
 
-                    val base = IdUtils.slugify(name)
+                    val base   = IdUtils.slugify(name)
                     val poseId = IdUtils.nextAvailableId(posesRef, base)
 
                     val storage = FirebaseStorage.getInstance()
                     val fileRef = storage.reference.child("pose_images/$poseId.jpg")
-
                     val localUri = selectedImageUri!!
                     fileRef.putFile(localUri).await()
                     val downloadUrl = fileRef.downloadUrl.await().toString()
 
-                    val width = selectedImageWidth ?: 0
+                    val width  = selectedImageWidth ?: 0
                     val height = selectedImageHeight ?: 0
-                    val mime = selectedImageMime ?: "image/jpeg"
-                    val now = System.currentTimeMillis()
+                    val mime   = selectedImageMime ?: "image/jpeg"
+                    val now    = System.currentTimeMillis()
 
                     val meta = mapOf(
-                        "assetId" to poseId,
-                        "url" to downloadUrl,
-                        "mimeType" to mime,
-                        "width" to width,
-                        "height" to height,
+                        "assetId"   to poseId,
+                        "url"       to downloadUrl,
+                        "mimeType"  to mime,
+                        "width"     to width,
+                        "height"    to height,
                         "createdAt" to now,
                         "updatedAt" to now
                     )
                     mediaRef.child(poseId).setValue(meta).await()
 
                     val newPose = Pose(
-                        id = poseId,
-                        name = name,
-                        level = level,
-                        category = Pose.Category.standingPoses,
-                        duration = duration.takeIf { it > 0 },
-                        repetitions = reps.takeIf { it > 0 },
+                        id          = poseId,
+                        name        = name,
+                        level       = level,
+                        category    = category,
+                        duration    = durationSec,
                         description = description,
-                        notes = null,
-                        image = downloadUrl
+                        notes       = notes,
+                        image       = downloadUrl
                     )
 
                     PoseRepository.savePose(newPose) { error ->
@@ -278,11 +277,7 @@ class ClassBuilderAddPoseFragment : Fragment() {
                     }
                 } catch (e: Exception) {
                     binding.imageUploadOverlay.visibility = View.GONE
-                    Toast.makeText(
-                        requireContext(),
-                        "Failed: ${e.message}",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Toast.makeText(requireContext(), "Failed: ${e.message}", Toast.LENGTH_LONG).show()
                 }
             }
         }

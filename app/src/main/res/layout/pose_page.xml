@@ -127,9 +127,9 @@
                     android:textColor="@color/sub_titles_text"/>
             </LinearLayout>
 
-            <!-- Duration/Reps row -->
+            <!-- Duration row -->
             <LinearLayout
-                android:id="@+id/ll_pd_duration_reps"
+                android:id="@+id/ll_pd_duration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -151,14 +151,6 @@
                         android:fontFamily="@font/urbanist"
                         android:textColor="@color/black"/>
 
-                    <TextView
-                        android:id="@+id/tv_pd_value_repetitions"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/__repetitions"
-                        android:textSize="14sp"
-                        android:fontFamily="@font/urbanist"
-                        android:textColor="@color/sub_titles_text"/>
                 </LinearLayout>
 
                 <!-- VALUE: _2_minutes -->

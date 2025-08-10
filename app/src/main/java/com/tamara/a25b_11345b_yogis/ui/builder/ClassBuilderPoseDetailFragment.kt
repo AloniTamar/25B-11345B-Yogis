@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.FirebaseApp
@@ -16,7 +15,6 @@ import com.tamara.a25b_11345b_yogis.R
 import com.tamara.a25b_11345b_yogis.data.model.Pose
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderPosePageBinding
 import com.tamara.a25b_11345b_yogis.ui.shared.ImagePagerAdapter
-import com.tamara.a25b_11345b_yogis.utils.wireBack
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.tasks.await
@@ -26,7 +24,6 @@ import java.nio.charset.StandardCharsets
 import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import com.google.firebase.database.FirebaseDatabase
-import com.tamara.a25b_11345b_yogis.ui.library.PoseDetailFragment
 import com.tamara.a25b_11345b_yogis.utils.navigateBackToMain
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
 import com.tamara.a25b_11345b_yogis.viewmodel.ClassBuilderClassPlanViewModel
@@ -59,7 +56,9 @@ class ClassBuilderPoseDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        wireBack(binding.btnPdBack)
+        binding.btnPdBack.setOnClickListener {
+            navigateSmoothly(ClassBuilderAddPoseFragment())
+        }
         binding.tvBackMain.setOnClickListener { navigateBackToMain() }
 
         binding.pdImageLoaderOverlay.visibility = View.VISIBLE
@@ -111,19 +110,8 @@ class ClassBuilderPoseDetailFragment : Fragment() {
             }
 
             val duration = pose.duration ?: 0
-            val reps     = pose.repetitions ?: 0
             binding.tvPdDuration.text    = "$duration seconds"
-            binding.tvPdDurationLabel.text = "$reps reps"
 
-            val colorBlack    = ContextCompat.getColor(requireContext(), R.color.black)
-            val colorSubtitle = ContextCompat.getColor(requireContext(), R.color.sub_titles_text)
-            if (duration > 0) {
-                binding.tvPdDuration.setTextColor(colorBlack)
-                binding.tvPdRepsLabel.setTextColor(colorSubtitle)
-            } else {
-                binding.tvPdDuration.setTextColor(colorSubtitle)
-                binding.tvPdRepsLabel.setTextColor(colorBlack)
-            }
             binding.btnAddPose.setOnClickListener {
                 viewModel.addPose(pose)
                 navigateSmoothly(ClassBuilderActionsFragment())

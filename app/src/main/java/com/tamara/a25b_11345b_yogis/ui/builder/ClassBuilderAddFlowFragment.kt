@@ -14,7 +14,6 @@ import com.tamara.a25b_11345b_yogis.data.repository.FlowRepository
 import com.tamara.a25b_11345b_yogis.databinding.ClassBuilderAddFlowBinding
 import com.tamara.a25b_11345b_yogis.ui.shared.BasicTimelineAdapter
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
-import com.tamara.a25b_11345b_yogis.utils.wireBack
 import com.tamara.a25b_11345b_yogis.viewmodel.ClassBuilderClassPlanViewModel
 
 class ClassBuilderAddFlowFragment : Fragment() {
@@ -42,7 +41,9 @@ class ClassBuilderAddFlowFragment : Fragment() {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        wireBack(binding.btnCtBack)
+        binding.btnCtBack.setOnClickListener {
+            navigateSmoothly(ClassBuilderFlowListFragment())
+        }
 
         val flowId = requireArguments().getString(ARG_FLOW_ID)
         if (flowId.isNullOrBlank()) {

@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.google.firebase.FirebaseApp
@@ -107,19 +106,7 @@ class PoseDetailFragment : Fragment() {
             }
 
             val duration = pose.duration ?: 0
-            val reps     = pose.repetitions ?: 0
             binding.tvPdValueDuration.text    = "$duration seconds"
-            binding.tvPdValueRepetitions.text = "$reps reps"
-
-            val colorBlack    = ContextCompat.getColor(requireContext(), R.color.black)
-            val colorSubtitle = ContextCompat.getColor(requireContext(), R.color.sub_titles_text)
-            if (duration > 0) {
-                binding.tvPdValueDuration.setTextColor(colorBlack)
-                binding.tvPdValueRepetitions.setTextColor(colorSubtitle)
-            } else {
-                binding.tvPdValueDuration.setTextColor(colorSubtitle)
-                binding.tvPdValueRepetitions.setTextColor(colorBlack)
-            }
         }
     }
 

@@ -14,7 +14,6 @@ import com.tamara.a25b_11345b_yogis.databinding.PoseLibraryPosesListBinding
 import com.tamara.a25b_11345b_yogis.ui.main.MainLoggedInFragment
 import com.tamara.a25b_11345b_yogis.utils.IdUtils
 import com.tamara.a25b_11345b_yogis.utils.navigateSmoothly
-import com.tamara.a25b_11345b_yogis.utils.wireBack
 
 class PlanListFragment : Fragment() {
     private var _binding: PoseLibraryPosesListBinding? = null
@@ -65,7 +64,9 @@ class PlanListFragment : Fragment() {
         )
 
 
-        wireBack(binding.btnPblBack)
+        binding.btnPblBack.setOnClickListener {
+            navigateSmoothly(MainLoggedInFragment())
+        }
 
         binding.tvBackMain.setOnClickListener {
             navigateSmoothly(MainLoggedInFragment())

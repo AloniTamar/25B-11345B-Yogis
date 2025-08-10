@@ -15,7 +15,6 @@ data class Pose(
     val level: Level = Level.beginner,
     val category: Category = Category.standingPoses,
     val duration: Int? = null,
-    val repetitions: Int? = null,
     val description: String = "",
     val notes: String? = null,
     val image: String? = ""

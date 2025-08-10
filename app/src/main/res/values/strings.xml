@@ -71,7 +71,6 @@
     <string name="pose_name">Pose Name</string>
     <string name="pose_family">Pose Family</string>
     <string name="duration">Duration</string>
-    <string name="repetitions">Repetitions</string>
     <string name="description">Description</string>
     <string name="note">Notes</string>
     <string name="new_class_builder">New Class Builder</string>
@@ -138,7 +137,6 @@
     <string name="seated_poses">Seated Poses</string>
     <string name="boat_poses">Boat Poses</string>
     <string name="balancing_poses">Balancing Poses</string>
-    <string name="__repetitions">/ Repetitions</string>
     <string name="start_on_all_fours_tuck_your_toes">Start on all fours, tuck your toes…</string>
     <string name="keep_feet_hip_width_apart">Keep feet hip-width apart…</string>
     <string name="discard_changes_title">Discard changes?</string>
@@ -147,10 +145,32 @@
     <string name="changing_password_please_wait">Changing password, please wait…</string>
     <string name="change_photo">Change Photo</string>
     <string name="loadinf_images_please_wait">Loadinf images, please wait…</string>
+    <string name="duration_seconds">Duration (seconds)</string>
+    <string name="select_yoga_type">Select Yoga Type</string>
     <string-array name="class_levels">
         <item>Beginner</item>
         <item>Intermediate</item>
         <item>Advanced</item>
+    </string-array>
+    <string-array name="pose_categories_labels">
+        <item>Standing poses</item>
+        <item>Forward bends</item>
+        <item>Backbend arches</item>
+        <item>Twists</item>
+        <item>Inversions</item>
+        <item>Seated poses</item>
+        <item>Boat poses</item>
+        <item>Balancing poses</item>
+    </string-array>
+    <string-array name="pose_categories_values">
+        <item>standingPoses</item>
+        <item>forwardBends</item>
+        <item>backendArches</item>
+        <item>twists</item>
+        <item>inversions</item>
+        <item>seatedPoses</item>
+        <item>boatPoses</item>
+        <item>balancingPoses</item>
     </string-array>
 
 

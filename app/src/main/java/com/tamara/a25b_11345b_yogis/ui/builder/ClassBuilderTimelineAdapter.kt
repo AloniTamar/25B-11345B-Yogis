@@ -31,8 +31,6 @@ class ClassBuilderTimelineAdapter(
                 is ClassPlanElement.PoseElement -> {
                     binding.tvTitle.text = element.pose.name
                     binding.tvDuration.text = element.pose.duration?.let { "$it min" }
-                        ?: element.pose.repetitions?.let { "$it reps" }
-                                ?: ""
                     binding.tvSub.text = element.pose.category.name.replace('_', ' ').replaceFirstChar { it.uppercase() }
                 }
                 is ClassPlanElement.FlowElement -> {

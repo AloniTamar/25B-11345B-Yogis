@@ -24,7 +24,6 @@ object PoseRepository {
         var level: String? = null,
         var category: String? = null,
         var duration: Int? = null,
-        var repetitions: Int? = null,
         var description: String? = null,
         var notes: String? = null,
         var image: String? = null
@@ -66,7 +65,6 @@ object PoseRepository {
             level = levelEnum,
             category = categoryEnum ?: Pose.Category.standingPoses,
             duration = duration,
-            repetitions = repetitions,
             description = description.orEmpty(),
             notes = notes,
             image = image

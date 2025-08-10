@@ -32,7 +32,7 @@ class BasicTimelineAdapter(
         fun bind(e: ClassPlanElement) {
             when (e) {
                 is ClassPlanElement.PoseElement -> {
-                    binding.tvDuration.text = "${e.pose.duration ?: e.pose.repetitions} ${if (e.pose.duration != null) "seconds" else "reps"}"
+                    binding.tvDuration.text = "${e.pose.duration} seconds"
                     binding.tvTitle.text    = e.pose.name
                     binding.tvSub.text      = "${e.pose.level}"
                 }

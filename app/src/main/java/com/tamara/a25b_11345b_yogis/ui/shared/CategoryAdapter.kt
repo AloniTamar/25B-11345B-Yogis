@@ -1,5 +1,6 @@
 package com.tamara.a25b_11345b_yogis.ui.shared
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -14,11 +15,12 @@ class CategoryAdapter(
     inner class ViewHolder(private val binding: ItemPoseBinding)
         : RecyclerView.ViewHolder(binding.root) {
 
+        @SuppressLint("SetTextI18n")
         fun bind(category: Pose.Category) {
             binding.tvLevelTitle.text = category.name
                 .replace(Regex("([a-z])([A-Z])"), "$1 $2")
                 .replaceFirstChar { it.uppercase() }
-
+            binding.tvLevelSubtitle.text = "Beginners ● Intermediate ● Advanced"
             binding.root.setOnClickListener {
                 onClick(category)
             }

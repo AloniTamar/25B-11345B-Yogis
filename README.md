@@ -72,7 +72,6 @@ Benefits: testable layers, single source of truth, and clear separation between 
 - **Class Plan Builder** — add from library, reorder, remove, set recommended rounds
 - **Teaching Mode** — step‑by‑step sequence view with next/previous controls
 - **Profile** — view & edit basic info
-- 
 ---
 
 ## 🗄️ Data Model (Firebase)

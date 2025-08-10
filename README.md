@@ -72,6 +72,12 @@ Benefits: testable layers, single source of truth, and clear separation between 
 
 ---
 
+## 🏛️ Architecture
+
+![Yogis – Architecture Flow](docs/yogis-architecture.svg)
+
+---
+
 ## 🗄️ Data Model (Firebase)
 This project uses **Firebase Realtime Database** (for structured data) and **Firebase Storage** (for images). Data is shaped and validated with **Draft‑07 JSON Schemas** (see `docs/schemas/`).
 
